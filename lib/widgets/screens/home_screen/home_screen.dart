@@ -1,0 +1,76 @@
+import 'package:flutter/material.dart';
+import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
+import 'horizontal_items.dart';
+
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  bool _isLoading = false;
+
+  @override
+  initState() {
+    super.initState();
+  }
+
+  _bodyView() {
+    return Stack(
+      children: [
+        Container(
+          width: double.infinity,
+          height: double.infinity,
+          padding: EdgeInsets.all(16),
+          child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemBuilder: (context, index) {
+              return HorizontalItems();
+            },
+            itemCount: 4,)
+        ),
+        _isLoading ? LoadingIndicator() : Container()
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+      child: SafeArea(
+        child: Scaffold(
+          extendBodyBehindAppBar: false,
+          backgroundColor: Theme.of(context).backgroundColor,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            toolbarHeight: 40,
+            centerTitle: true,
+            title: Text(
+              'ZmongolBook',
+              style: Theme.of(context).textTheme.headline1,
+            ),
+            actions: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed('/search');
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: Icon (
+                    Icons.search,
+                    color: Colors.black,
+                    size: 32,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          body: _bodyView()
+        ),
+      ),
+    );
+  }
+}
