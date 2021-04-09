@@ -2,7 +2,16 @@ import 'package:flutter/material.dart';
 import './page_content.dart';
 import './page_title.dart';
 
-class DetailScreen extends StatelessWidget {
+class DetailScreen extends StatefulWidget {
+  final int index;
+
+  DetailScreen(this.index);
+
+  @override
+  _DetailScreenState createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,7 +19,7 @@ class DetailScreen extends StatelessWidget {
       body: Row(
         children: [
           PageTitle(),
-          Expanded(child: PageContent())
+          Expanded(child: PageContent(widget.index))
         ],
       ),
     );

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:mongol_ebook/Utils/DataDemo.dart';
 import 'package:mongol_ebook/widgets/screens/detail_screen/detail_screen.dart';
 
 class SingleItem extends StatelessWidget {
   final int index;
-  final String category;
 
-  SingleItem(this.index, this.category);
+  SingleItem(this.index);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed('/detail');
+        Navigator.of(context).pushNamed('/detail', arguments: {'index': index});
       },
       child: Container(
         margin: EdgeInsets.all(4),
@@ -26,7 +26,7 @@ class SingleItem extends StatelessWidget {
             quarterTurns: 1,
             child: Center(
               child: Text(
-                category,
+                DataDemo.instance.getTitleByIndex(index),
                 style: Theme.of(context).textTheme.headline2,
                 textAlign: TextAlign.center,
                 maxLines: 1,

@@ -24,13 +24,6 @@ class _PageTitleState extends State<PageTitle> {
               color: Colors.black,
             ),
           ),
-          RotatedBox(
-            quarterTurns: 1,
-            child: Text(
-              'ᠸᠢᠺᠢᠫᠧ',
-              style: Theme.of(context).textTheme.headline1,
-            ),
-          ),
           Expanded(
             child: Container(),
           ),
