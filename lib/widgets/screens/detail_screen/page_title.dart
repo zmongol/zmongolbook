@@ -11,7 +11,7 @@ class _PageTitleState extends State<PageTitle> {
     return Container(
       width: 60,
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+        color: Colors.indigo[800], //no, press cmd +r
       ),
       child: Column(
         children: [

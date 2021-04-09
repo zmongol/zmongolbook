@@ -28,7 +28,7 @@ class SingleItem extends StatelessWidget {
               child: Text(
                 DataDemo.instance.getTitleByIndex(index),
                 style: Theme.of(context).textTheme.headline2,
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
