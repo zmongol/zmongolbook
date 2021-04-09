@@ -40,7 +40,7 @@ class _MongolBookAppState extends State<MongolBookApp> with WidgetsBindingObserv
           button: TextStyle(fontFamily: 'haratig', fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white),
         ),
         primaryColor: Colors.grey[200],
-        backgroundColor: Color(0xfffafafa)
+        backgroundColor: Colors.lightBlue[200]
     );
   }
 

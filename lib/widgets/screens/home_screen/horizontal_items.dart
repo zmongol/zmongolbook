@@ -9,7 +9,7 @@ class HorizontalItems extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).backgroundColor,
       ),
       child: Container(
         constraints: new BoxConstraints(
