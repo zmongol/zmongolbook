@@ -24,7 +24,8 @@ class SingleItem extends StatelessWidget {
           margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
           child: RotatedBox(
             quarterTurns: 1,
-            child: Center(
+            child: Align(
+              alignment: Alignment.centerLeft,
               child: Text(
                 DataDemo.instance.getTitleByIndex(index),
                 style: Theme.of(context).textTheme.headline2,

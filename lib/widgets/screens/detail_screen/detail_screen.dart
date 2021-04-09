@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import './page_content.dart';
-import './page_title.dart';
 
 class DetailScreen extends StatefulWidget {
   final int index;
@@ -14,13 +13,25 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: Row(
-        children: [
-          PageTitle(),
-          Expanded(child: PageContent(widget.index))
-        ],
+
+    return Container(
+      decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+      child: SafeArea(
+        child: Scaffold(
+            extendBodyBehindAppBar: false,
+            backgroundColor: Theme.of(context).backgroundColor,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              toolbarHeight: 40,
+              centerTitle: true,
+              leading: GestureDetector(
+                onTap: () {Navigator.pop(context);},
+                child: Icon(Icons.arrow_back,color: Colors.black,),
+              ),
+            ),
+            body: PageContent(widget.index)
+        ),
       ),
     );
   }
