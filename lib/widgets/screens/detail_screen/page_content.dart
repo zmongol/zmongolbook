@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:mongol/mongol.dart';
+import 'package:mongol_ebook/Helper/AppSetting.dart';
 import 'package:mongol_ebook/Utils/DataDemo.dart';
 
 class PageContent extends StatefulWidget {
@@ -21,18 +22,19 @@ class _PageContentState extends State<PageContent> {
         child: Container(
           margin: EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Theme.of(context).backgroundColor,
+            color: AppSetting.instance.contentBackgroundColor,
           ),
           width: double.infinity,
           height: double.infinity,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
+            padding: EdgeInsets.all(16),
             child: MongolText(
-                DataDemo.instance.getContentByIndex(widget.index),
-                style: Theme.of(context).textTheme.bodyText1),
+              DataDemo.instance.getContentByIndex(widget.index),
+              style: AppSetting.instance.contentTextStyle,
           ),
         ),
       ),
-    );
+    ));
   }
 }

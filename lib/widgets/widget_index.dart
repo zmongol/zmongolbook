@@ -8,3 +8,6 @@ export 'screens/detail_screen/detail_screen.dart';
 
 // Common Widget
 export 'common/vertical_text.dart';
+
+// Setting
+export 'screens/setting/setting.dart';

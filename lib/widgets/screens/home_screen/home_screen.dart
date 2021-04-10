@@ -66,6 +66,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed('/setting');
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: Icon (
+                    Icons.settings,
+                    color: Colors.black,
+                    size: 32,
+                  ),
+                ),
+              ),
             ],
           ),
           body: _bodyView()

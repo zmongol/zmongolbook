@@ -69,6 +69,9 @@ class _MongolBookAppState extends State<MongolBookApp> with WidgetsBindingObserv
           }
           if (settings.name == '/search')
             return FadePageRoute(child: ScaffoldWrapper(SearchScreen()), settings: settings);
+          if (settings.name == '/setting')
+            return FadePageRoute(child: ScaffoldWrapper(SettingScreen()), settings: settings);
+
           return null;
         }
     );
