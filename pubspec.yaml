@@ -70,6 +70,12 @@ flutter:
     - family: haratig
       fonts:
         - asset: assets/fonts/z52haratig.otf
+    - family: qimedtig
+      fonts:
+        - asset: assets/fonts/z52qimedtig.otf
+    - family: ordostig
+      fonts:
+        - asset: assets/fonts/z52ordostig.otf
   # fonts:
   #   - family: Schyler
   #     fonts:

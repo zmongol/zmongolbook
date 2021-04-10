@@ -19,7 +19,7 @@ class _DetailScreenState extends State<DetailScreen> {
       child: SafeArea(
         child: Scaffold(
             extendBodyBehindAppBar: false,
-            backgroundColor: Theme.of(context).backgroundColor,
+            backgroundColor: Theme.of(context).primaryColor,
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,

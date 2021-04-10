@@ -15,7 +15,7 @@ class SingleItem extends StatelessWidget {
       },
       child: Container(
         margin: EdgeInsets.all(4),
-        width: 52,
+        width: 40,
         decoration: BoxDecoration(
             border: Border.all(color: Colors.white),
             color: Theme.of(context).backgroundColor,

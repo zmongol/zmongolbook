@@ -31,16 +31,16 @@ class _MongolBookAppState extends State<MongolBookApp> with WidgetsBindingObserv
   _theme() {
     return ThemeData(
         textTheme: TextTheme(
-          headline1: TextStyle(fontFamily: 'haratig', fontSize: 22, fontWeight: FontWeight.w400, color: Colors.black),
+          headline1: TextStyle(fontFamily: 'ordostig', fontSize: 25, fontWeight: FontWeight.w400, color: Colors.black),
           headline2: TextStyle(fontFamily: 'haratig', fontSize: 18, fontWeight: FontWeight.w400, color: Colors.black),
           headline3: TextStyle(fontFamily: 'haratig', fontSize: 14, fontWeight: FontWeight.w400, color: Colors.grey),
           subtitle1: TextStyle(fontFamily: 'haratig', fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black),
           subtitle2: TextStyle(fontFamily: 'haratig', fontSize: 10, fontWeight: FontWeight.w400),
-          bodyText1: TextStyle(fontFamily: 'haratig', fontSize: 18, fontWeight: FontWeight.w400, color: Colors.black),
+          bodyText1: TextStyle(fontFamily: 'qimedtig', fontSize: 22, fontWeight: FontWeight.w400, color: Colors.black),
           button: TextStyle(fontFamily: 'haratig', fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white),
         ),
-        primaryColor: Colors.indigo[800],
-        backgroundColor: Colors.blue[100]
+        primaryColor: Colors.grey[200],
+        backgroundColor: Colors.grey[50]
     );
   }
 
