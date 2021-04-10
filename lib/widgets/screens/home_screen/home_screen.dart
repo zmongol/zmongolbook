@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mongol_ebook/Helper/AppConstant.dart';
+import 'package:mongol_ebook/Helper/DataReader.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
 import 'horizontal_items.dart';
 
@@ -14,9 +16,19 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   initState() {
     super.initState();
+    loadData();
+  }
+
+  loadData() async {
+    await DataReader.instance.readData();
+    setState(() {});
   }
 
   _bodyView() {
+    int numberOfRow = DataReader.instance.data.length ~/ ITEMS_IN_ROW;
+    if (DataReader.instance.data.length % ITEMS_IN_ROW > 0) {
+      numberOfRow ++;
+    }
     return Stack(
       children: [
         Container(
@@ -26,9 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
           child: ListView.builder(
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
-              return HorizontalItems();
+              return HorizontalItems(index);
             },
-            itemCount: 4,)
+            itemCount: numberOfRow)
         ),
         _isLoading ? LoadingIndicator() : Container()
       ],

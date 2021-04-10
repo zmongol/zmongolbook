@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mongol_ebook/Utils/DataDemo.dart';
-import 'package:mongol_ebook/widgets/screens/detail_screen/detail_screen.dart';
+import 'package:mongol_ebook/Helper/DataReader.dart';
 
 class SingleItem extends StatelessWidget {
   final int index;
@@ -27,7 +26,7 @@ class SingleItem extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                DataDemo.instance.getTitleByIndex(index),
+                DataReader.instance.getTitleByIndex(index),
                 style: Theme.of(context).textTheme.headline2,
                 textAlign: TextAlign.left,
                 maxLines: 1,
