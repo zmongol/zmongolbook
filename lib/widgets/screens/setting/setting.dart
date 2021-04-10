@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Helper/AppSetting.dart';
+import 'package:mongol_ebook/Utils/MongolFont.dart';
 import 'package:mongol_ebook/widgets/common/color_picker.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -14,7 +16,36 @@ class _SettingScreenState extends State<SettingScreen> {
 
   _onBottomBarItemPressed(int index) {
     if (index == 0) {
-      //Todo: show font selection
+      showBottomSheet(context: context, builder: (BuildContext context) {
+        return Container(
+          color: Colors.white,
+          height: 260,
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemExtent: 48,
+              itemCount: MongolFonts.fontList.length,
+              itemBuilder: (context, int i) {
+                return Align(
+                    alignment: Alignment.topCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 16.0),
+                      child: InkWell(
+                        onTap: () {
+                          AppSetting.instance.contentTextStyle = AppSetting.instance.contentTextStyle.copyWith(fontFamily: MongolFonts.fontList[i][0]);
+                          AppSetting.instance.save();
+                          Navigator.pop(context);
+                          setState(() {});
+                        },
+                        child: MongolText(
+                          MongolFonts.fontList[i][1],
+                          style: TextStyle(
+                              fontSize: 28, fontFamily: MongolFonts.fontList[i][0]),
+                        ),
+                      ),
+                    ));
+              }),
+        );
+      });
       return;
     }
 
@@ -42,6 +73,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 } else {
                   AppSetting.instance.contentBackgroundColor = color;
                 }
+                AppSetting.instance.save();
                 Navigator.pop(context);
                 setState(() {});
               },

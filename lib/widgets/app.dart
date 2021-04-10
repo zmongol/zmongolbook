@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mongol_ebook/Helper/AppSetting.dart';
 import 'package:mongol_ebook/widgets/screens/search.dart';
 import 'package:mongol_ebook/widgets/widget_index.dart';
 
@@ -19,6 +20,7 @@ class _MongolBookAppState extends State<MongolBookApp> with WidgetsBindingObserv
   void initState() {
     WidgetsBinding.instance!.addObserver(this);
     super.initState();
+    AppSetting.instance.get();
   }
 
   @override
