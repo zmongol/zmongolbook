@@ -20,8 +20,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   loadData() async {
+    setState(() {
+      _isLoading = true;
+    });
     await DataReader.instance.readData();
-    setState(() {});
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   _bodyView() {
