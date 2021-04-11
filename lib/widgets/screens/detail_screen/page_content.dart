@@ -19,7 +19,7 @@ class _PageContentState extends State<PageContent> {
       decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
       child: SafeArea(
         child: Container(
-          margin: EdgeInsets.all(16),
+          padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: AppSetting.instance.contentBackgroundColor,
           ),
