@@ -22,7 +22,7 @@ class AppSetting {
 
   get() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String fontFamily = prefs.getString(CONTENT_FONT_FAMILY) ?? 'qimedtig';
+    String fontFamily = prefs.getString(CONTENT_FONT_FAMILY) ?? 'z52qimedtig';
     double fontSize = prefs.getDouble(CONTENT_FONT_SIZE) ?? 22;
     String textColorHex = prefs.getString(CONTENT_TEXT_COLOR) ?? 'ff000000';
     Color textColor = Color(int.parse('0x$textColorHex'));
