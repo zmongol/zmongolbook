@@ -73,45 +73,54 @@ flutter:
     - family: haratig
       fonts:
         - asset: assets/fonts/z52haratig.otf
-    - family: qimedtig
+    - family: z52amglangtig
       fonts:
-        - asset: assets/fonts/z52qimedtig.otf
-    - family: ordostig
-      fonts:
-        - asset: assets/fonts/z52ordostig.otf
-
-    - family: amglangtig
-      fonts:
-        - asset: assets/fonts/z52amglangtigtig.otf
-    - family: buduntig
+        - asset: assets/fonts/z52amglangtig.otf
+    - family: z52buduntig
       fonts:
         - asset: assets/fonts/z52buduntig.otf
-    - family: chimegtig
+    - family: z52chimegtig
       fonts:
         - asset: assets/fonts/z52chimegtig.otf
-    - family: egulentig
+    - family: z52egulentig
       fonts:
         - asset: assets/fonts/z52egulentig.otf
-    - family: hawangtig
+    - family: z52hawangtig
       fonts:
         - asset: assets/fonts/z52hawangtig.ttf
-    - family: holsnujugtig
+    - family: z52ordostig
       fonts:
-        - asset: assets/fonts/z52holsnujugtig.otf
-    - family: qingmingtig
-      fonts:
-        - asset: assets/fonts/z52qingmingtig.otf
-    - family: sanstig
-      fonts:
-        - asset: assets/fonts/z52sanstig.otf
-    - family: sayatig
+        - asset: assets/fonts/z52ordostig.otf
+    - family: z52sayatig
       fonts:
         - asset: assets/fonts/z52sayatig.ttf
-
-
-    - family: uljitig
+    - family: z52sanstig
+      fonts:
+        - asset: assets/fonts/z52sanstig.otf
+    - family: z52holsnujugtig
+      fonts:
+        - asset: assets/fonts/z52holsnujugtig.otf
+    - family: z52uljitig
       fonts:
         - asset: assets/fonts/z52uljitig.ttf
+    - family: z52togtig
+      fonts:
+        - asset: assets/fonts/z52togtig.ttf
+    - family: z52qimedtig
+      fonts:
+        - asset: assets/fonts/z52qimedtig.otf
+    - family: z52qingmingtig
+      fonts:
+        - asset: assets/fonts/z52qingmingtig.otf
+    - family: z52solibotig
+      fonts:
+        - asset: assets/fonts/z52solibotig.otf
+    - family: z52sonintig
+      fonts:
+        - asset: assets/fonts/z52sonintig.otf
+    - family: z52tsagaantig
+      fonts:
+        - asset: assets/fonts/z52tsagaantig.otf
 
   # fonts:
   #   - family: Schyler
