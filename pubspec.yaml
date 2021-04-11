@@ -124,6 +124,9 @@ flutter:
     - family: z52tsagaantig
       fonts:
         - asset: assets/fonts/z52tsagaantig.otf
+    - family: z52onontig
+      fonts:
+        - asset: assets/fonts/z52onontig.otf
 
   # fonts:
   #   - family: Schyler
