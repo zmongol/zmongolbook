@@ -16,9 +16,10 @@ class HorizontalItems extends StatelessWidget {
     if (a > 0) {
       numberOfRow++;
     }
-    int itemInRow = ITEMS_IN_ROW;
+    int itemsInRow = ITEMS_IN_ROW;
     if (rowIndex == numberOfRow - 1) {
-      itemInRow = DataReader.instance.data.length % ITEMS_IN_ROW;
+      if (DataReader.instance.data.length % ITEMS_IN_ROW !=0 )
+        itemsInRow = DataReader.instance.data.length % ITEMS_IN_ROW;
     }
 
     return Container(
@@ -33,7 +34,7 @@ class HorizontalItems extends StatelessWidget {
         child: ListView.builder(
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
-          itemCount: itemInRow,
+          itemCount: itemsInRow,
           itemBuilder: (context, colIndex) {
             return SingleItem(rowIndex * ITEMS_IN_ROW + colIndex);
           },
