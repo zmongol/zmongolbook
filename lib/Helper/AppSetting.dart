@@ -31,5 +31,4 @@ class AppSetting {
     contentTextStyle = contentTextStyle.copyWith(fontFamily: fontFamily, fontSize: fontSize, color: textColor);
     contentBackgroundColor = bgColor;
   }
-
 }

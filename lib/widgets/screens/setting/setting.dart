@@ -22,8 +22,6 @@ class _SettingScreenState extends State<SettingScreen> {
     }
   }
 
-  double _currentFontSize = AppSetting.instance.contentTextStyle.fontSize!;
-
   _showFontSelection() {
     _controller = showBottomSheet(context: context, builder: (BuildContext context) {
       return Container(
@@ -68,11 +66,10 @@ class _SettingScreenState extends State<SettingScreen> {
                   borderRadius: new BorderRadius.all(new Radius.circular(5.0)),
                   boxShadow: [new BoxShadow(color: Colors.black38, offset: new Offset(0.0, 2.0), blurRadius: 10)]),
               child: new Slider(
-                value: _currentFontSize,
+                value: AppSetting.instance.contentTextStyle.fontSize!,
                 activeColor: Colors.grey,
                 inactiveColor: Colors.grey,
                 onChanged: (double newValue) {
-                  _currentFontSize = newValue;
                   AppSetting.instance.contentTextStyle = AppSetting.instance.contentTextStyle.copyWith(fontSize: newValue);
                   AppSetting.instance.save();
                   reloadSlider(() {});
@@ -85,7 +82,6 @@ class _SettingScreenState extends State<SettingScreen> {
       });
     });
   }
-
 
   _onBottomBarItemPressed(int index) {
     if (index == 0) {
@@ -127,9 +123,7 @@ class _SettingScreenState extends State<SettingScreen> {
         );
       });
     }
-
   }
-
 
   @override
   Widget build(BuildContext context) {

@@ -34,7 +34,6 @@ class DataReader {
         }
       }
     }
-
     print ('Data content length: ${this.data.length}');
   }
 
