@@ -108,7 +108,7 @@ class _SettingScreenState extends State<SettingScreen> {
             child: MaterialPicker(
               pickerColor: currentColor ,
               onColorChanged: (Color color) {
-                if (index == 1) {
+                if (index == 2) {
                   AppSetting.instance.contentTextStyle = AppSetting.instance.contentTextStyle.copyWith(color: color);
                 } else {
                   AppSetting.instance.contentBackgroundColor = color;
