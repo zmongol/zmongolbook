@@ -93,7 +93,7 @@ flutter:
         - asset: assets/fonts/z52ordostig.otf
     - family: z52sayatig
       fonts:
-        - asset: assets/fonts/z52sayatig.ttf
+        - asset: assets/fonts/z52saitig.otf
     - family: z52sanstig
       fonts:
         - asset: assets/fonts/z52sanstig.otf
