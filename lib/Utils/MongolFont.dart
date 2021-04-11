@@ -27,7 +27,6 @@ class MongolFonts {
     [z52holsnujugtig, ' ᡸᡭᢑᡭᢔᡭᡧ ᡥᡭᡬᢛᡭᡬᡨ ᢘᡬᡬᡨ'],
     [z52togtig, ' ᢘᡭᢇ ᢘᡬᡬᡨ'],
     [z52sanstig, ' ᢔᡪᡪᢓ ᢘᡬᡬᡨ'],
-    [z52sanstigbold, ' ᢔᡪᡪᢓ ᢘᡬᡬᡨ ᡴᡭᡬᢙᡭᢋᡭᡧ'],
     [z52uljitig, ' ᡥᡭᡬᢑᢛᡪᡫ ᢘᡬᡬᡨ'],
     [haratig, ' ᡸᡪᢝᡨ ᢘᡬᡬᡨ'],
     [z52tsagaantig, ' ᢚᡪᡱᡱᡪᡧ ᢘᡬᡬᡨ'],

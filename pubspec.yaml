@@ -97,6 +97,9 @@ flutter:
     - family: z52sanstig
       fonts:
         - asset: assets/fonts/z52sanstig.otf
+    - family: z52sanstigbold
+      fonts:
+        - asset: assets/fonts/z52sanstigbold.otf
     - family: z52holsnujugtig
       fonts:
         - asset: assets/fonts/z52holsnujugtig.otf
