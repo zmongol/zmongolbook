@@ -79,6 +79,40 @@ flutter:
     - family: ordostig
       fonts:
         - asset: assets/fonts/z52ordostig.otf
+
+    - family: amglangtig
+      fonts:
+        - asset: assets/fonts/z52amglangtigtig.otf
+    - family: buduntig
+      fonts:
+        - asset: assets/fonts/z52buduntig.otf
+    - family: chimegtig
+      fonts:
+        - asset: assets/fonts/z52chimegtig.otf
+    - family: egulentig
+      fonts:
+        - asset: assets/fonts/z52egulentig.otf
+    - family: hawangtig
+      fonts:
+        - asset: assets/fonts/z52hawangtig.ttf
+    - family: holsnujugtig
+      fonts:
+        - asset: assets/fonts/z52holsnujugtig.otf
+    - family: qingmingtig
+      fonts:
+        - asset: assets/fonts/z52qingmingtig.otf
+    - family: sanstig
+      fonts:
+        - asset: assets/fonts/z52sanstig.otf
+    - family: sayatig
+      fonts:
+        - asset: assets/fonts/z52sayatig.ttf
+
+
+    - family: uljitig
+      fonts:
+        - asset: assets/fonts/z52uljitig.ttf
+
   # fonts:
   #   - family: Schyler
   #     fonts:
