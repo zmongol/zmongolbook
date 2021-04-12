@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/screenutil_init.dart';
 import 'package:mongol_ebook/Helper/AppSetting.dart';
 import 'package:mongol_ebook/widgets/screens/search.dart';
 import 'package:mongol_ebook/widgets/widget_index.dart';
@@ -48,34 +49,38 @@ class _MongolBookAppState extends State<MongolBookApp> with WidgetsBindingObserv
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        theme: _theme(),
-        navigatorKey: navigatorKey,
-        title: 'Mongol Book App',
-        initialRoute: '/',
-        routes: {
-          '/': (BuildContext context) {
-           return HomeScreen();
+    return ScreenUtilInit(
+      designSize: Size(360, 640),
+      allowFontScaling: false,
+      builder: () => MaterialApp(
+          theme: _theme(),
+          navigatorKey: navigatorKey,
+          title: 'Mongol Book App',
+          initialRoute: '/',
+          routes: {
+            '/': (BuildContext context) {
+              return HomeScreen();
+            },
           },
-        },
-        onGenerateRoute: (settings) {
-          if (settings.name == '/home')
-            return FadePageRoute(child: ScaffoldWrapper(HomeScreen()), settings: settings);
-          if (settings.name == '/detail') {
-            Map args = settings.arguments as Map;
-            if (args['index'] != null) {
-              return FadePageRoute(child: ScaffoldWrapper(DetailScreen(args['index'])), settings: settings);
-            } else {
-              return null;
+          onGenerateRoute: (settings) {
+            if (settings.name == '/home')
+              return FadePageRoute(child: ScaffoldWrapper(HomeScreen()), settings: settings);
+            if (settings.name == '/detail') {
+              Map args = settings.arguments as Map;
+              if (args['index'] != null) {
+                return FadePageRoute(child: ScaffoldWrapper(DetailScreen(args['index'])), settings: settings);
+              } else {
+                return null;
+              }
             }
-          }
-          if (settings.name == '/search')
-            return FadePageRoute(child: ScaffoldWrapper(SearchScreen()), settings: settings);
-          if (settings.name == '/setting')
-            return FadePageRoute(child: ScaffoldWrapper(SettingScreen()), settings: settings);
+            if (settings.name == '/search')
+              return FadePageRoute(child: ScaffoldWrapper(SearchScreen()), settings: settings);
+            if (settings.name == '/setting')
+              return FadePageRoute(child: ScaffoldWrapper(SettingScreen()), settings: settings);
 
-          return null;
-        }
+            return null;
+          }
+      )
     );
   }
 }
