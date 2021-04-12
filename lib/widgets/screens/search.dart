@@ -48,11 +48,24 @@ class _SearchScreenState extends State<SearchScreen> {
                 elevation: 0,
                 leading: GestureDetector(
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.pop(context, '');
                     kbCtrl.textEditingController.text = '';
                   },
                   child: Icon(Icons.arrow_back),
                 ),
+                actions: [
+                  GestureDetector(
+                    onTap: () {
+                      String text = kbCtrl.textEditingController.text;
+                      Navigator.pop(context, text);
+                      kbCtrl.textEditingController.text = '';
+                    },
+                    child: Padding(
+                        padding: EdgeInsets.only(right: 16),
+                        child: Icon(Icons.done)
+                    ),
+                  ),
+                ],
               ),
               body: Container(
                 height: double.infinity,

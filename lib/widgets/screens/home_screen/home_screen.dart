@@ -12,6 +12,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   bool _isLoading = false;
+  bool _isSearching = false;
+  List<Map<String, String>> _data = [];
 
   @override
   initState() {
@@ -24,14 +26,36 @@ class _HomeScreenState extends State<HomeScreen> {
       _isLoading = true;
     });
     await DataReader.instance.readData();
+    _data = DataReader.instance.data;
     setState(() {
       _isLoading = false;
     });
   }
 
+  _resetData() {
+    setState(() {
+      _isSearching = false;
+      _data = DataReader.instance.data;
+    });
+  }
+
+  _search(dynamic value) {
+    if (value is String) {
+      if (value.isEmpty) {
+        _resetData();
+      } else {
+        final searchData = _data.where((element) => element['title']!.toLowerCase().contains(value.toLowerCase())).toList();
+        _data = searchData;
+        _isSearching = true;
+        setState(() {
+        });
+      }
+    }
+  }
+
   _bodyView() {
-    int numberOfRow = DataReader.instance.data.length ~/ ITEMS_IN_ROW;
-    if (DataReader.instance.data.length % ITEMS_IN_ROW > 0) {
+    int numberOfRow = _data.length ~/ ITEMS_IN_ROW;
+    if (_data.length % ITEMS_IN_ROW > 0) {
       numberOfRow ++;
     }
     return Stack(
@@ -72,12 +96,18 @@ class _HomeScreenState extends State<HomeScreen> {
             actions: [
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed('/search');
+                  if (_isSearching) {
+                    _resetData();
+                    return;
+                  }
+                  Navigator.of(context).pushNamed('/search').then((value) {
+                    _search(value);
+                  });
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(right: 16.0),
                   child: Icon (
-                    Icons.search,
+                    _isSearching ? Icons.search_off : Icons.search,
                     color: Colors.black,
                     size: 32,
                   ),
