@@ -4,10 +4,16 @@ import 'package:flutter/services.dart' show ByteData, rootBundle;
 class DataReader {
   DataReader._privateConstructor();
   static final DataReader _dataReader = DataReader._privateConstructor();
-  static DataReader get instance {return _dataReader;}
+  static DataReader get instance {
+    return _dataReader;
+  }
 
+  //NOTE: keep the original data load from the file
+  List<Map<String, String>> originalData = [];
+
+  //NOTE: keep the data on searching
   List<Map<String, String>> data = [];
-
+  
   readData() async {
     this.data.clear();
     ByteData data = await rootBundle.load("assets/data.xlsx");
@@ -30,11 +36,12 @@ class DataReader {
             'article': row[1]!.value
           };
 
-          this.data.add(rowContent);
+          this.originalData.add(rowContent);
         }
       }
     }
-    print ('Data content length: ${this.data.length}');
+    this.data = this.originalData;
+    print('Data content length: ${this.originalData.length}');
   }
 
   getTitleByIndex(int index) {
