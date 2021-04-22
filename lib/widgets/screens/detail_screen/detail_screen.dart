@@ -4,6 +4,7 @@ import './page_content.dart';
 class DetailScreen extends StatefulWidget {
   final int index;
 
+
   DetailScreen(this.index);
 
   @override

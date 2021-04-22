@@ -36,6 +36,8 @@ dependencies:
   excel: 2.0.0-null-safety
   flutter_launcher_icons: ^0.9.0
   flutter_screenutil: 5.0.0-nullsafety.11
+  http: ^0.13.1
+  provider: ^5.0.0
 
 
 dev_dependencies:
@@ -59,10 +61,10 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
+    # To add assets to your application, add an assets section, like this:
   assets:
       - assets/z52words03.db
-      - assets/data.xlsx
+  #   - assets/data.xlsx
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

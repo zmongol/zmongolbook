@@ -4,6 +4,7 @@ const String CONTENT_FONT_SIZE = 'CONTENT_FONT_SIZE';
 const String CONTENT_FONT_FAMILY = 'CONTENT_FONT_FAMILY';
 const double MIN_FONT_SIZE = 20;
 const double MAX_FONT_SIZE = 40;
+const String BASE_URL="";
 
 const int ITEMS_IN_ROW = 30;
 

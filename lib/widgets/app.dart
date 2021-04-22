@@ -8,7 +8,7 @@ import 'common/fade_page_route.dart';
 import 'common/scaffold_wrapper.dart';
 
 class MongolBookApp extends StatefulWidget {
-
+  static  List apiData=<dynamic>[];
   @override
   _MongolBookAppState createState() => _MongolBookAppState();
 

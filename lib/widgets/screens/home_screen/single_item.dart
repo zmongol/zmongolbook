@@ -3,8 +3,8 @@ import 'package:mongol_ebook/Helper/DataReader.dart';
 
 class SingleItem extends StatelessWidget {
   final int index;
-
-  SingleItem(this.index);
+  String title;
+  SingleItem(this.index,this.title);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,8 @@ class SingleItem extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                DataReader.instance.getTitleByIndex(index),
+                title,
+                //DataReader.instance.getTitleByIndex(index),
                 style: Theme.of(context).textTheme.headline2,
                 textAlign: TextAlign.left,
                 maxLines: 1,

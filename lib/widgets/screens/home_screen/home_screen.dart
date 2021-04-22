@@ -1,17 +1,22 @@
+
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
+import 'package:mongol_ebook/Api%20Manager/api_manager.dart';
 import 'package:mongol_ebook/Helper/AppConstant.dart';
 import 'package:mongol_ebook/Helper/DataReader.dart';
+import 'package:mongol_ebook/widgets/app.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
 import 'horizontal_items.dart';
 
 class HomeScreen extends StatefulWidget {
+  static  List currentData=<dynamic>[];
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-  bool _isLoading = false;
+  bool _isLoading = true;
   bool _isSearching = false;
 
   @override
@@ -21,19 +26,31 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   loadData() async {
-    setState(() {
-      _isLoading = true;
+    ApiManager.getTitle().then((value)
+    {
+      setState(() {
+        MongolBookApp.apiData=value;
+        HomeScreen.currentData=List.from(MongolBookApp.apiData);
+        _isLoading=false;
+      });
+
+
     });
-    await DataReader.instance.readData();
-    setState(() {
-      _isLoading = false;
-    });
+    // setState(() {
+    //   _isLoading = true;
+    // });
+    // await DataReader.instance.readData();
+    // setState(() {
+    //   _isLoading = false;
+    // });
   }
 
   _resetData() {
     setState(() {
       _isSearching = false;
-      DataReader.instance.data = DataReader.instance.originalData;
+      print("Api Data: "+MongolBookApp.apiData.length.toString());
+      HomeScreen.currentData=List.from(MongolBookApp.apiData);
+    //  DataReader.instance.data = DataReader.instance.originalData;
     });
   }
 
@@ -41,35 +58,51 @@ class _HomeScreenState extends State<HomeScreen> {
     if (value is String) {
       if (value.isEmpty) {
         _resetData();
-      } else {
-        final searchData = DataReader.instance.originalData.where((element) => element['title']!.toLowerCase().contains(value.toLowerCase())).toList();
-        DataReader.instance.data = searchData;
-        _isSearching = true;
+      }  else {
+        // final searchData = DataReader.instance.originalData
+        //     .where((element) =>
+        //         element['title']!.toLowerCase().contains(value.toLowerCase()))
+        //     .toList();
+        // DataReader.instance.data = searchData;
+        HomeScreen.currentData.clear();
+        for (var item in MongolBookApp.apiData)
+          {
+            if(item['garqag'].toString().toLowerCase().contains(value.toLowerCase()))
+              {
+              //  print("Title: "+item['garqag'].toString().toLowerCase());
+                HomeScreen.currentData.add(item);
+              }
+          }
         setState(() {
+          _isSearching = true;
         });
       }
     }
   }
 
+
+
   _bodyView() {
     int numberOfRow = DataReader.instance.data.length ~/ ITEMS_IN_ROW;
     if (DataReader.instance.data.length % ITEMS_IN_ROW > 0) {
-      numberOfRow ++;
+      numberOfRow++;
     }
+    print("Data Length: "+MongolBookApp.apiData.length.toString());
     return Stack(
       children: [
         Container(
-          width: double.infinity,
-          height: double.infinity,
-          padding: EdgeInsets.all(16),
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemBuilder: (context, index) {
-              return HorizontalItems(index);
-            },
-            itemCount: numberOfRow)
-        ),
-        _isLoading ? LoadingIndicator() : Container()
+            width: double.infinity,
+            height: double.infinity,
+            padding: EdgeInsets.all(16),
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return HorizontalItems(index,HomeScreen.currentData[index]["garqag"]);
+                },
+                itemCount: HomeScreen.currentData.length)),
+        _isLoading ? LoadingIndicator() : Container(
+          child: HomeScreen.currentData.length == 0?Text('No Data Found') : null,
+        )
       ],
     );
   }
@@ -80,54 +113,53 @@ class _HomeScreenState extends State<HomeScreen> {
       decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
       child: SafeArea(
         child: Scaffold(
-          extendBodyBehindAppBar: false,
-          backgroundColor: Theme.of(context).backgroundColor,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            toolbarHeight: 40,
-            centerTitle: true,
-            title: Text(
-              'ZmongolBook',
-              style: Theme.of(context).textTheme.headline1,
+            extendBodyBehindAppBar: false,
+            backgroundColor: Theme.of(context).backgroundColor,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              toolbarHeight: 40,
+              centerTitle: true,
+              title: Text(
+                'ZmongolBook',
+                style: Theme.of(context).textTheme.headline1,
+              ),
+              actions: [
+                GestureDetector(
+                  onTap: ()  {
+                    if (_isSearching) {
+                      _resetData();
+                      return;
+                    }
+                    Navigator.of(context).pushNamed('/search').then((value) {
+                      _search(value);
+                    });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16.0),
+                    child: Icon(
+                      _isSearching ? Icons.search_off : Icons.search,
+                      color: Colors.black,
+                      size: 32,
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/setting');
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16.0),
+                    child: Icon(
+                      Icons.settings,
+                      color: Colors.black,
+                      size: 32,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            actions: [
-              GestureDetector(
-                onTap: () {
-                  if (_isSearching) {
-                    _resetData();
-                    return;
-                  }
-                  Navigator.of(context).pushNamed('/search').then((value) {
-                    _search(value);
-                  });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
-                  child: Icon (
-                    _isSearching ? Icons.search_off : Icons.search,
-                    color: Colors.black,
-                    size: 32,
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pushNamed('/setting');
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
-                  child: Icon (
-                    Icons.settings,
-                    color: Colors.black,
-                    size: 32,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          body: _bodyView()
-        ),
+            body: _bodyView()),
       ),
     );
   }
