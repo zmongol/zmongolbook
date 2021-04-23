@@ -53,6 +53,7 @@ class _MongolBookAppState extends State<MongolBookApp> with WidgetsBindingObserv
       designSize: Size(360, 640),
       allowFontScaling: false,
       builder: () => MaterialApp(
+          debugShowCheckedModeBanner: false,
           theme: _theme(),
           navigatorKey: navigatorKey,
           title: 'Mongol Book App',
