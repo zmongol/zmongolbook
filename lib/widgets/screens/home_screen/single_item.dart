@@ -10,7 +10,7 @@ class SingleItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed('/detail', arguments: {'index': index});
+        Navigator.of(context).pushNamed('/detail', arguments: {'title': title});
       },
       child: Container(
         margin: EdgeInsets.all(4),

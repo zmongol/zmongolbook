@@ -30,6 +30,7 @@ class ApiManager
      Uri uri = Uri.parse("http://18.141.10.41/get_data.php");
     var map = new Map<String, dynamic>();
     map['id'] = id;
+    print("Content id: "+id);
     http.Response response = await http.post(
       uri,
       body: map,

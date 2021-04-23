@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import './page_content.dart';
 
 class DetailScreen extends StatefulWidget {
-  final int index;
+  final String title;
 
 
-  DetailScreen(this.index);
+  DetailScreen(this.title);
 
   @override
   _DetailScreenState createState() => _DetailScreenState();
@@ -31,7 +31,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 child: Icon(Icons.arrow_back,color: Colors.black,),
               ),
             ),
-            body: PageContent(widget.index)
+            body: PageContent(widget.title)
         ),
       ),
     );

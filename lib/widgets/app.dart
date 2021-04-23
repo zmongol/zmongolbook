@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil_init.dart';
 import 'package:mongol_ebook/Helper/AppSetting.dart';
+import 'package:mongol_ebook/widgets/screens/login_screen/login_screen.dart';
+import 'package:mongol_ebook/widgets/screens/login_screen/signup_screen.dart';
 import 'package:mongol_ebook/widgets/screens/search.dart';
 import 'package:mongol_ebook/widgets/widget_index.dart';
 
@@ -68,12 +70,14 @@ class _MongolBookAppState extends State<MongolBookApp> with WidgetsBindingObserv
               return FadePageRoute(child: ScaffoldWrapper(HomeScreen()), settings: settings);
             if (settings.name == '/detail') {
               Map args = settings.arguments as Map;
-              if (args['index'] != null) {
-                return FadePageRoute(child: ScaffoldWrapper(DetailScreen(args['index'])), settings: settings);
+              if (args['title'] != null) {
+                return FadePageRoute(child: ScaffoldWrapper(DetailScreen(args['title'])), settings: settings);
               } else {
                 return null;
               }
             }
+            if(settings.name == '/signup')
+              return FadePageRoute(child: ScaffoldWrapper(SignupPage()), settings: settings);
             if (settings.name == '/search')
               return FadePageRoute(child: ScaffoldWrapper(SearchScreen()), settings: settings);
             if (settings.name == '/setting')
