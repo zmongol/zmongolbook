@@ -38,7 +38,7 @@ dependencies:
   flutter_screenutil: 5.0.0-nullsafety.11
   http: ^0.13.1
   flutter_signin_button: ^2.0.0
-  provider: ^5.0.0
+  fluttertoast: ^8.0.6
 
 
 dev_dependencies:

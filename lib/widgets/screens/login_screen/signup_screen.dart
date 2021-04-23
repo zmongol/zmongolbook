@@ -1,8 +1,16 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:mongol_ebook/Api%20Manager/api_manager.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SignupPage extends StatelessWidget {
+  final usernameText = TextEditingController();
+  final passwordText = TextEditingController();
+  final confirmPasswordText = TextEditingController();
+  final emailText = TextEditingController();
+  final phoneText = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,11 +24,11 @@ class SignupPage extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back_ios,
+          icon: Icon(
+            Icons.arrow_back_ios,
             size: 20,
-            color: Colors.black,),
-
-
+            color: Colors.black,
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -33,133 +41,149 @@ class SignupPage extends StatelessWidget {
             children: <Widget>[
               Column(
                 children: <Widget>[
-                  Text("Sign up",
+                  Text(
+                    "Sign up",
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
-
-                    ),),
-                  SizedBox(height: 20,),
-                  Text("Create an account, It's free ",
-                    style: TextStyle(
-                        fontSize: 15,
-                        color:Colors.grey[700]),)
-
-
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Create an account, It's free ",
+                    style: TextStyle(fontSize: 15, color: Colors.grey[700]),
+                  )
                 ],
               ),
               Column(
-                children: <Widget>[
-                  inputFile(label: "Username"),
-                  inputFile(label: "Email"),
-                  inputFile(label: "Password", obscureText: true),
-                  inputFile(label: "Phone Number ", obscureText: true),
+                children: [
+                  inputFile(label: "Username", textController: usernameText),
+                  inputFile(
+                      label: "Password",
+                      obscureText: true,
+                      textController: passwordText),
+                  inputFile(
+                      label: "Confirm Password",
+                      obscureText: true,
+                      textController: confirmPasswordText),
+                  inputFile(label: "Email", textController: emailText),
+                  inputFile(label: "Phone Number", textController: phoneText),
                 ],
               ),
               Container(
                 padding: EdgeInsets.only(top: 3, left: 3),
-                decoration:
-                BoxDecoration(
+                decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
                     border: Border(
                       bottom: BorderSide(color: Colors.black),
                       top: BorderSide(color: Colors.black),
                       left: BorderSide(color: Colors.black),
                       right: BorderSide(color: Colors.black),
-
-
-
-                    )
-
-                ),
+                    )),
                 child: MaterialButton(
                   minWidth: double.infinity,
                   height: 60,
-                  onPressed: () {},
+                  onPressed: () {
+                    ApiManager.signUp(
+                        usernameText.text,
+                        emailText.text,
+                        passwordText.text,
+                        confirmPasswordText.text,
+                        phoneText.text)
+                        .then((value) {
+                      if (value.contains("inserted")) {
+                        Navigator.of(context).pushReplacementNamed('/login');
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Signup Successful')));
+                      }
+                      else if(value.contains("exists"))
+                      {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('User already exists')));
+                      }
+                      else if (value.contains('not inserted'))
+                      {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Failure')));
+                      }
+                    });
+                  },
                   color: Color(0xff0095FF),
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),
-
                   ),
                   child: Text(
-                    "Sign up", style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18,
-                    color: Colors.white,
-
+                    "Sign up",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
                   ),
-                  ),
-
                 ),
-
-
-
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text("Already have an account?"),
-                  Text(" Login", style:TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18
-                  ),
+                  Text(
+                    " Login",
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
                   )
                 ],
               )
-
-
-
             ],
-
           ),
-
-
         ),
-
       ),
-
     );
   }
-}
 
+  void showToast(String msg) {
+     Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.white,
+        textColor: Colors.black,
+        fontSize: 16.0
+    );
+  }
 
-
-// we will be creating a widget for text field
-Widget inputFile({label, obscureText = false})
-{
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Text(
-        label,
-        style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w400,
-            color:Colors.black87
+  // we will be creating a widget for text field
+  Widget inputFile({label, textController, obscureText = false}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          label,
+          style: TextStyle(
+              fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
         ),
-
-      ),
-      SizedBox(
-        height: 5,
-      ),
-      TextField(
-        obscureText: obscureText,
-        decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 0,
-                horizontal: 10),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Color(0xFFBDBDBD),
+        SizedBox(
+          height: 5,
+        ),
+        TextField(
+          obscureText: obscureText,
+          controller: textController,
+          decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Color(0xFFBDBDBD),
+                ),
               ),
-
-            ),
-            border: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFFBDBDBD))
-            )
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFFBDBDBD)))),
         ),
-      ),
-      SizedBox(height: 10,)
-    ],
-  );
+        SizedBox(
+          height: 10,
+        )
+      ],
+    );
+  }
 }

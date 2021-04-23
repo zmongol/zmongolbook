@@ -62,7 +62,7 @@ class _MongolBookAppState extends State<MongolBookApp> with WidgetsBindingObserv
           initialRoute: '/',
           routes: {
             '/': (BuildContext context) {
-              return HomeScreen();
+              return LoginPage();
             },
           },
           onGenerateRoute: (settings) {
@@ -78,6 +78,8 @@ class _MongolBookAppState extends State<MongolBookApp> with WidgetsBindingObserv
             }
             if(settings.name == '/signup')
               return FadePageRoute(child: ScaffoldWrapper(SignupPage()), settings: settings);
+            if(settings.name == '/login')
+              return FadePageRoute(child: ScaffoldWrapper(LoginPage()), settings: settings);
             if (settings.name == '/search')
               return FadePageRoute(child: ScaffoldWrapper(SearchScreen()), settings: settings);
             if (settings.name == '/setting')
