@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mongol_ebook/Helper/DataReader.dart';
+import 'package:mongol_ebook/widgets/app.dart';
 
 class SingleItem extends StatelessWidget {
   final int index;
@@ -8,9 +9,11 @@ class SingleItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String id='';
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed('/detail', arguments: {'title': title});
+        id = getIdFromTitle(id);
+        Navigator.of(context).pushNamed('/detail', arguments: {'index': id});
       },
       child: Container(
         margin: EdgeInsets.all(4),
@@ -38,5 +41,17 @@ class SingleItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String getIdFromTitle(String id) {
+      for (var item in MongolBookApp.apiData)
+    {
+      print('ID: '+item['id']);
+      if(item['garqag'].toString().toLowerCase().compareTo(title) == 0)
+      {
+       id =item['id'];
+      }
+    }
+    return id;
   }
 }

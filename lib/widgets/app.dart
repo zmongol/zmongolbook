@@ -1,16 +1,21 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/screenutil_init.dart';
 import 'package:mongol_ebook/Helper/AppSetting.dart';
 import 'package:mongol_ebook/widgets/screens/login_screen/login_screen.dart';
 import 'package:mongol_ebook/widgets/screens/login_screen/signup_screen.dart';
 import 'package:mongol_ebook/widgets/screens/search.dart';
 import 'package:mongol_ebook/widgets/widget_index.dart';
+import 'package:uni_links/uni_links.dart';
 
 import 'common/fade_page_route.dart';
 import 'common/scaffold_wrapper.dart';
 
 class MongolBookApp extends StatefulWidget {
   static  List apiData=<dynamic>[];
+
   @override
   _MongolBookAppState createState() => _MongolBookAppState();
 
@@ -18,7 +23,7 @@ class MongolBookApp extends StatefulWidget {
 
 class _MongolBookAppState extends State<MongolBookApp> with WidgetsBindingObserver {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>(debugLabel: 'navigatorKey');
-
+  late StreamSubscription _sub;
   @override
   void initState() {
     WidgetsBinding.instance!.addObserver(this);
@@ -31,6 +36,7 @@ class _MongolBookAppState extends State<MongolBookApp> with WidgetsBindingObserv
     // TODO: implement dispose
     super.dispose();
   }
+
 
 
   _theme() {
@@ -70,8 +76,8 @@ class _MongolBookAppState extends State<MongolBookApp> with WidgetsBindingObserv
               return FadePageRoute(child: ScaffoldWrapper(HomeScreen()), settings: settings);
             if (settings.name == '/detail') {
               Map args = settings.arguments as Map;
-              if (args['title'] != null) {
-                return FadePageRoute(child: ScaffoldWrapper(DetailScreen(args['title'])), settings: settings);
+              if (args['index'] != null) {
+                return FadePageRoute(child: ScaffoldWrapper(DetailScreen(args['index'])), settings: settings);
               } else {
                 return null;
               }

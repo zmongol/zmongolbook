@@ -11,32 +11,27 @@ import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/home_screen.dart';
 
 class PageContent extends StatefulWidget {
-  final String title;
+  final String index;
 
-  PageContent(this.title);
+  PageContent(this.index);
 
   @override
   _PageContentState createState() => _PageContentState();
 }
 
 class _PageContentState extends State<PageContent> {
-      late Future <Article> article;
-      late String id;
+    static late Future <Article> article;
+       String id='';
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    for (var item in MongolBookApp.apiData)
-    {
-      if(item['garqag'].toString().toLowerCase().compareTo(widget.title) == 0)
-      {
-        id=item['id'];
-      }
-    }
+
       setState(() {
-        article=ApiManager.getData(id);
+        article = ApiManager.getData(widget.index);
       });
+
 
 
   }

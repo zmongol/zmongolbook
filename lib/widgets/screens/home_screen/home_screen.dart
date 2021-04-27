@@ -1,16 +1,21 @@
 
+import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mongol_ebook/Api%20Manager/api_manager.dart';
 import 'package:mongol_ebook/Helper/AppConstant.dart';
 import 'package:mongol_ebook/Helper/DataReader.dart';
 import 'package:mongol_ebook/widgets/app.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uni_links/uni_links.dart';
 import 'horizontal_items.dart';
 
 class HomeScreen extends StatefulWidget {
   static  List currentData=<dynamic>[];
+  String deepLink='';
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -18,11 +23,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool _isLoading = true;
   bool _isSearching = false;
+  late StreamSubscription _sub;
 
   @override
   initState() {
     super.initState();
     loadData();
+
   }
 
   loadData() async {
@@ -32,7 +39,9 @@ class _HomeScreenState extends State<HomeScreen> {
         MongolBookApp.apiData=value;
         HomeScreen.currentData=List.from(MongolBookApp.apiData);
         _isLoading=false;
+        initUniLinks();
       });
+
 
 
     });
@@ -45,12 +54,48 @@ class _HomeScreenState extends State<HomeScreen> {
     // });
   }
 
+
+  Future<Null> initUniLinks() async {
+    // Platform messages may fail, so we use a try/catch PlatformException.
+
+    try {
+      String initialLink = await getInitialLink();
+      // Parse the link and warn the user, if it is not correct,
+      // but keep in mind it could be `null`.
+      if(initialLink!=null) {
+        if (initialLink.contains('Zmongol')) {
+          Uri uri=Uri.parse(initialLink);
+          setState(() {
+            print('Initial Deep link : '+uri.toString());
+            print('title: '+ uri.pathSegments[1].toString());
+            widget.deepLink=uri.toString();
+            Navigator.of(context).pushNamed('/detail',
+                arguments: {'index': uri.pathSegments[1].toString()});
+          });
+
+        }
+      }
+      _sub = getUriLinksStream().listen((event) {
+        setState(() {
+          print('Deep link listener: '+event.toString());
+          print('title: '+ event.pathSegments[1].toString());
+          widget.deepLink=event.toString();
+           Navigator.of(context).pushNamed('/detail',
+                arguments: {'index': event.pathSegments[1].toString()});
+        });
+
+      });
+    } on PlatformException {
+      // Handle exception by warning the user their action did not succeed
+      // return?
+    }
+  }
+
   _resetData() {
     setState(() {
       _isSearching = false;
       print("Api Data: "+MongolBookApp.apiData.length.toString());
       HomeScreen.currentData=List.from(MongolBookApp.apiData);
-    //  DataReader.instance.data = DataReader.instance.originalData;
     });
   }
 
@@ -158,9 +203,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ],
+              leading: GestureDetector(
+                onTap: () {
+                  clearData();
+                  Navigator.of(context).pushReplacementNamed('/');
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Icon(
+                    Icons.logout,
+                    color: Colors.black,
+                    size: 32,
+                  ),
+                ),
+              ),
             ),
             body: _bodyView()),
       ),
     );
+  }
+
+  clearData() async{
+   var prefs= await SharedPreferences.getInstance();
+   prefs.clear();
   }
 }

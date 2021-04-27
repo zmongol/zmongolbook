@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:mongol_ebook/widgets/app.dart';
 import './page_content.dart';
+import 'package:share/share.dart';
 
 class DetailScreen extends StatefulWidget {
-  final String title;
+  final String index;
 
 
-  DetailScreen(this.title);
+  DetailScreen(this.index);
 
   @override
   _DetailScreenState createState() => _DetailScreenState();
 }
 
 class _DetailScreenState extends State<DetailScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -26,12 +36,27 @@ class _DetailScreenState extends State<DetailScreen> {
               elevation: 0,
               toolbarHeight: 40,
               centerTitle: true,
+              actions: [
+                GestureDetector(
+                  onTap: () {
+                    Share.share('http://Zmongol/detail/'+widget.index);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16.0),
+                    child: Icon(
+                      Icons.share,
+                      color: Colors.black,
+                      size: 32,
+                    ),
+                  ),
+                ),
+              ],
               leading: GestureDetector(
                 onTap: () {Navigator.pop(context);},
                 child: Icon(Icons.arrow_back,color: Colors.black,),
               ),
             ),
-            body: PageContent(widget.title)
+            body: PageContent(widget.index)
         ),
       ),
     );

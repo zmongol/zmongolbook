@@ -1,11 +1,45 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:mongol_ebook/Api%20Manager/api_manager.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:mongol_ebook/Helper/AppConstant.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uni_links/uni_links.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final usernameText = TextEditingController();
+
   final passwordText = TextEditingController();
+
+  late bool userLogged;
+  late SharedPreferences prefs;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUser().then((value)
+    {
+      if(value)
+      {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Logged In")));
+        Navigator.of(context).pushReplacementNamed('/home');
+      }
+    });
+
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,11 +110,12 @@ class LoginPage extends StatelessWidget {
                           if (value.contains('successful')) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text("LogIn Successful")));
+                            saveUser();
                             Navigator.of(context).pushReplacementNamed('/home');
                           } else if (value.contains('incorrect')) {
                             // showToast('Incorrect username/password');
-                             ScaffoldMessenger.of(context).showSnackBar(
-                                 SnackBar(content: Text("Login failed")));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Login failed")));
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text("Failure")));
@@ -120,7 +155,7 @@ class LoginPage extends StatelessWidget {
                           text: 'SignUp With Phone'),
                       SignInButton(
                         Buttons.FacebookNew,
-                        onPressed: () {},
+                        onPressed: () => fbLogin(context),
                       ),
                     ],
                   ),
@@ -131,6 +166,30 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  saveUser() async{
+   prefs= await SharedPreferences.getInstance();
+   prefs.setBool(LOGGED_IN, true);
+  }
+
+   Future<bool> getUser() async{
+    prefs= await SharedPreferences.getInstance();
+    return  prefs.getBool(LOGGED_IN) ?? false ;
+  }
+
+  Future<void> fbLogin(BuildContext ctx) async {
+    final LoginResult result = await FacebookAuth.instance
+        .login(); // by the fault we request the email and the public profile
+    if (result.status == LoginStatus.success) {
+      // you are logged
+      final AccessToken accessToken = result.accessToken!;
+      print('FB access token: ' + accessToken.token);
+      ScaffoldMessenger.of(ctx).showSnackBar(
+          SnackBar(content: Text("LogIn Successful")));
+      saveUser();
+      Navigator.of(ctx).pushReplacementNamed('/home');
+    }
   }
 
   void showToast(String msg) {
@@ -144,7 +203,6 @@ class LoginPage extends StatelessWidget {
         fontSize: 16.0);
   }
 
-// we will be creating a widget for text field
   Widget inputFile({label, obscureText = false, textController}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Zmongolbook</string>
+    <string name="facebook_app_id">2851087648449554</string>
+    <string name="fb_login_protocol_scheme">fb2851087648449554</string>
+</resources>
