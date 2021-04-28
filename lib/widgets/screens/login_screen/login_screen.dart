@@ -31,8 +31,8 @@ class _LoginPageState extends State<LoginPage> {
     {
       if(value)
       {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Logged In")));
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //     SnackBar(content: Text("Logged In")));
         Navigator.of(context).pushReplacementNamed('/home');
       }
     });

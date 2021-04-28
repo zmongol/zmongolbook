@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:collection';
 
@@ -14,8 +13,10 @@ import 'package:uni_links/uni_links.dart';
 import 'horizontal_items.dart';
 
 class HomeScreen extends StatefulWidget {
-  static  List currentData=<dynamic>[];
-  String deepLink='';
+  static List currentData = <dynamic>[];
+  static int itemsIndex = 0;
+  String deepLink = '';
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -24,36 +25,24 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _isLoading = true;
   bool _isSearching = false;
   late StreamSubscription _sub;
+  int _selectedIndex = 0;
 
   @override
   initState() {
     super.initState();
     loadData();
-
   }
 
   loadData() async {
-    ApiManager.getTitle().then((value)
-    {
+    ApiManager.getTitle().then((value) {
       setState(() {
-        MongolBookApp.apiData=value;
-        HomeScreen.currentData=List.from(MongolBookApp.apiData);
-        _isLoading=false;
+        MongolBookApp.apiData = value;
+        HomeScreen.currentData = List.from(MongolBookApp.apiData);
+        _isLoading = false;
         initUniLinks();
       });
-
-
-
     });
-    // setState(() {
-    //   _isLoading = true;
-    // });
-    // await DataReader.instance.readData();
-    // setState(() {
-    //   _isLoading = false;
-    // });
   }
-
 
   Future<Null> initUniLinks() async {
     // Platform messages may fail, so we use a try/catch PlatformException.
@@ -62,28 +51,26 @@ class _HomeScreenState extends State<HomeScreen> {
       String initialLink = await getInitialLink();
       // Parse the link and warn the user, if it is not correct,
       // but keep in mind it could be `null`.
-      if(initialLink!=null) {
+      if (initialLink != null) {
         if (initialLink.contains('Zmongol')) {
-          Uri uri=Uri.parse(initialLink);
+          Uri uri = Uri.parse(initialLink);
           setState(() {
-            print('Initial Deep link : '+uri.toString());
-            print('title: '+ uri.pathSegments[1].toString());
-            widget.deepLink=uri.toString();
+            print('Initial Deep link : ' + uri.toString());
+            print('title: ' + uri.pathSegments[1].toString());
+            widget.deepLink = uri.toString();
             Navigator.of(context).pushNamed('/detail',
                 arguments: {'index': uri.pathSegments[1].toString()});
           });
-
         }
       }
       _sub = getUriLinksStream().listen((event) {
         setState(() {
-          print('Deep link listener: '+event.toString());
-          print('title: '+ event.pathSegments[1].toString());
-          widget.deepLink=event.toString();
-           Navigator.of(context).pushNamed('/detail',
-                arguments: {'index': event.pathSegments[1].toString()});
+          print('Deep link listener: ' + event.toString());
+          print('title: ' + event.pathSegments[1].toString());
+          widget.deepLink = event.toString();
+          Navigator.of(context).pushNamed('/detail',
+              arguments: {'index': event.pathSegments[1].toString()});
         });
-
       });
     } on PlatformException {
       // Handle exception by warning the user their action did not succeed
@@ -94,8 +81,8 @@ class _HomeScreenState extends State<HomeScreen> {
   _resetData() {
     setState(() {
       _isSearching = false;
-      print("Api Data: "+MongolBookApp.apiData.length.toString());
-      HomeScreen.currentData=List.from(MongolBookApp.apiData);
+      print("Api Data: " + MongolBookApp.apiData.length.toString());
+      HomeScreen.currentData = List.from(MongolBookApp.apiData);
     });
   }
 
@@ -103,21 +90,22 @@ class _HomeScreenState extends State<HomeScreen> {
     if (value is String) {
       if (value.isEmpty) {
         _resetData();
-      }  else {
+      } else {
         // final searchData = DataReader.instance.originalData
         //     .where((element) =>
         //         element['title']!.toLowerCase().contains(value.toLowerCase()))
         //     .toList();
         // DataReader.instance.data = searchData;
         HomeScreen.currentData.clear();
-        for (var item in MongolBookApp.apiData)
-          {
-            if(item['garqag'].toString().toLowerCase().contains(value.toLowerCase()))
-              {
-              //  print("Title: "+item['garqag'].toString().toLowerCase());
-                HomeScreen.currentData.add(item);
-              }
+        for (var item in MongolBookApp.apiData) {
+          if (item['garqag']
+              .toString()
+              .toLowerCase()
+              .contains(value.toLowerCase())) {
+            //  print("Title: "+item['garqag'].toString().toLowerCase());
+            HomeScreen.currentData.add(item);
           }
+        }
         setState(() {
           _isSearching = true;
         });
@@ -125,14 +113,12 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-
-
   _bodyView() {
     int numberOfRow = DataReader.instance.data.length ~/ ITEMS_IN_ROW;
     if (DataReader.instance.data.length % ITEMS_IN_ROW > 0) {
       numberOfRow++;
     }
-    print("Data Length: "+MongolBookApp.apiData.length.toString());
+    print("Data Length: " + MongolBookApp.apiData.length.toString());
     return Stack(
       children: [
         Container(
@@ -140,14 +126,18 @@ class _HomeScreenState extends State<HomeScreen> {
             height: double.infinity,
             padding: EdgeInsets.all(16),
             child: ListView.builder(
-                scrollDirection: Axis.horizontal,
+                scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) {
-                  return HorizontalItems(index,HomeScreen.currentData[index]["garqag"]);
+                  return HorizontalItems(index);
                 },
-                itemCount: HomeScreen.currentData.length)),
-        _isLoading ? LoadingIndicator() : Container(
-          child: HomeScreen.currentData.length == 0?Text('No Data Found') : null,
-        )
+                itemCount: (HomeScreen.currentData.length / 4).toInt())),
+        _isLoading
+            ? LoadingIndicator()
+            : Container(
+                child: HomeScreen.currentData.length == 0
+                    ? Text('No Data Found')
+                    : null,
+              )
       ],
     );
   }
@@ -171,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               actions: [
                 GestureDetector(
-                  onTap: ()  {
+                  onTap: () {
                     if (_isSearching) {
                       _resetData();
                       return;
@@ -218,13 +208,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            body: _bodyView()),
+            body: _selectedIndex == 1 ?_bodyView():Container(),
+            bottomNavigationBar: BottomNavigationBar(
+              items: [
+                BottomNavigationBarItem(icon: Icon(Icons.home), label: 'News'),
+                BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Books'),
+              ],
+              currentIndex: _selectedIndex,
+              selectedItemColor: Colors.amber[800],
+              onTap: _onItemTapped,
+            )),
       ),
     );
   }
 
-  clearData() async{
-   var prefs= await SharedPreferences.getInstance();
-   prefs.clear();
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  clearData() async {
+    var prefs = await SharedPreferences.getInstance();
+    prefs.clear();
   }
 }
