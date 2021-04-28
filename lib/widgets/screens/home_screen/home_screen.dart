@@ -8,6 +8,7 @@ import 'package:mongol_ebook/Helper/AppConstant.dart';
 import 'package:mongol_ebook/Helper/DataReader.dart';
 import 'package:mongol_ebook/widgets/app.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
+import 'package:mongol_ebook/widgets/screens/home_screen/news_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uni_links/uni_links.dart';
 import 'horizontal_items.dart';
@@ -119,27 +120,33 @@ class _HomeScreenState extends State<HomeScreen> {
       numberOfRow++;
     }
     print("Data Length: " + MongolBookApp.apiData.length.toString());
-    return Stack(
-      children: [
-        Container(
-            width: double.infinity,
-            height: double.infinity,
-            padding: EdgeInsets.all(16),
-            child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemBuilder: (context, index) {
-                  return HorizontalItems(index);
-                },
-                itemCount: (HomeScreen.currentData.length / 4).toInt())),
-        _isLoading
-            ? LoadingIndicator()
-            : Container(
-                child: HomeScreen.currentData.length == 0
-                    ? Text('No Data Found')
-                    : null,
-              )
-      ],
-    );
+    if (_selectedIndex == 1) {
+      return Stack(
+        children: [
+          Container(
+              width: double.infinity,
+              height: double.infinity,
+              padding: EdgeInsets.all(16),
+              child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, index) {
+                    return HorizontalItems(index);
+                  },
+                  itemCount: (HomeScreen.currentData.length / 4).toInt())),
+          _isLoading
+              ? LoadingIndicator()
+              : Container(
+                  child: HomeScreen.currentData.length == 0
+                      ? Text('No Data Found')
+                      : null,
+                )
+        ],
+      );
+    } else if (_selectedIndex == 0) {
+      return NewsScreen();
+    } else {
+      return Container();
+    }
   }
 
   @override
@@ -172,11 +179,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(right: 16.0),
-                    child: Icon(
-                      _isSearching ? Icons.search_off : Icons.search,
-                      color: Colors.black,
-                      size: 32,
-                    ),
+                    child: _selectedIndex == 2
+                        ? null
+                        : Icon(
+                            _isSearching ? Icons.search_off : Icons.search,
+                            color: Colors.black,
+                            size: 32,
+                          ),
                   ),
                 ),
                 GestureDetector(
@@ -185,11 +194,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(right: 16.0),
-                    child: Icon(
-                      Icons.settings,
-                      color: Colors.black,
-                      size: 32,
-                    ),
+                    child: _selectedIndex == 2
+                        ? Icon(
+                            Icons.settings,
+                            color: Colors.black,
+                            size: 32,
+                          )
+                        : null,
                   ),
                 ),
               ],
@@ -200,19 +211,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16.0),
-                  child: Icon(
-                    Icons.logout,
-                    color: Colors.black,
-                    size: 32,
-                  ),
+                  child: _selectedIndex == 2
+                      ? Icon(
+                          Icons.logout,
+                          color: Colors.black,
+                          size: 32,
+                        )
+                      : null,
                 ),
               ),
             ),
-            body: _selectedIndex == 1 ?_bodyView():Container(),
+            body: _bodyView(),
             bottomNavigationBar: BottomNavigationBar(
               items: [
                 BottomNavigationBarItem(icon: Icon(Icons.home), label: 'News'),
                 BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Books'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.perm_identity), label: 'Profile')
               ],
               currentIndex: _selectedIndex,
               selectedItemColor: Colors.amber[800],
