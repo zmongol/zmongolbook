@@ -17,6 +17,7 @@ class HomeScreen extends StatefulWidget {
   static List currentData = <dynamic>[];
   static int itemsIndex = 0;
   String deepLink = '';
+  static bool isSearching = false;
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -24,10 +25,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool _isLoading = true;
-  bool _isSearching = false;
+
   late StreamSubscription _sub;
   int _selectedIndex = 0;
-
   @override
   initState() {
     super.initState();
@@ -81,72 +81,55 @@ class _HomeScreenState extends State<HomeScreen> {
 
   _resetData() {
     setState(() {
-      _isSearching = false;
+      HomeScreen.isSearching = false;
       print("Api Data: " + MongolBookApp.apiData.length.toString());
       HomeScreen.currentData = List.from(MongolBookApp.apiData);
     });
   }
 
-  _search(dynamic value) {
-    if (value is String) {
-      if (value.isEmpty) {
-        _resetData();
-      } else {
-        // final searchData = DataReader.instance.originalData
-        //     .where((element) =>
-        //         element['title']!.toLowerCase().contains(value.toLowerCase()))
-        //     .toList();
-        // DataReader.instance.data = searchData;
-        HomeScreen.currentData.clear();
-        for (var item in MongolBookApp.apiData) {
-          if (item['garqag']
-              .toString()
-              .toLowerCase()
-              .contains(value.toLowerCase())) {
-            //  print("Title: "+item['garqag'].toString().toLowerCase());
-            HomeScreen.currentData.add(item);
-          }
-        }
-        setState(() {
-          _isSearching = true;
-        });
-      }
-    }
-  }
 
   _bodyView() {
-    int numberOfRow = DataReader.instance.data.length ~/ ITEMS_IN_ROW;
-    if (DataReader.instance.data.length % ITEMS_IN_ROW > 0) {
-      numberOfRow++;
+    // int numberOfRow = DataReader.instance.data.length ~/ ITEMS_IN_ROW;
+    // if (DataReader.instance.data.length % ITEMS_IN_ROW > 0) {
+    //   numberOfRow++;
+    // }
+
+    switch(_selectedIndex)
+    {
+      case 0:
+        {
+          return NewsScreen();
+        }
+      case 1:
+        {
+          return Stack(
+            children: [
+              Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  padding: EdgeInsets.all(16),
+                  child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemBuilder: (context, index) {
+                        return HorizontalItems(index);
+                      },
+                      itemCount: (HomeScreen.currentData.length / 4).toInt())),
+              _isLoading
+                  ? LoadingIndicator()
+                  : Container(
+                child: HomeScreen.currentData.length == 0
+                    ? Text('No Data Found')
+                    : null,
+              )
+            ],
+          );
+        }
+      default:
+        {
+          return Container();
+        }
     }
-    print("Data Length: " + MongolBookApp.apiData.length.toString());
-    if (_selectedIndex == 1) {
-      return Stack(
-        children: [
-          Container(
-              width: double.infinity,
-              height: double.infinity,
-              padding: EdgeInsets.all(16),
-              child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) {
-                    return HorizontalItems(index);
-                  },
-                  itemCount: (HomeScreen.currentData.length / 4).toInt())),
-          _isLoading
-              ? LoadingIndicator()
-              : Container(
-                  child: HomeScreen.currentData.length == 0
-                      ? Text('No Data Found')
-                      : null,
-                )
-        ],
-      );
-    } else if (_selectedIndex == 0) {
-      return NewsScreen();
-    } else {
-      return Container();
-    }
+
   }
 
   @override
@@ -169,20 +152,18 @@ class _HomeScreenState extends State<HomeScreen> {
               actions: [
                 GestureDetector(
                   onTap: () {
-                    if (_isSearching) {
-                      _resetData();
-                      return;
-                    }
-                    Navigator.of(context).pushNamed('/search').then((value) {
-                      _search(value);
-                    });
+                    // if (HomeScreen.isSearching) {
+                    //   _resetData();
+                    //   return;
+                    // }
+                     Navigator.of(context).pushNamed('/search');
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(right: 16.0),
                     child: _selectedIndex == 2
                         ? null
                         : Icon(
-                            _isSearching ? Icons.search_off : Icons.search,
+                            Icons.search,
                             color: Colors.black,
                             size: 32,
                           ),
@@ -230,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: Icon(Icons.perm_identity), label: 'Profile')
               ],
               currentIndex: _selectedIndex,
-              selectedItemColor: Colors.amber[800],
+              selectedItemColor: Colors.green[500],
               onTap: _onItemTapped,
             )),
       ),
