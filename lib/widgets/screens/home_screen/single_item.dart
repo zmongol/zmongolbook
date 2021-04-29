@@ -37,8 +37,8 @@ class SingleItem extends StatelessWidget {
                     //DataReader.instance.getTitleByIndex(index),
                     style: Theme.of(context).textTheme.headline2,
                     textAlign: TextAlign.left,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                    //maxLines: 1,
+                   // overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
@@ -51,7 +51,7 @@ class SingleItem extends StatelessWidget {
 
   String getIdFromTitle(String id) {
     for (var item in MongolBookApp.apiData) {
-      print('ID: ' + item['id']);
+      //print('ID: ' + item['id']);
       if (item['garqag'].toString().toLowerCase().compareTo(title) == 0) {
         id = item['id'];
       }

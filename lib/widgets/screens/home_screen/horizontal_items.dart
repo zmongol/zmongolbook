@@ -38,7 +38,7 @@ class HorizontalItems extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemCount: 4,
           itemBuilder: (context, colIndex) {
-            return SingleItem(colIndex, HomeScreen.currentData[rowIndex * 4 + colIndex]["garqag"]);
+            return SingleItem(colIndex,HomeScreen.currentData[rowIndex * 4 + colIndex]["garqag"]);
             //rowIndex * ITEMS_IN_ROW + colIndex
           },
         ),

@@ -57,7 +57,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   GestureDetector(
                     onTap: () {
                       String text = kbCtrl.textEditingController.text;
-                      Navigator.pop(context, text);
+                      Navigator.of(context).pushReplacementNamed('/searchResult',arguments: {'value':text});
+                      //Navigator.pop(context, text);
                       kbCtrl.textEditingController.text = '';
                     },
                     child: Padding(
