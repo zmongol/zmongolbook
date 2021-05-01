@@ -92,5 +92,25 @@ class ApiManager
 
   }
 
+  static Future<List<dynamic>> getCategoryTitle() async
+  {
+    HttpClient client = new HttpClient();
+
+    var requestUrl = "http://13.229.116.197/category_table.php";
+
+    HttpClientRequest request = await client.getUrl(Uri.parse(requestUrl));
+
+    HttpClientResponse response = await request.close();
+
+    String reply = await response.transform(utf8.decoder).join();
+
+    print("Response: "+reply.toString());
+    List<dynamic> responseJson = json.decode(reply);
+
+    print("JsonResponse: "+responseJson.toString());
+    return responseJson;
+
+  }
+
 
 }

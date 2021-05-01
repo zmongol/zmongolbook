@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   initState() {
     super.initState();
-    loadData();
+
   }
 
   loadData() async {
@@ -102,6 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       case 1:
         {
+          loadData();
           return Stack(
             children: [
               Container(

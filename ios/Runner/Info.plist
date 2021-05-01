@@ -55,13 +55,11 @@
         <array>
           <string>fb2851087648449554</string>
           <string>http</string>
-
         </array>
          <key>CFBundleTypeRole</key>
               <string>Editor</string>
               <key>CFBundleURLName</key>
               <string>Zmongol</string>
-
       </dict>
     </array>
     <key>FacebookAppID</key>

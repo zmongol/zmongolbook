@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mongol/mongol.dart';
+import 'package:mongol_ebook/Api%20Manager/api_manager.dart';
 import 'package:mongol_ebook/Helper/AppSetting.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/category_item.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/home_screen.dart';
@@ -8,7 +9,32 @@ import 'package:mongol_ebook/widgets/screens/home_screen/single_item.dart';
 
 import 'category_title.dart';
 
-class NewsScreen extends StatelessWidget {
+class NewsScreen extends StatefulWidget {
+
+  @override
+  _NewsScreenState createState() => _NewsScreenState();
+}
+
+class _NewsScreenState extends State<NewsScreen> {
+  String categorySelected='Category 0';
+  static List categoryTitles = <dynamic>[];
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadInitialData();
+  }
+
+  loadInitialData() async {
+    ApiManager.getCategoryTitle().then((value) {
+      setState(() {
+        categoryTitles=value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
@@ -53,8 +79,7 @@ class NewsScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      'Category Title',
-                      //DataReader.instance.getTitleByIndex(index),
+                      categorySelected,
                       style: Theme.of(context).textTheme.headline1,
                       textAlign: TextAlign.center,
                       maxLines: 1,
@@ -88,14 +113,27 @@ class NewsScreen extends StatelessWidget {
             child: ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              itemCount: 14,
+              itemCount: categoryTitles.length,
               itemBuilder: (context, index) {
-                return CategoryTitle(index);
+                return InkWell(
+                  onTap: ()
+                    {
+                      setCategory(categoryTitles[index]['category']);
+                    },
+                    child: CategoryTitle(categoryTitles[index]['category']));
               },
             ),
           ),
         ],
       ),
     );
+  }
+
+  setCategory(String s)
+  {
+    setState(() {
+      categorySelected=s;
+    });
+
   }
 }

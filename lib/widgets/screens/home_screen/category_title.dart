@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CategoryTitle extends StatelessWidget {
-  int categoryTitle;
+  String categoryTitle;
   CategoryTitle(this.categoryTitle);
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class CategoryTitle extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            'Category '+categoryTitle.toString(),
+            'Category '+categoryTitle,
             style: Theme.of(context).textTheme.headline1,
             textAlign: TextAlign.center,
             maxLines: 1,
