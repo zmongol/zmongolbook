@@ -5,7 +5,7 @@ const String CONTENT_FONT_FAMILY = 'CONTENT_FONT_FAMILY';
 const String LOGGED_IN = 'LOGGED_IN';
 const double MIN_FONT_SIZE = 20;
 const double MAX_FONT_SIZE = 40;
-const String BASE_URL="http://18.141.10.41/";
+const String BASE_URL="http://13.229.116.197/";
 
 const int ITEMS_IN_ROW = 30;
 

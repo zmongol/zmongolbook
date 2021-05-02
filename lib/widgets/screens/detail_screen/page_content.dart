@@ -32,8 +32,6 @@ class _PageContentState extends State<PageContent> {
         article = ApiManager.getData(widget.index);
       });
 
-
-
   }
 
   @override

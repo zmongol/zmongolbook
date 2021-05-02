@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:http/http.dart' as http ;
 import 'package:mongol_ebook/Helper/AppConstant.dart';
 import 'package:mongol_ebook/Model/article.dart';
+import 'package:mongol_ebook/Model/category_article.dart';
+import 'package:mongol_ebook/Model/category_article_response.dart';
 
 class ApiManager
 {
@@ -96,7 +98,7 @@ class ApiManager
   {
     HttpClient client = new HttpClient();
 
-    var requestUrl = "http://13.229.116.197/category_table.php";
+    var requestUrl = BASE_URL+"category_table.php";
 
     HttpClientRequest request = await client.getUrl(Uri.parse(requestUrl));
 
@@ -111,6 +113,35 @@ class ApiManager
     return responseJson;
 
   }
+
+  static Future<List<CategoryArticle>> getCategoryArticles (String category,String offset) async
+  {
+    List<CategoryArticle> responseModelList=<CategoryArticle>[];
+    Uri uri = Uri.parse(BASE_URL+"get_category.php");
+    var map = new Map<String, dynamic>();
+    map['category'] = category;
+    map['offset'] = offset;
+
+    http.Response response = await http.post(
+      uri,
+      body: map,
+    );
+
+    final reply = await response.body.toString();
+
+    print("Response: "+reply.toString());
+    final List parsed = json.decode(reply);
+    if(parsed == null)
+      {
+        return responseModelList;
+      }
+     responseModelList = new CategoryArticleResponse.fromJson(parsed).list;
+
+    print("JsonResponse: "+parsed.toString());
+    return responseModelList;
+
+  }
+
 
 
 }

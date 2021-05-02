@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Helper/DataReader.dart';
 import 'package:mongol_ebook/widgets/app.dart';
 
@@ -36,7 +37,7 @@ class SingleItem extends StatelessWidget {
                     title,
                     //DataReader.instance.getTitleByIndex(index),
                     style: Theme.of(context).textTheme.headline2,
-                    textAlign: TextAlign.left,
+                    textAlign: TextAlign.right,
                     //maxLines: 1,
                    // overflow: TextOverflow.ellipsis,
                   ),

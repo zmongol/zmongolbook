@@ -2,35 +2,65 @@ import 'package:flutter/material.dart';
 import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Api%20Manager/api_manager.dart';
 import 'package:mongol_ebook/Helper/AppSetting.dart';
-import 'package:mongol_ebook/widgets/screens/home_screen/category_item.dart';
+import 'package:mongol_ebook/Model/category_article.dart';
+import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
+import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/category_item.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/home_screen.dart';
-import 'package:mongol_ebook/widgets/screens/home_screen/news_top_item.dart';
+import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/news_top_item.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/single_item.dart';
 
 import 'category_title.dart';
 
 class NewsScreen extends StatefulWidget {
-
   @override
   _NewsScreenState createState() => _NewsScreenState();
 }
 
 class _NewsScreenState extends State<NewsScreen> {
-  String categorySelected='Category 0';
+  String categorySelected = 'Category';
   static List categoryTitles = <dynamic>[];
-
+  static List categoryArticles = <CategoryArticle>[];
+  int offset = 0;
+  late ScrollController _controller;
+  bool _isLoading = true;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadInitialData();
+    _controller = ScrollController();
+    _controller.addListener(_scrollListener);
+    loadCategories();
   }
 
-  loadInitialData() async {
+  _scrollListener() {
+    if (_controller.offset >= _controller.position.maxScrollExtent &&
+        !_controller.position.outOfRange) {
+      loadArticles();
+    }
+  }
+
+  loadCategories() async {
     ApiManager.getCategoryTitle().then((value) {
       setState(() {
-        categoryTitles=value;
+        categoryTitles = value;
+        categorySelected = categoryTitles[0]['category'];
+        loadArticles();
+      });
+    });
+  }
+
+  loadArticles() async {
+    ApiManager.getCategoryArticles(categorySelected, offset.toString())
+        .then((value) {
+      setState(() {
+        offset = offset + 50;
+        _isLoading=false;
+        // categoryArticles.addAll(value.map((e) {
+        //   return e;
+        // }));
+       // categoryArticles=value;
+        categoryArticles.addAll(value);
       });
     });
   }
@@ -88,18 +118,26 @@ class _NewsScreenState extends State<NewsScreen> {
                   ),
                 ),
               ),
-              Container(
+              _isLoading?LoadingIndicator():Container(
                 constraints: new BoxConstraints(
-                  maxWidth: deviceWidth*0.8,
+                  maxWidth: deviceWidth * 0.8,
                   minHeight: 35.0,
                   maxHeight: 300.0,
                 ),
                 child: ListView.builder(
+                  controller: _controller,
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  itemCount: 14,
+                  itemCount: categoryArticles.length,
                   itemBuilder: (context, index) {
-                    return CategoryItem(index);
+                    return InkWell(
+                        onTap: () {
+                          Navigator.of(context).pushNamed('/detail',
+                              arguments: {
+                                'index': categoryArticles[index].id
+                              });
+                        },
+                        child: CategoryItem(categoryArticles[index].title));
                   },
                 ),
               ),
@@ -116,8 +154,7 @@ class _NewsScreenState extends State<NewsScreen> {
               itemCount: categoryTitles.length,
               itemBuilder: (context, index) {
                 return InkWell(
-                  onTap: ()
-                    {
+                    onTap: () {
                       setCategory(categoryTitles[index]['category']);
                     },
                     child: CategoryTitle(categoryTitles[index]['category']));
@@ -129,11 +166,13 @@ class _NewsScreenState extends State<NewsScreen> {
     );
   }
 
-  setCategory(String s)
-  {
+  setCategory(String s) {
     setState(() {
-      categorySelected=s;
+      categorySelected = s;
+      offset = 0;
+      categoryArticles.clear();
+      _isLoading=true;
+      loadArticles();
     });
-
   }
 }

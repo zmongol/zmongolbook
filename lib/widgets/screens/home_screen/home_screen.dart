@@ -8,7 +8,7 @@ import 'package:mongol_ebook/Helper/AppConstant.dart';
 import 'package:mongol_ebook/Helper/DataReader.dart';
 import 'package:mongol_ebook/widgets/app.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
-import 'package:mongol_ebook/widgets/screens/home_screen/news_screen.dart';
+import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/news_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uni_links/uni_links.dart';
 import 'horizontal_items.dart';
@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   initState() {
     super.initState();
-
+    initUniLinks();
   }
 
   loadData() async {
@@ -40,7 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
         MongolBookApp.apiData = value;
         HomeScreen.currentData = List.from(MongolBookApp.apiData);
         _isLoading = false;
-        initUniLinks();
       });
     });
   }
@@ -157,6 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     //   _resetData();
                     //   return;
                     // }
+                    HomeScreen.itemsIndex=_selectedIndex;
                      Navigator.of(context).pushNamed('/search');
                   },
                   child: Padding(

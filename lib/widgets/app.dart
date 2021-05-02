@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/screenutil_init.dart';
 import 'package:mongol_ebook/Helper/AppSetting.dart';
+import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/search_screen_news.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/search_screen.dart';
 import 'package:mongol_ebook/widgets/screens/login_screen/login_screen.dart';
 import 'package:mongol_ebook/widgets/screens/login_screen/signup_screen.dart';
@@ -123,6 +124,12 @@ class _MongolBookAppState extends State<MongolBookApp>
                 Map args = settings.arguments as Map;
                 return FadePageRoute(
                     child: ScaffoldWrapper(SearchResultScreen(args['value'])),
+                    settings: settings);
+              }
+              if (settings.name == '/categoriesSearchResult') {
+                Map args = settings.arguments as Map;
+                return FadePageRoute(
+                    child: ScaffoldWrapper(CategoriesSearchResultScreen(args['category'])),
                     settings: settings);
               }
               if (settings.name == '/setting')

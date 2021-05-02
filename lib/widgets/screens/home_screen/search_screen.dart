@@ -5,6 +5,7 @@ import 'package:mongol_ebook/widgets/screens/home_screen/single_item.dart';
 
 class SearchResultScreen extends StatefulWidget {
   final dynamic value;
+
   SearchResultScreen(this.value);
 
   @override
@@ -12,11 +13,10 @@ class SearchResultScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchResultScreen> {
-
   List currentData = <dynamic>[];
-   bool _isLoading = true;
+  bool _isLoading = true;
 
-   @override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -26,9 +26,9 @@ class _SearchScreenState extends State<SearchResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
-      child: SafeArea(
-        child: Scaffold(
+        decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+        child: SafeArea(
+          child: Scaffold(
             extendBodyBehindAppBar: false,
             backgroundColor: Theme.of(context).backgroundColor,
             appBar: AppBar(
@@ -47,7 +47,8 @@ class _SearchScreenState extends State<SearchResultScreen> {
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(right: 16.0),
-                    child: Icon(Icons.search_off,
+                    child: Icon(
+                      Icons.search_off,
                       color: Colors.black,
                       size: 32,
                     ),
@@ -56,17 +57,17 @@ class _SearchScreenState extends State<SearchResultScreen> {
               ],
             ),
             body: _bodyView(),
-      ),
-    ));
+          ),
+        ));
   }
 
-  _bodyView()
-  {
+  _bodyView() {
     return Stack(
       children: [
         Container(
-            width: double.infinity,
-            height: double.infinity,
+            // width: double.infinity,
+            //  height: double.infinity,
+            constraints: BoxConstraints(maxHeight: 500),
             padding: EdgeInsets.all(16),
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -77,32 +78,34 @@ class _SearchScreenState extends State<SearchResultScreen> {
         _isLoading
             ? LoadingIndicator()
             : Container(
-          child: currentData.length == 0
-              ? Text('No Data Found')
-              : null,
-        )
+                child: currentData.length == 0
+                    ? Center(child: Text('No Data Found'))
+                    : null,
+              )
       ],
     );
   }
 
-   _search(dynamic value) {
-     if (value is String) {
-       if (value.isEmpty) {
-        currentData.length=0;
-       } else {
-         for (var item in MongolBookApp.apiData) {
-           if (item['garqag']
-               .toString()
-               .toLowerCase()
-               .contains(value.toLowerCase())) {
-             print("Title: "+item['garqag'].toString().toLowerCase());
-             currentData.add(item);
-           }
-         }
-         setState(() {
-           _isLoading=false;
-         });
-       }
-     }
-   }
+  _search(dynamic value) {
+    if (value is String) {
+      if (value.isEmpty) {
+        setState(() {
+          _isLoading = false;
+        });
+      } else {
+        for (var item in MongolBookApp.apiData) {
+          if (item['garqag']
+              .toString()
+              .toLowerCase()
+              .contains(value.toLowerCase())) {
+            print("Title: " + item['garqag'].toString().toLowerCase());
+            currentData.add(item);
+          }
+        }
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
 }
