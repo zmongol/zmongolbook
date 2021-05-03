@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/screenutil_init.dart';
 import 'package:mongol_ebook/Helper/AppSetting.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/search_screen_news.dart';
@@ -10,7 +12,6 @@ import 'package:mongol_ebook/widgets/screens/login_screen/login_screen.dart';
 import 'package:mongol_ebook/widgets/screens/login_screen/signup_screen.dart';
 import 'package:mongol_ebook/widgets/screens/search.dart';
 import 'package:mongol_ebook/widgets/widget_index.dart';
-import 'package:uni_links/uni_links.dart';
 
 import 'common/fade_page_route.dart';
 import 'common/scaffold_wrapper.dart';
@@ -27,12 +28,57 @@ class _MongolBookAppState extends State<MongolBookApp>
   GlobalKey<NavigatorState> navigatorKey =
       GlobalKey<NavigatorState>(debugLabel: 'navigatorKey');
   late StreamSubscription _sub;
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  static const AndroidNotificationChannel channel = AndroidNotificationChannel(
+    'zmongolbook', // id
+    'High Importance Notifications', // title
+    'This channel is used for new articles notifications.', // description
+    importance: Importance.max,
+  );
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
 
   @override
-  void initState() {
+   void initState() {
     WidgetsBinding.instance!.addObserver(this);
     super.initState();
     AppSetting.instance.get();
+     showForegroundNotification();
+  }
+
+  Future showForegroundNotification() async {
+
+
+    FlutterLocalNotificationsPlugin flp = FlutterLocalNotificationsPlugin();
+    var android = AndroidInitializationSettings('@mipmap/ic_launcher');
+    var iOS = IOSInitializationSettings();
+    var initSetttings = InitializationSettings(android: android, iOS: iOS);
+    flp.initialize(initSetttings);
+
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("Firebase: "+message.notification!.body.toString());
+      RemoteNotification notification = message.notification!;
+      AndroidNotification android = message.notification!.android!;
+      if (notification != null && android != null) {
+        showNotification(message.notification!.body.toString(), flp);
+      }
+    });
+  }
+
+  void showNotification( v, flp) async {
+    var android = AndroidNotificationDetails(
+        'zmongolbook', 'channel NAME', 'CHANNEL DESCRIPTION',
+        priority: Priority.high, importance: Importance.max);
+    var platform = NotificationDetails(android: android);
+    await flp.show(0, 'Zmongolbook', '$v', platform,
+        payload: 'VIS \n $v');
   }
 
   @override

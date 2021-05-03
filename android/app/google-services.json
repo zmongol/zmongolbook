@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "23366589007",
+    "firebase_url": "https://zmongolbook-9f89a-default-rtdb.firebaseio.com",
+    "project_id": "zmongolbook-9f89a",
+    "storage_bucket": "zmongolbook-9f89a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:23366589007:android:1e58b46aad9ef57862e83a",
+        "android_client_info": {
+          "package_name": "zmongol.zmongolbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "23366589007-8opshovu0me8ht3f8j4vask4b6nnr802.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqrZN3-eURmDd2h9WDcwtQ9ECeU15iNXg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "23366589007-8opshovu0me8ht3f8j4vask4b6nnr802.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

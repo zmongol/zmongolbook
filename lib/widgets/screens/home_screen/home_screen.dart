@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:collection';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mongol_ebook/Api%20Manager/api_manager.dart';
 import 'package:mongol_ebook/Helper/AppConstant.dart';
 import 'package:mongol_ebook/Helper/DataReader.dart';
@@ -28,6 +30,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late StreamSubscription _sub;
   int _selectedIndex = 0;
+  static const AndroidNotificationChannel channel = AndroidNotificationChannel(
+    'zmongolbook', // id
+    'High Importance Notifications', // title
+    'This channel is used for new articles notifications.', // description
+    importance: Importance.max,
+  );
   @override
   initState() {
     super.initState();
