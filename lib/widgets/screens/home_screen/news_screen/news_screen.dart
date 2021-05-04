@@ -20,9 +20,11 @@ class _NewsScreenState extends State<NewsScreen> {
   String categorySelected = 'Category';
   static List categoryTitles = <dynamic>[];
   static List categoryArticles = <CategoryArticle>[];
+  static List topArticles = <dynamic>[];
   int offset = 0;
   late ScrollController _controller;
   bool _isLoading = true;
+  bool _isLoading2 = true;
 
   @override
   void initState() {
@@ -30,7 +32,17 @@ class _NewsScreenState extends State<NewsScreen> {
     super.initState();
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
+    getTopArticles();
     loadCategories();
+  }
+
+  getTopArticles() async {
+    ApiManager.getTopArticles().then((value) {
+      setState(() {
+        _isLoading2=false;
+        topArticles = List.from(value);
+      });
+    });
   }
 
   _scrollListener() {
@@ -55,11 +67,11 @@ class _NewsScreenState extends State<NewsScreen> {
         .then((value) {
       setState(() {
         offset = offset + 50;
-        _isLoading=false;
+        _isLoading = false;
         // categoryArticles.addAll(value.map((e) {
         //   return e;
         // }));
-       // categoryArticles=value;
+        // categoryArticles=value;
         categoryArticles.addAll(value);
       });
     });
@@ -73,17 +85,33 @@ class _NewsScreenState extends State<NewsScreen> {
         children: [
           Row(
             children: [
-              Image.network("https://picsum.photos/250?image=9"),
-              Container(
-                margin: EdgeInsets.fromLTRB(8, 8, 0, 8),
-                child: RotatedBox(
-                  quarterTurns: 1,
-                  child: Text(
-                    'Mongol Title',
-                    style: Theme.of(context).textTheme.headline2,
-                    textAlign: TextAlign.left,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+              Image.network(
+                "https://picsum.photos/250?image=9",
+                width: deviceWidth * 0.5,
+              ),
+              Expanded(
+                child: Container(
+                  height: 300,
+                  width: deviceWidth * 0.4,
+
+                  margin: EdgeInsets.fromLTRB(8, 8, 0, 8),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: _isLoading2
+                        ? LoadingIndicator(): InkWell(
+                      onTap: ()
+                      {
+                        Navigator.of(context).pushNamed('/detail',
+                            arguments: {'index': topArticles[0]['id']});
+                      },
+                      child: MongolText(
+                        topArticles.isNotEmpty
+                            ? topArticles[0]['tittle']
+                            : 'Top Article',
+                        style: Theme.of(context).textTheme.headline2,
+                        softWrap: true,
+                      ),
+                    ),
                   ),
                 ),
               )
@@ -91,9 +119,32 @@ class _NewsScreenState extends State<NewsScreen> {
           ),
           Row(
             children: [
-              NewsTopItem(deviceWidth),
-              NewsTopItem(deviceWidth),
-              NewsTopItem(deviceWidth)
+              Expanded(
+                child: Container(
+                  height: 300,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (ctx, index) {
+                      return _isLoading2
+                          ? Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            child: LoadingIndicator(),
+                          ):InkWell(
+                          onTap: () {
+                            Navigator.of(context).pushNamed('/detail',
+                                arguments: {'index': topArticles[index + 1]['id']});
+                          },
+                          child: NewsTopItem(
+                              deviceWidth,
+                              topArticles.isNotEmpty
+                                  ? topArticles[index + 1]['tittle']
+                                  : "Top Articles"));
+                    },
+                    itemCount: 3,
+                  ),
+                ),
+              ),
             ],
           ),
           Row(
@@ -118,29 +169,32 @@ class _NewsScreenState extends State<NewsScreen> {
                   ),
                 ),
               ),
-              _isLoading?LoadingIndicator():Container(
-                constraints: new BoxConstraints(
-                  maxWidth: deviceWidth * 0.8,
-                  minHeight: 35.0,
-                  maxHeight: 300.0,
-                ),
-                child: ListView.builder(
-                  controller: _controller,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: categoryArticles.length,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                        onTap: () {
-                          Navigator.of(context).pushNamed('/detail',
-                              arguments: {
-                                'index': categoryArticles[index].id
-                              });
+              _isLoading
+                  ? LoadingIndicator()
+                  : Container(
+                      constraints: new BoxConstraints(
+                        maxWidth: deviceWidth * 0.8,
+                        minHeight: 35.0,
+                        maxHeight: 300.0,
+                      ),
+                      child: ListView.builder(
+                        controller: _controller,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: categoryArticles.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                              onTap: () {
+                                Navigator.of(context).pushNamed('/detail',
+                                    arguments: {
+                                      'index': categoryArticles[index].id
+                                    });
+                              },
+                              child:
+                                  CategoryItem(categoryArticles[index].title));
                         },
-                        child: CategoryItem(categoryArticles[index].title));
-                  },
-                ),
-              ),
+                      ),
+                    ),
             ],
           ),
           Container(
@@ -171,7 +225,7 @@ class _NewsScreenState extends State<NewsScreen> {
       categorySelected = s;
       offset = 0;
       categoryArticles.clear();
-      _isLoading=true;
+      _isLoading = true;
       loadArticles();
     });
   }

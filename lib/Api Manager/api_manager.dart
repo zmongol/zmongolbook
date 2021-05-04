@@ -52,7 +52,7 @@ class ApiManager
 
   static Future<String> signUp(String username,String email,String pass,String confirmPass,String mobileNo) async
   {
-    Uri uri = Uri.parse(BASE_URL+"signup.php");
+     Uri uri = Uri.parse(BASE_URL+"signup.php");/**/
     var map = new Map<String, dynamic>();
     map['username'] = username;
     map['email'] = email;
@@ -139,6 +139,26 @@ class ApiManager
 
     print("JsonResponse: "+parsed.toString());
     return responseModelList;
+
+  }
+
+  static Future<List<dynamic>> getTopArticles() async
+  {
+    HttpClient client = new HttpClient();
+
+    var requestUrl = BASE_URL+"priority.php";
+
+    HttpClientRequest request = await client.getUrl(Uri.parse(requestUrl));
+
+    HttpClientResponse response = await request.close();
+
+    String reply = await response.transform(utf8.decoder).join();
+
+    print("Response: "+reply.toString());
+    List<dynamic> responseJson = json.decode(reply);
+
+    print("JsonResponse: "+responseJson.toString());
+    return responseJson;
 
   }
 
