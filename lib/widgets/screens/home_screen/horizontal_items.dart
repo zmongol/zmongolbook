@@ -32,6 +32,7 @@ class HorizontalItems extends StatelessWidget {
         constraints: new BoxConstraints(
           minHeight: 35.0,
           maxHeight: 300.0,
+          maxWidth: double.infinity,
         ),
         child: ListView.builder(
           shrinkWrap: true,

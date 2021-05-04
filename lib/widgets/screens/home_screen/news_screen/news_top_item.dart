@@ -12,7 +12,7 @@ class NewsTopItem extends StatelessWidget {
       height: 180,
       width: deviceWidth*0.33,
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.black54),
+        border: Border.all(color: Colors.grey),
       ),
       margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
       child: Padding(

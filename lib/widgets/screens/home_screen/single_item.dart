@@ -7,10 +7,12 @@ class SingleItem extends StatelessWidget {
   final int index;
   String title;
 
+
   SingleItem(this.index, this.title);
 
   @override
   Widget build(BuildContext context) {
+    var deviceWidth = MediaQuery.of(context).size.width;
     String id = '';
     return GestureDetector(
       onTap: () {
@@ -26,24 +28,21 @@ class SingleItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(4)),
         child: Container(
           margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
-          child: RotatedBox(
-            quarterTurns: 1,
-            child: Row(
-              children: [
-                Image.network("https://picsum.photos/250?image=9"),
-                SizedBox(width: 5),
-                Expanded(
-                  child: Text(
-                    title,
-                    //DataReader.instance.getTitleByIndex(index),
-                    style: Theme.of(context).textTheme.headline2,
-                    textAlign: TextAlign.right,
-                    //maxLines: 1,
-                   // overflow: TextOverflow.ellipsis,
-                  ),
+          child: Column(
+            children: [
+              Image.network("https://picsum.photos/250?image=9",height: 50,width: 100,),
+              SizedBox(height: 5),
+              Expanded(
+                child: MongolText(
+                  title,
+                  //DataReader.instance.getTitleByIndex(index),
+                  style: Theme.of(context).textTheme.headline2,
+                 // textAlign: MongolTextAlign.justify,
+                  //maxLines: 1,
+                 // overflow: TextOverflow.ellipsis,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
