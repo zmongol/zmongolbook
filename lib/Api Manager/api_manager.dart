@@ -162,6 +162,25 @@ class ApiManager
 
   }
 
+  static Future<String> sendToken (String username,String fcmToken) async
+  {
+    Uri uri = Uri.parse(BASE_URL+"fcm_token.php");
+    var map = new Map<String, dynamic>();
+    map['username'] = username;
+    map['token'] = fcmToken;
+
+    http.Response response = await http.post(
+      uri,
+      body: map,
+    );
+
+    final reply = await response.body.toString();
+
+    print("Response: "+reply.toString());
+
+    return reply;
+
+  }
 
 
 }

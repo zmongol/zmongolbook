@@ -27,7 +27,6 @@ class _MongolBookAppState extends State<MongolBookApp>
     with WidgetsBindingObserver {
   GlobalKey<NavigatorState> navigatorKey =
       GlobalKey<NavigatorState>(debugLabel: 'navigatorKey');
-  late StreamSubscription _sub;
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   static const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'zmongolbook', // id
@@ -47,7 +46,6 @@ class _MongolBookAppState extends State<MongolBookApp>
   }
 
   Future showForegroundNotification() async {
-
 
     FlutterLocalNotificationsPlugin flp = FlutterLocalNotificationsPlugin();
     var android = AndroidInitializationSettings('@mipmap/ic_launcher');

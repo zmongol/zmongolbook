@@ -20,8 +20,8 @@ class SingleItem extends StatelessWidget {
         Navigator.of(context).pushNamed('/detail', arguments: {'index': id});
       },
       child: Container(
-        margin: EdgeInsets.all(4),
-        width: 100,
+        // margin: EdgeInsets.all(4),
+        width: deviceWidth*0.25,
         decoration: BoxDecoration(
             border: Border.all(color: Colors.white),
             color: Theme.of(context).backgroundColor,
@@ -30,7 +30,7 @@ class SingleItem extends StatelessWidget {
           margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
           child: Column(
             children: [
-              Image.network("https://picsum.photos/250?image=9",height: 50,width: 100,),
+              Image.network("https://picsum.photos/250?image=9",),
               SizedBox(height: 5),
               Expanded(
                 child: MongolText(

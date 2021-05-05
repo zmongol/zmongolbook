@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mongol_ebook/widgets/app.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
-import 'package:mongol_ebook/widgets/screens/home_screen/single_item.dart';
+import 'package:mongol_ebook/widgets/screens/home_screen/books_screen/single_item.dart';
 
 class SearchResultScreen extends StatefulWidget {
   final dynamic value;

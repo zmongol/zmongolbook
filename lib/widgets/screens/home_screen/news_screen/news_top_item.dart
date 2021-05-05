@@ -12,7 +12,7 @@ class NewsTopItem extends StatelessWidget {
       height: 180,
       width: deviceWidth*0.33,
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
+        border: Border.all(color: Theme.of(context).primaryColor),
       ),
       margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
       child: Padding(
@@ -21,6 +21,7 @@ class NewsTopItem extends StatelessWidget {
           title,
           style: Theme.of(context).textTheme.headline2,
           softWrap: true,
+          overflow: TextOverflow.ellipsis,
         ),
       ),
     );

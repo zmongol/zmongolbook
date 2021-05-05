@@ -10,10 +10,11 @@ import 'package:mongol_ebook/Helper/AppConstant.dart';
 import 'package:mongol_ebook/Helper/DataReader.dart';
 import 'package:mongol_ebook/widgets/app.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
+import 'package:mongol_ebook/widgets/screens/home_screen/books_screen/books_screen.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/news_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uni_links/uni_links.dart';
-import 'horizontal_items.dart';
+import 'books_screen/horizontal_items.dart';
 
 class HomeScreen extends StatefulWidget {
   static List currentData = <dynamic>[];
@@ -30,26 +31,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late StreamSubscription _sub;
   int _selectedIndex = 0;
-  static const AndroidNotificationChannel channel = AndroidNotificationChannel(
-    'zmongolbook', // id
-    'High Importance Notifications', // title
-    'This channel is used for new articles notifications.', // description
-    importance: Importance.max,
-  );
+
   @override
   initState() {
     super.initState();
     initUniLinks();
-  }
-
-  loadData() async {
-    ApiManager.getTitle().then((value) {
-      setState(() {
-        MongolBookApp.apiData = value;
-        HomeScreen.currentData = List.from(MongolBookApp.apiData);
-        _isLoading = false;
-      });
-    });
   }
 
   Future<Null> initUniLinks() async {
@@ -109,28 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       case 1:
         {
-          loadData();
-          return Stack(
-            children: [
-              Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  padding: EdgeInsets.all(16),
-                  child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (context, index) {
-                        return HorizontalItems(index);
-                      },
-                      itemCount: (HomeScreen.currentData.length / 4).toInt())),
-              _isLoading
-                  ? LoadingIndicator()
-                  : Container(
-                child: HomeScreen.currentData.length == 0
-                    ? Text('No Data Found')
-                    : null,
-              )
-            ],
-          );
+          return BooksScreen();
         }
       default:
         {
@@ -144,86 +109,84 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
-      child: SafeArea(
-        child: Scaffold(
-            extendBodyBehindAppBar: false,
-            backgroundColor: Theme.of(context).backgroundColor,
-            appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              toolbarHeight: 40,
-              centerTitle: true,
-              title: Text(
-                'ZmongolBook',
-                style: Theme.of(context).textTheme.headline1,
-              ),
-              actions: [
-                GestureDetector(
-                  onTap: () {
-                    // if (HomeScreen.isSearching) {
-                    //   _resetData();
-                    //   return;
-                    // }
-                    HomeScreen.itemsIndex=_selectedIndex;
-                     Navigator.of(context).pushNamed('/search');
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 16.0),
-                    child: _selectedIndex == 2
-                        ? null
-                        : Icon(
-                            Icons.search,
-                            color: Colors.black,
-                            size: 32,
-                          ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed('/setting');
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 16.0),
-                    child: _selectedIndex == 2
-                        ? Icon(
-                            Icons.settings,
-                            color: Colors.black,
-                            size: 32,
-                          )
-                        : null,
-                  ),
-                ),
-              ],
-              leading: GestureDetector(
+      child: Scaffold(
+          extendBodyBehindAppBar: false,
+          backgroundColor: Theme.of(context).backgroundColor,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            toolbarHeight: 40,
+            centerTitle: true,
+            title: Text(
+              'ZmongolBook',
+              style: Theme.of(context).textTheme.headline1,
+            ),
+            actions: [
+              GestureDetector(
                 onTap: () {
-                  clearData();
-                  Navigator.of(context).pushReplacementNamed('/');
+                  // if (HomeScreen.isSearching) {
+                  //   _resetData();
+                  //   return;
+                  // }
+                  HomeScreen.itemsIndex=_selectedIndex;
+                   Navigator.of(context).pushNamed('/search');
                 },
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: _selectedIndex == 2
+                      ? null
+                      : Icon(
+                          Icons.search,
+                          color: Colors.black,
+                          size: 32,
+                        ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed('/setting');
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
                   child: _selectedIndex == 2
                       ? Icon(
-                          Icons.logout,
+                          Icons.settings,
                           color: Colors.black,
                           size: 32,
                         )
                       : null,
                 ),
               ),
+            ],
+            leading: GestureDetector(
+              onTap: () {
+                clearData();
+                Navigator.of(context).pushReplacementNamed('/');
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: _selectedIndex == 2
+                    ? Icon(
+                        Icons.logout,
+                        color: Colors.black,
+                        size: 32,
+                      )
+                    : null,
+              ),
             ),
-            body: _bodyView(),
-            bottomNavigationBar: BottomNavigationBar(
-              items: [
-                BottomNavigationBarItem(icon: Icon(Icons.home), label: 'News'),
-                BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Books'),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.perm_identity), label: 'Profile')
-              ],
-              currentIndex: _selectedIndex,
-              selectedItemColor: Colors.green[500],
-              onTap: _onItemTapped,
-            )),
-      ),
+          ),
+          body: _bodyView(),
+          bottomNavigationBar: BottomNavigationBar(
+            items: [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'News'),
+              BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Books'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.perm_identity), label: 'Profile')
+            ],
+            currentIndex: _selectedIndex,
+            selectedItemColor: Colors.green[500],
+            onTap: _onItemTapped,
+          )),
     );
   }
 

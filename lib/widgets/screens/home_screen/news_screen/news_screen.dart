@@ -7,7 +7,7 @@ import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/category_item.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/home_screen.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/news_top_item.dart';
-import 'package:mongol_ebook/widgets/screens/home_screen/single_item.dart';
+import 'package:mongol_ebook/widgets/screens/home_screen/books_screen/single_item.dart';
 
 import 'category_title.dart';
 
@@ -18,6 +18,8 @@ class NewsScreen extends StatefulWidget {
 
 class _NewsScreenState extends State<NewsScreen> {
   String categorySelected = 'Category';
+  String categoryName = '';
+
   static List categoryTitles = <dynamic>[];
   static List categoryArticles = <CategoryArticle>[];
   static List topArticles = <dynamic>[];
@@ -39,7 +41,7 @@ class _NewsScreenState extends State<NewsScreen> {
   getTopArticles() async {
     ApiManager.getTopArticles().then((value) {
       setState(() {
-        _isLoading2=false;
+        _isLoading2 = false;
         topArticles = List.from(value);
       });
     });
@@ -57,6 +59,7 @@ class _NewsScreenState extends State<NewsScreen> {
       setState(() {
         categoryTitles = value;
         categorySelected = categoryTitles[0]['category'];
+        categoryName = categoryTitles[0]["category_name"];
         loadArticles();
       });
     });
@@ -87,31 +90,31 @@ class _NewsScreenState extends State<NewsScreen> {
             children: [
               Image.network(
                 "https://picsum.photos/250?image=9",
-                width: deviceWidth * 0.5,
+                width: deviceWidth * 0.75,
               ),
               Expanded(
                 child: Container(
                   height: 300,
-                  width: deviceWidth * 0.4,
-
-                  margin: EdgeInsets.fromLTRB(8, 8, 0, 8),
+                  width: deviceWidth * 0.35,
+                  margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: _isLoading2
-                        ? LoadingIndicator(): InkWell(
-                      onTap: ()
-                      {
-                        Navigator.of(context).pushNamed('/detail',
-                            arguments: {'index': topArticles[0]['id']});
-                      },
-                      child: MongolText(
-                        topArticles.isNotEmpty
-                            ? topArticles[0]['tittle']
-                            : 'Top Article',
-                        style: Theme.of(context).textTheme.headline2,
-                        softWrap: true,
-                      ),
-                    ),
+                        ? LoadingIndicator()
+                        : InkWell(
+                            onTap: () {
+                              Navigator.of(context).pushNamed('/detail',
+                                  arguments: {'index': topArticles[0]['id']});
+                            },
+                            child: MongolText(
+                              topArticles.isNotEmpty
+                                  ? topArticles[0]['tittle']
+                                  : 'Top Article',
+                              style: Theme.of(context).textTheme.headline2,
+                              softWrap: true,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
                   ),
                 ),
               )
@@ -128,18 +131,23 @@ class _NewsScreenState extends State<NewsScreen> {
                     itemBuilder: (ctx, index) {
                       return _isLoading2
                           ? Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 30),
-                            child: LoadingIndicator(),
-                          ):InkWell(
-                          onTap: () {
-                            Navigator.of(context).pushNamed('/detail',
-                                arguments: {'index': topArticles[index + 1]['id']});
-                          },
-                          child: NewsTopItem(
-                              deviceWidth,
-                              topArticles.isNotEmpty
-                                  ? topArticles[index + 1]['tittle']
-                                  : "Top Articles"));
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 30),
+                              child: LoadingIndicator(),
+                            )
+                          : InkWell(
+                              onTap: () {
+                                Navigator.of(context).pushNamed('/detail',
+                                    arguments: {
+                                      'index': topArticles[index + 1]['id']
+                                    });
+                              },
+                              child: NewsTopItem(
+                                  deviceWidth,
+                                  topArticles.isNotEmpty
+                                      ? topArticles[index + 1]['tittle'] +
+                                          topArticles[index + 1]['content']
+                                      : "Top Articles"));
                     },
                     itemCount: 3,
                   ),
@@ -152,7 +160,7 @@ class _NewsScreenState extends State<NewsScreen> {
               Container(
                 height: 180,
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black54),
+                  border: Border.all(color: Theme.of(context).primaryColor),
                 ),
                 margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
                 child: RotatedBox(
@@ -160,7 +168,7 @@ class _NewsScreenState extends State<NewsScreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      categorySelected,
+                      categoryName,
                       style: Theme.of(context).textTheme.headline1,
                       textAlign: TextAlign.center,
                       maxLines: 1,
@@ -209,9 +217,11 @@ class _NewsScreenState extends State<NewsScreen> {
               itemBuilder: (context, index) {
                 return InkWell(
                     onTap: () {
-                      setCategory(categoryTitles[index]['category']);
+                      setCategory(categoryTitles[index]['category'],
+                          categoryTitles[index]['category_name']);
                     },
-                    child: CategoryTitle(categoryTitles[index]['category']));
+                    child:
+                        CategoryTitle(categoryTitles[index]['category_name']));
               },
             ),
           ),
@@ -220,9 +230,10 @@ class _NewsScreenState extends State<NewsScreen> {
     );
   }
 
-  setCategory(String s) {
+  setCategory(String cat, String name) {
     setState(() {
-      categorySelected = s;
+      categorySelected = cat;
+      categoryName = name;
       offset = 0;
       categoryArticles.clear();
       _isLoading = true;

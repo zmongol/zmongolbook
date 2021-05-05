@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:excel/excel.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CategoryTitle extends StatelessWidget {
@@ -9,7 +13,7 @@ class CategoryTitle extends StatelessWidget {
       height: 180,
       width: 100,
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.black54),
+        border: Border.all(color: Theme.of(context).primaryColor),
       ),
       margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
       child: RotatedBox(
@@ -17,8 +21,8 @@ class CategoryTitle extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            'Category '+categoryTitle,
-            style: Theme.of(context).textTheme.headline1,
+            categoryTitle,
+            //style: Theme.of(context).textTheme.headline1,
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

@@ -3,6 +3,7 @@ const String CONTENT_BACKGROUND_COLOR = 'CONTENT_BACKGROUND_COLOR';
 const String CONTENT_FONT_SIZE = 'CONTENT_FONT_SIZE';
 const String CONTENT_FONT_FAMILY = 'CONTENT_FONT_FAMILY';
 const String LOGGED_IN = 'LOGGED_IN';
+const String USERNAME = '';
 const double MIN_FONT_SIZE = 20;
 const double MAX_FONT_SIZE = 40;
 const String BASE_URL="http://54.254.41.200/";

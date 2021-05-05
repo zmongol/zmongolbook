@@ -4,7 +4,7 @@ import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Api%20Manager/api_manager.dart';
 import 'package:mongol_ebook/Model/category_article.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
-import 'package:mongol_ebook/widgets/screens/home_screen/single_item.dart';
+import 'package:mongol_ebook/widgets/screens/home_screen/books_screen/single_item.dart';
 
 class CategoriesSearchResultScreen extends StatefulWidget {
   String category;
