@@ -5,6 +5,7 @@ import 'package:mongol_ebook/Api%20Manager/api_manager.dart';
 import 'package:mongol_ebook/Model/category_article.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/books_screen/single_item.dart';
+import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/news_screen.dart';
 
 class CategoriesSearchResultScreen extends StatefulWidget {
   String category;
@@ -16,6 +17,7 @@ class CategoriesSearchResultScreen extends StatefulWidget {
 
 class _CategoriesSearchResultScreenState extends State<CategoriesSearchResultScreen> {
   List currentData = <CategoryArticle>[];
+  String categoryId='';
   bool _isLoading = true;
   int offset=0;
   late ScrollController _controller;
@@ -32,12 +34,13 @@ class _CategoriesSearchResultScreenState extends State<CategoriesSearchResultScr
   _scrollListener() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
-      loadArticles();
+     _search(widget.category);
+
     }
   }
 
   loadArticles() async {
-    ApiManager.getCategoryArticles(widget.category, offset.toString())
+    ApiManager.getCategoryArticles(categoryId, offset.toString())
         .then((value) {
       setState(() {
         if(value.length>0) {
@@ -150,6 +153,25 @@ class _CategoriesSearchResultScreenState extends State<CategoriesSearchResultScr
         )
       ],
     );
+  }
+
+  _search(dynamic value) {
+    if (value is String) {
+      if (value.isEmpty) {
+        setState(() {
+          _isLoading = false;
+        });
+      } else {
+        for (var item in NewsScreen.categoryTitles) {
+          if (item['category_name'] == value.toLowerCase()) {
+            print("Title: " + item['category_name'].toString().toLowerCase());
+            categoryId=item['category'];
+            loadArticles();
+            break;
+          }
+        }
+      }
+    }
   }
 
 }

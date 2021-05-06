@@ -22,7 +22,7 @@ class CategoryTitle extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             categoryTitle,
-            //style: Theme.of(context).textTheme.headline1,
+            style: Theme.of(context).textTheme.headline2,
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

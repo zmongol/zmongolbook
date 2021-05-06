@@ -29,6 +29,10 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    logIn();
+  }
+
+  void logIn() {
     getUser().then((value) {
       if (value) {
         FirebaseMessaging.instance.getToken().then((token) {
@@ -127,16 +131,8 @@ class _LoginPageState extends State<LoginPage> {
                                 usernameText.text, passwordText.text)
                                 .then((value) {
                               if (value.contains('successful')) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        content: Text("LogIn Successful")));
                                 saveUser();
-                                Future.delayed(const Duration(seconds: 2), () {
-                                  ScaffoldMessenger.of(context)
-                                      .removeCurrentSnackBar();
-                                  Navigator.of(context)
-                                      .pushReplacementNamed('/home');
-                                });
+                                 logIn();
                               } else if (value.contains('incorrect')) {
                                 // showToast('Incorrect username/password');
                                 ScaffoldMessenger.of(context).showSnackBar(

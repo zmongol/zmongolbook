@@ -12,6 +12,7 @@ import 'package:mongol_ebook/widgets/screens/home_screen/books_screen/single_ite
 import 'category_title.dart';
 
 class NewsScreen extends StatefulWidget {
+  static List categoryTitles = <dynamic>[];
   @override
   _NewsScreenState createState() => _NewsScreenState();
 }
@@ -20,7 +21,7 @@ class _NewsScreenState extends State<NewsScreen> {
   String categorySelected = 'Category';
   String categoryName = '';
 
-  static List categoryTitles = <dynamic>[];
+
   static List categoryArticles = <CategoryArticle>[];
   static List topArticles = <dynamic>[];
   int offset = 0;
@@ -57,9 +58,9 @@ class _NewsScreenState extends State<NewsScreen> {
   loadCategories() async {
     ApiManager.getCategoryTitle().then((value) {
       setState(() {
-        categoryTitles = value;
-        categorySelected = categoryTitles[0]['category'];
-        categoryName = categoryTitles[0]["category_name"];
+        NewsScreen.categoryTitles = value;
+        categorySelected = NewsScreen.categoryTitles[0]['category'];
+        categoryName = NewsScreen.categoryTitles[0]["category_name"];
         loadArticles();
       });
     });
@@ -169,7 +170,7 @@ class _NewsScreenState extends State<NewsScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       categoryName,
-                      style: Theme.of(context).textTheme.headline1,
+                      style: Theme.of(context).textTheme.headline2,
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -213,15 +214,15 @@ class _NewsScreenState extends State<NewsScreen> {
             child: ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              itemCount: categoryTitles.length,
+              itemCount: NewsScreen.categoryTitles.length,
               itemBuilder: (context, index) {
                 return InkWell(
                     onTap: () {
-                      setCategory(categoryTitles[index]['category'],
-                          categoryTitles[index]['category_name']);
+                      setCategory(NewsScreen.categoryTitles[index]['category'],
+                          NewsScreen.categoryTitles[index]['category_name']);
                     },
                     child:
-                        CategoryTitle(categoryTitles[index]['category_name']));
+                        CategoryTitle(NewsScreen.categoryTitles[index]['category_name']));
               },
             ),
           ),
