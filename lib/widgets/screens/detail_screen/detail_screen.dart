@@ -46,7 +46,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     child: Icon(
                       Icons.share,
                       color: Colors.black,
-                      size: 32,
+                      size: 25,
                     ),
                   ),
                 ),

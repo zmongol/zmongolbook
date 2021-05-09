@@ -90,12 +90,13 @@ class _NewsScreenState extends State<NewsScreen> {
           Row(
             children: [
               Image.network(
-                "https://picsum.photos/250?image=9",
+                "http://east-mod.oss-cn-beijing.aliyuncs.com/Zcode%20123.JPG@!content-image",
                 width: deviceWidth * 0.75,
+                height: 200,
               ),
               Expanded(
                 child: Container(
-                  height: 300,
+                  height: 200,
                   width: deviceWidth * 0.35,
                   margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
                   child: Padding(
@@ -125,7 +126,7 @@ class _NewsScreenState extends State<NewsScreen> {
             children: [
               Expanded(
                 child: Container(
-                  height: 300,
+                  height: 200,
                   child: ListView.builder(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,

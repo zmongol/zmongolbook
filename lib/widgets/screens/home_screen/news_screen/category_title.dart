@@ -10,8 +10,8 @@ class CategoryTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 180,
-      width: 100,
+      height: 120,
+      //width: 40,
       decoration: BoxDecoration(
         border: Border.all(color: Theme.of(context).primaryColor),
       ),
