@@ -10,7 +10,7 @@ class CategoryItem extends StatelessWidget {
       height: 180,
       width: 70,
       decoration: BoxDecoration(
-        border: Border.all(color: Theme.of(context).primaryColor),
+        border: Border.all(color: Theme.of(context).cardColor),
       ),
       margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
       child: Padding(

@@ -121,7 +121,8 @@ class _MongolBookAppState extends State<MongolBookApp>
               fontWeight: FontWeight.w500,
               color: Colors.white),
         ),
-        primaryColor: Colors.grey[500],
+        primaryColor: Colors.grey[200],
+        cardColor: Colors.grey[500],
         backgroundColor: Colors.grey[50]);
   }
 

@@ -6,9 +6,10 @@ import 'package:mongol_ebook/widgets/app.dart';
 class SingleItem extends StatelessWidget {
   final int index;
   String title;
+  String image;
 
 
-  SingleItem(this.index, this.title);
+  SingleItem(this.index, this.title,this.image);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,6 @@ class SingleItem extends StatelessWidget {
         Navigator.of(context).pushNamed('/detail', arguments: {'index': id});
       },
       child: Container(
-        // margin: EdgeInsets.all(4),
         width: deviceWidth*0.25,
         decoration: BoxDecoration(
             border: Border.all(color: Colors.white),
@@ -30,7 +30,7 @@ class SingleItem extends StatelessWidget {
           margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
           child: Column(
             children: [
-              Image.network("https://picsum.photos/250?image=9",),
+              Image.network(image),
               SizedBox(height: 5),
               Expanded(
                 child: MongolText(

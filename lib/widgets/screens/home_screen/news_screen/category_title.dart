@@ -11,9 +11,8 @@ class CategoryTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 120,
-      //width: 40,
       decoration: BoxDecoration(
-        border: Border.all(color: Theme.of(context).primaryColor),
+        border: Border.all(color: Theme.of(context).cardColor),
       ),
       margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
       child: RotatedBox(
