@@ -19,56 +19,45 @@ class TopStory extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-          height: height,
-          width: width,
-          child: Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(16.0),
-                child: Image.network(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16.0),
+        child: Container(
+            height: height,
+            width: width,
+            child: Stack(
+              children: [
+                Image.network(
                   //TODO: Replace placeholder with iamge from backend
                   int.parse(article.id) % 2 == 1 ? placeholder1 : placeholder2,
                   fit: BoxFit.cover,
                   height: height,
                   width: double.infinity,
                 ),
-              ),
-              Container(
-                height: height,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    gradient: LinearGradient(
-                        begin: FractionalOffset.centerLeft,
-                        end: FractionalOffset.centerRight,
-                        colors: [
-                          Colors.transparent,
-                          Colors.black.withOpacity(0.7)
-                        ],
-                        stops: [
-                          0.0,
-                          1.0
-                        ])),
-              ),
-              Align(
-                  alignment: Alignment.topRight,
-                  child: Container(
-                      width: 100.0,
-                      margin: EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          MongolText(
-                            article.title,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline2!
-                                .copyWith(color: Colors.white),
-                            softWrap: true,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Flexible(
-                            child: MongolText(
-                              article.content,
+                Container(
+                  height: height,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      gradient: LinearGradient(
+                          begin: FractionalOffset.centerLeft,
+                          end: FractionalOffset.centerRight,
+                          colors: [
+                            Colors.transparent,
+                            Colors.black.withOpacity(0.7)
+                          ],
+                          stops: [
+                            0.0,
+                            1.0
+                          ])),
+                ),
+                Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                        width: 100.0,
+                        margin: EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            MongolText(
+                              article.title,
                               style: Theme.of(context)
                                   .textTheme
                                   .headline2!
@@ -76,11 +65,22 @@ class TopStory extends StatelessWidget {
                               softWrap: true,
                               overflow: TextOverflow.ellipsis,
                             ),
-                          )
-                        ],
-                      )))
-            ],
-          )),
+                            Flexible(
+                              child: MongolText(
+                                article.content,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline2!
+                                    .copyWith(color: Colors.white),
+                                softWrap: true,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            )
+                          ],
+                        )))
+              ],
+            )),
+      ),
     );
   }
 }
