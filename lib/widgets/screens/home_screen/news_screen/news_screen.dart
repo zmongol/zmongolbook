@@ -26,8 +26,8 @@ class _NewsScreenState extends State<NewsScreen> {
 
   int offset = 0;
   late ScrollController _controller;
-  bool _isLoading = true;
-  bool _isLoading2 = true;
+  bool _isLoadingTopArticles = true;
+  bool _isLoadingCategorizedNews = true;
 
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _NewsScreenState extends State<NewsScreen> {
   getTopArticles() async {
     ApiManager.getTopArticles().then((value) {
       setState(() {
-        _isLoading2 = false;
+        _isLoadingTopArticles = false;
         priorityArticle = value[0];
         _topArticles = value..remove(priorityArticle);
       });
@@ -74,7 +74,7 @@ class _NewsScreenState extends State<NewsScreen> {
         .then((value) {
       setState(() {
         offset = offset + 50;
-        _isLoading = false;
+        _isLoadingCategorizedNews = false;
         _categorizedArticles.addAll(value);
       });
     });
@@ -89,28 +89,15 @@ class _NewsScreenState extends State<NewsScreen> {
           SizedBox(
             height: 24.0,
           ),
-          priorityArticle != null
-              ? PriorityNews(
-                  article: priorityArticle!,
-                  onTap: () => _openDetailPage(context, priorityArticle!.id),
-                )
-              : Container(
-                  height: 200.0,
-                  alignment: Alignment.center,
-                  child: LoadingIndicator(),
-                ),
+          _priorityNewsWidget(),
           SizedBox(
             height: 24.0,
           ),
-          TopStories(
-            articles: _topArticles,
-            onTap: () => _openDetailPage(context, priorityArticle!.id),
-          ),
+          _topStoriesWidget(),
           SizedBox(
             height: 24.0,
           ),
-          CategorizedNewsSection(
-              articles: _categorizedArticles, categoryName: categoryName),
+          _categorizedNewsWidget(),
           SizedBox(
             height: 24.0,
           ),
@@ -123,6 +110,55 @@ class _NewsScreenState extends State<NewsScreen> {
     );
   }
 
+  Widget _priorityNewsWidget() {
+    return !_isLoadingTopArticles
+        ? PriorityNews(
+            article: priorityArticle!,
+            onTap: () => _openDetailPage(context, priorityArticle!.id),
+          )
+        : Container(
+            height: 200.0,
+            alignment: Alignment.center,
+            child: LoadingIndicator(),
+          );
+  }
+
+  Widget _topStoriesWidget() {
+    return !_isLoadingTopArticles
+        ? TopStories(
+            articles: _topArticles,
+            onTap: () => _openDetailPage(context, priorityArticle!.id),
+          )
+        : Row(children: [
+            Flexible(
+                child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: LoadingIndicator(),
+            )),
+            Flexible(
+                child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: LoadingIndicator(),
+            )),
+            Flexible(
+                child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: LoadingIndicator(),
+            )),
+          ]);
+  }
+
+  Widget _categorizedNewsWidget() {
+    return !_isLoadingCategorizedNews
+        ? CategorizedNewsSection(
+            articles: _categorizedArticles, categoryName: categoryName)
+        : Container(
+            child: LoadingIndicator(),
+            height: 200.0,
+            alignment: Alignment.center,
+          );
+  }
+
   void _openDetailPage(BuildContext context, String id) {
     Navigator.of(context).pushNamed('/detail', arguments: {'index': id});
   }
@@ -133,7 +169,7 @@ class _NewsScreenState extends State<NewsScreen> {
       categoryName = category.categoryName;
       offset = 0;
       _categorizedArticles.clear();
-      _isLoading = true;
+      _isLoadingCategorizedNews = true;
       loadArticles();
     });
   }

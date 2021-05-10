@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mongol_ebook/Model/top_article.dart';
-import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/top_story.dart';
 
 class TopStories extends StatelessWidget {
@@ -28,22 +27,6 @@ class TopStories extends StatelessWidget {
                 },
                 itemCount: articles.length,
               )
-            : Row(children: [
-                Flexible(
-                    child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: LoadingIndicator(),
-                )),
-                Flexible(
-                    child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: LoadingIndicator(),
-                )),
-                Flexible(
-                    child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: LoadingIndicator(),
-                )),
-              ]));
+            : Container());
   }
 }
