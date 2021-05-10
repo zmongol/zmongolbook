@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // Platform messages may fail, so we use a try/catch PlatformException.
 
     try {
-      String initialLink = await getInitialLink();
+      String? initialLink = await getInitialLink();
       // Parse the link and warn the user, if it is not correct,
       // but keep in mind it could be `null`.
       if (initialLink != null) {
@@ -59,11 +59,12 @@ class _HomeScreenState extends State<HomeScreen> {
       }
       _sub = getUriLinksStream().listen((event) {
         setState(() {
+          String? index = event?.pathSegments[1];
           print('Deep link listener: ' + event.toString());
-          print('title: ' + event.pathSegments[1].toString());
+          print('title: ' + index!);
           widget.deepLink = event.toString();
-          Navigator.of(context).pushNamed('/detail',
-              arguments: {'index': event.pathSegments[1].toString()});
+          Navigator.of(context)
+              .pushNamed('/detail', arguments: {'index': index});
         });
       });
     } on PlatformException {
