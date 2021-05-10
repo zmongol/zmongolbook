@@ -60,17 +60,14 @@ class CategorizedNews extends StatelessWidget {
               height: 16.0,
             ),
             Flexible(
-                child: Row(
-              children: [
-                MongolText(
-                  article.title,
-                  maxLines: 3,
-                  style: Theme.of(context).textTheme.headline2!,
-                  softWrap: true,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            )),
+              child: MongolText(
+                article.title,
+                maxLines: 3,
+                style: Theme.of(context).textTheme.headline2!,
+                softWrap: true,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ],
         ),
       ),
