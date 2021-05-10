@@ -55,6 +55,7 @@ class TopStory extends StatelessWidget {
                         width: 100.0,
                         margin: EdgeInsets.all(8.0),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             MongolText(
                               article.title,
@@ -68,6 +69,7 @@ class TopStory extends StatelessWidget {
                             Flexible(
                               child: MongolText(
                                 article.content,
+                                maxLines: 4,
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline2!
