@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mongol/mongol.dart';
-import 'package:mongol_ebook/Model/top_article.dart';
+import 'package:mongol_ebook/Model/article.dart';
 
 class TopStory extends StatelessWidget {
   static const height = 300.0;
@@ -9,7 +9,7 @@ class TopStory extends StatelessWidget {
       "https://a3.espncdn.com/combiner/i?img=%2Fphoto%2F2021%2F0509%2Fr851774_1296x729_16%2D9.jpg&w=1140&cquality=40&format=jpg";
   static const placeholder2 =
       "https://media.cntraveler.com/photos/57fea9ec8584f8cd20e65f15/16:9/w_1600,c_limit/Aerial-One&OnlyReethiRah-Maldives-CRHotel.jpg";
-  final TopArticle article;
+  final NewArticle article;
   final VoidCallback onTap;
 
   const TopStory({Key? key, required this.article, required this.onTap})
@@ -28,7 +28,7 @@ class TopStory extends StatelessWidget {
               children: [
                 Image.network(
                   //TODO: Replace placeholder with iamge from backend
-                  int.parse(article.id) % 2 == 1 ? placeholder1 : placeholder2,
+                  article.imageUrl ?? _getPlaceholder(),
                   fit: BoxFit.cover,
                   height: height,
                   width: double.infinity,
@@ -59,6 +59,7 @@ class TopStory extends StatelessWidget {
                           children: [
                             MongolText(
                               article.title,
+                              maxLines: 3,
                               style: Theme.of(context)
                                   .textTheme
                                   .headline2!
@@ -84,5 +85,9 @@ class TopStory extends StatelessWidget {
             )),
       ),
     );
+  }
+
+  _getPlaceholder() {
+    return (article.id % 2 == 1) ? placeholder1 : placeholder2;
   }
 }

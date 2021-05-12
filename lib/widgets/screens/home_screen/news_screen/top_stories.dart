@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/Model/top_article.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/top_story.dart';
 
 class TopStories extends StatelessWidget {
-  final List<TopArticle> articles;
+  final List<NewArticle> articles;
   final VoidCallback onTap;
 
   const TopStories({Key? key, required this.articles, required this.onTap})
@@ -19,7 +20,7 @@ class TopStories extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 separatorBuilder: (_, index) => SizedBox(width: 20.0),
                 itemBuilder: (_, index) {
-                  TopArticle article = articles[index];
+                  var article = articles[index];
                   return TopStory(
                     article: article,
                     onTap: onTap,

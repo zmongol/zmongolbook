@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mongol/mongol.dart';
+import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/Model/top_article.dart';
 
 class CategorizedNews extends StatelessWidget {
@@ -14,7 +15,7 @@ class CategorizedNews extends StatelessWidget {
 
   static const _imageSize = 120.0;
 
-  final TopArticle article;
+  final NewArticle article;
   final VoidCallback onTap;
 
   const CategorizedNews({Key? key, required this.article, required this.onTap})
@@ -24,7 +25,7 @@ class CategorizedNews extends StatelessWidget {
   Widget build(BuildContext context) {
     String imgUrl = "";
 
-    switch (int.parse(article.id) % 4) {
+    switch (article.id % 4) {
       case 1:
         imgUrl = placeholder1;
         break;

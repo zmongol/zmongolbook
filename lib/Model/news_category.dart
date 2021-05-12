@@ -1,18 +1,18 @@
 class NewsCategory {
-  final String id;
-  final String category; //This is used to filter by category
-  final String categoryName;
+  final int id;
+  final String name;
+  final int categoryCode;
 
-  NewsCategory(this.id, this.category, this.categoryName);
+  NewsCategory(this.id, this.name, this.categoryCode);
 
   NewsCategory.fromJson(Map<String, dynamic> json)
       : this.id = json["id"],
-        this.category = json["category"],
-        this.categoryName = json["category_name"];
+        this.name = json["name"],
+        this.categoryCode = json["category_code"];
 
   Map<String, dynamic> toJson() => {
         "id": this.id,
-        "category": this.category,
-        "category_name": this.categoryName
+        "name": this.name,
+        "category_code": this.categoryCode,
       };
 }

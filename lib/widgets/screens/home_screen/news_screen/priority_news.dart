@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mongol/mongol.dart';
-import 'package:mongol_ebook/Model/top_article.dart';
+import 'package:mongol_ebook/Model/article.dart';
 
 class PriorityNews extends StatelessWidget {
   static const double _height = 200;
-  final TopArticle article;
+  final NewArticle article;
   final VoidCallback onTap;
 
   const PriorityNews({Key? key, required this.article, required this.onTap})
@@ -20,7 +20,8 @@ class PriorityNews extends StatelessWidget {
             children: [
               //TODO: Replace placeholder with iamge from backend
               Image.network(
-                "https://images.barrons.com/im-335962?width=1260&size=1.5",
+                article.imageUrl ??
+                    "https://images.barrons.com/im-335962?width=1260&size=1.5",
                 fit: BoxFit.cover,
                 height: _height,
                 width: double.infinity,
@@ -50,6 +51,7 @@ class PriorityNews extends StatelessWidget {
                         children: [
                           MongolText(
                             article.title,
+                            maxLines: 3,
                             style: Theme.of(context)
                                 .textTheme
                                 .headline2!
@@ -60,6 +62,7 @@ class PriorityNews extends StatelessWidget {
                           Flexible(
                             child: MongolText(
                               article.content,
+                              maxLines: 4,
                               style: Theme.of(context)
                                   .textTheme
                                   .headline2!

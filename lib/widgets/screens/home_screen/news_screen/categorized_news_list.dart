@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mongol_ebook/Model/top_article.dart';
+import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/categorized_news.dart';
 
 class CategorizedNewsList extends StatelessWidget {
-  final List<TopArticle> articles;
+  final List<NewArticle> articles;
 
   const CategorizedNewsList({Key? key, required this.articles})
       : super(key: key);
@@ -16,7 +16,7 @@ class CategorizedNewsList extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       separatorBuilder: (_, index) => SizedBox(width: 20.0),
       itemBuilder: (_, index) {
-        TopArticle article = articles[index];
+        var article = articles[index];
         return CategorizedNews(
           article: article,
           onTap: () => _openDetailPage(context, article.id),

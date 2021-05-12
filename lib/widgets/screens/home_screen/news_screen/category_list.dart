@@ -26,7 +26,7 @@ class CategoryList extends StatelessWidget {
                         margin: index != categories.length - 1
                             ? const EdgeInsets.only(left: 16.0)
                             : const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: CategoryPill(text: category.categoryName)));
+                        child: CategoryPill(text: category.name)));
               },
               separatorBuilder: (context, index) => SizedBox(
                 width: 0.0,

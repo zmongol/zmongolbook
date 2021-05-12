@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mongol/mongol.dart';
-import 'package:mongol_ebook/Model/top_article.dart';
+import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
-import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/top_story.dart';
 
 import 'categorized_news_list.dart';
 
 class CategorizedNewsSection extends StatelessWidget {
-  final List<TopArticle> articles;
+  final List<NewArticle> articles;
   final String categoryName;
 
   const CategorizedNewsSection(
