@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:mongol_ebook/Model/article.dart';
+import 'package:mongol_ebook/Model/auth/login_result.dart';
 import 'package:mongol_ebook/Model/news_category.dart';
 
 class ApiService {
@@ -20,14 +21,35 @@ class ApiService {
         "last_name": lastName,
       });
     } on DioError catch (e) {
-      if(e.response != null) {
-      return e.response!.data["error"];
+      if (e.response != null) {
+        return e.response!.data["error"];
       } else {
         return "Unknown error";
       }
     }
 
     return null;
+  }
+
+  Future<LoginResult> login(String username, String password) async {
+    var endpoint = _baseUrl + "/api/auth/login";
+    try {
+      print(username + " | " + password);
+      var response = await _dio.post(endpoint, data: {
+        "username": username,
+        "password": password,
+      });
+
+      return LoginResult(true, accessToken: response.data["result"]["token"]);
+    } on DioError catch (e) {
+      var errorMsg;
+      if (e.response != null) {
+        errorMsg = e.response!.data["error"];
+      } else {
+        errorMsg = "Unknown error";
+      }
+      return LoginResult(false, errorMessage: errorMsg);
+    }
   }
 
   Future<List<NewArticle>> getTopStories() async {

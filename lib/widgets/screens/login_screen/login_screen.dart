@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:mongol_ebook/Api%20Manager/api_manager.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:mongol_ebook/Helper/AppConstant.dart';
+import 'package:mongol_ebook/network/api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uni_links/uni_links.dart';
 
@@ -17,6 +19,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final apiService = ApiService(Dio(), BASE_URL + ":8080");
   final usernameText = TextEditingController();
 
   final passwordText = TextEditingController();
@@ -126,23 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: MaterialButton(
                           minWidth: double.infinity,
                           height: 50,
-                          onPressed: () {
-                            ApiManager.logIn(
-                                usernameText.text, passwordText.text)
-                                .then((value) {
-                              if (value.contains('successful')) {
-                                saveUser();
-                                 logIn();
-                              } else if (value.contains('incorrect')) {
-                                // showToast('Incorrect username/password');
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text("Login failed")));
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text("Failure")));
-                              }
-                            });
-                          },
+                          onPressed: () => _tryLogin(),
                           color: Color(0xff0095FF),
                           elevation: 0,
                           shape: RoundedRectangleBorder(
@@ -187,6 +174,17 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  _tryLogin() async {
+    var result = await apiService.login(usernameText.text, passwordText.text);
+
+    if (result.success) {
+        saveUser();
+        logIn();
+    } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(result.errorMessage!)));
+    }
   }
 
   saveUser() async {
