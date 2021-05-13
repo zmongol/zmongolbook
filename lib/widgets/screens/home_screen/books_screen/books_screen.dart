@@ -1,25 +1,38 @@
-
-
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:mongol_ebook/Api%20Manager/api_manager.dart';
-import 'package:mongol_ebook/widgets/app.dart';
+import 'package:mongol_ebook/Helper/AppConstant.dart';
+import 'package:mongol_ebook/Model/article.dart';
+import 'package:mongol_ebook/network/api_service.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
-
-import 'horizontal_items.dart';
+import 'package:mongol_ebook/widgets/screens/home_screen/books_screen/book_widget.dart';
 
 class BooksScreen extends StatefulWidget {
-  static List currentData = <dynamic>[];
   @override
   _BooksScreenState createState() => _BooksScreenState();
 }
 
 class _BooksScreenState extends State<BooksScreen> {
   bool _isLoading = true;
+  int _currentPage = 0;
+
+  late ApiService _apiService;
+  late ScrollController _scrollController;
+
+  // Currently fetches list of articles
+  List<NewArticle> _books = [];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      if (_scrollController.offset >=
+              _scrollController.position.maxScrollExtent &&
+          !_scrollController.position.outOfRange) {
+        loadData();
+      }
+    });
+    _apiService = ApiService(Dio(), BASE_URL + ":8080");
     loadData();
   }
 
@@ -28,34 +41,34 @@ class _BooksScreenState extends State<BooksScreen> {
     return Stack(
       children: [
         Container(
-            width: double.infinity,
-            height: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 16),
-            child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemBuilder: (context, index) {
-                  return HorizontalItems(index);
-                },
-                itemCount: (BooksScreen.currentData.length / 4).toInt())),
-        _isLoading
-            ? LoadingIndicator()
-            : Container(
-          child: BooksScreen.currentData.length == 0
-              ? Text('No Data Found')
-              : null,
-        )
+          width: double.infinity,
+          height: double.infinity,
+          padding: EdgeInsets.symmetric(vertical: 16),
+          child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                childAspectRatio: 1 / 2,
+              ),
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                return BookWidget(
+                  book: _books[index],
+                );
+              },
+              itemCount: _books.length),
+        ),
+        _isLoading ? LoadingIndicator() : Container(),
       ],
     );
   }
 
   loadData() async {
-    ApiManager.getTitle().then((value) {
+    _apiService.getArticles(limit: 50, page: _currentPage).then((articles) {
       setState(() {
-        MongolBookApp.apiData = value;
-        BooksScreen.currentData = List.from(MongolBookApp.apiData);
+        _currentPage++;
+        _books.addAll(articles);
         _isLoading = false;
       });
     });
   }
-
 }
