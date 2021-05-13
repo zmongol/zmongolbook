@@ -8,6 +8,28 @@ class ApiService {
 
   ApiService(this._dio, this._baseUrl);
 
+  Future<String?> register(String username, String password, String email,
+      String firstName, String? lastName) async {
+    var endpoint = _baseUrl + "/api/auth/register";
+    try {
+      await _dio.post(endpoint, data: {
+        "username": username,
+        "email": email,
+        "password": password,
+        "first_name": firstName,
+        "last_name": lastName,
+      });
+    } on DioError catch (e) {
+      if(e.response != null) {
+      return e.response!.data["error"];
+      } else {
+        return "Unknown error";
+      }
+    }
+
+    return null;
+  }
+
   Future<List<NewArticle>> getTopStories() async {
     var endpoint = _baseUrl + "/api/articles/priority";
     var response = await _dio.get(endpoint);

@@ -1,15 +1,18 @@
-import 'dart:io';
-
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:mongol_ebook/Api%20Manager/api_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mongol_ebook/Helper/AppConstant.dart';
+import 'package:mongol_ebook/network/api_service.dart';
 
 class SignupPage extends StatelessWidget {
+  final apiService = ApiService(Dio(), BASE_URL + ":8080");
   final usernameText = TextEditingController();
   final passwordText = TextEditingController();
   final confirmPasswordText = TextEditingController();
   final emailText = TextEditingController();
-  final phoneText = TextEditingController();
+  final firstNameText = TextEditingController();
+  final lastNameText = TextEditingController();
+  // final phoneText = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +72,9 @@ class SignupPage extends StatelessWidget {
                       obscureText: true,
                       textController: confirmPasswordText),
                   inputFile(label: "Email", textController: emailText),
-                  inputFile(label: "Phone Number", textController: phoneText),
+                  inputFile(label: "First Name", textController: firstNameText),
+                  inputFile(label: "Last Name", textController: lastNameText),
+                  // inputFile(label: "Phone Number", textController: phoneText),
                 ],
               ),
               Container(
@@ -85,31 +90,7 @@ class SignupPage extends StatelessWidget {
                 child: MaterialButton(
                   minWidth: double.infinity,
                   height: 60,
-                  onPressed: () {
-                    ApiManager.signUp(
-                        usernameText.text,
-                        emailText.text,
-                        passwordText.text,
-                        confirmPasswordText.text,
-                        phoneText.text)
-                        .then((value) {
-                      if (value.contains("inserted")) {
-                        Navigator.of(context).pushReplacementNamed('/login');
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Signup Successful')));
-                      }
-                      else if(value.contains("exists"))
-                      {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('User already exists')));
-                      }
-                      else if (value.contains('not inserted'))
-                      {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Failure')));
-                      }
-                    });
-                  },
+                  onPressed: () => _signUp(context),
                   color: Color(0xff0095FF),
                   elevation: 0,
                   shape: RoundedRectangleBorder(
@@ -142,16 +123,36 @@ class SignupPage extends StatelessWidget {
     );
   }
 
+  void _signUp(BuildContext context) async {
+    var username = usernameText.text;
+    var email = emailText.text;
+    var password = passwordText.text;
+    var firstName = firstNameText.text;
+    var lastName = lastNameText.text;
+    String? errorMsg = await apiService.register(
+        username, password, email, firstName, lastName);
+
+    var snackbarText;
+    if (errorMsg == null) {
+      Navigator.of(context).pushReplacementNamed('/login');
+      snackbarText = "Signup successful";
+    } else {
+      snackbarText = "Failed to sign up: " + errorMsg;
+    }
+
+     ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(snackbarText),),);
+  }
+
   void showToast(String msg) {
-     Fluttertoast.showToast(
+    Fluttertoast.showToast(
         msg: msg,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.white,
         textColor: Colors.black,
-        fontSize: 16.0
-    );
+        fontSize: 16.0);
   }
 
   // we will be creating a widget for text field
