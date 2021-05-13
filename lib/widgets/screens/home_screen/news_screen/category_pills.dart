@@ -13,7 +13,7 @@ class CategoryPill extends StatelessWidget {
       height: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24.0),
-        color: Colors.lightBlue[200],
+        color: Colors.green[300],
       ),
       child: MongolText(
         text,

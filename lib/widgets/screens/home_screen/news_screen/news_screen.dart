@@ -95,24 +95,25 @@ class _NewsScreenState extends State<NewsScreen> {
       child: Column(
         children: [
           SizedBox(
-            height: 24.0,
+            height: 14.0,
           ),
           _priorityNewsWidget(),
           SizedBox(
-            height: 24.0,
+            height: 14.0,
           ),
           _topStoriesWidget(),
           SizedBox(
-            height: 24.0,
-          ),
-          _categorizedNewsWidget(),
-          SizedBox(
-            height: 24.0,
+            height: 14.0,
           ),
           CategoryList(
             categories: _categories,
             setCategoryCallback: setCategory,
           ),
+          SizedBox(
+            height: 14.0,
+          ),
+          _categorizedNewsWidget(),
+
         ],
       ),
     );

@@ -13,7 +13,7 @@ class CategorizedNews extends StatelessWidget {
   static const placeholder4 =
       "https://st2.depositphotos.com/2256213/12010/i/950/depositphotos_120104944-stock-photo-colloseum-rome-italy.jpg";
 
-  static const _imageSize = 120.0;
+  static const _imageSize = 80.0;
 
   final NewArticle article;
   final VoidCallback onTap;

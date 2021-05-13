@@ -3,8 +3,8 @@ import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Model/article.dart';
 
 class TopStory extends StatelessWidget {
-  static const height = 300.0;
-  static const width = 240.0;
+  static const height = 200.0;
+  static const width = 160.0;
   static const placeholder1 =
       "https://a3.espncdn.com/combiner/i?img=%2Fphoto%2F2021%2F0509%2Fr851774_1296x729_16%2D9.jpg&w=1140&cquality=40&format=jpg";
   static const placeholder2 =
