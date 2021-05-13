@@ -80,8 +80,7 @@ class _DetailScreenState extends State<DetailScreen> {
               }
             case ConnectionState.done:
               {
-                print(snapshot.data);
-                print(widget.id);
+                print("Opening article with ID: " + widget.id.toString());
                 if (snapshot.data != null) {
                   return PageContent(
                     article: snapshot.data!,
