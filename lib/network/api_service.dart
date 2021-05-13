@@ -60,13 +60,18 @@ class ApiService {
   }
 
   Future<List<NewArticle>> getArticles(
-      {int categoryId = 0, int page = 0, int limit = 25}) async {
+      {int categoryId = 0, int page = 0, int limit = 25, String? title}) async {
     var endpoint = _baseUrl + "/api/articles?page=$page&limit=$limit";
-    print(endpoint);
 
     if (categoryId > 0) {
       endpoint = endpoint + "&categoryId=$categoryId";
     }
+
+    if (title != null) {
+      endpoint = endpoint + "&title=$title";
+    }
+
+    print(endpoint);
 
     var response = await _dio.get(endpoint);
     var result = List<Map<String, dynamic>>.from(response.data["result"]);
