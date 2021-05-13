@@ -6,7 +6,7 @@ const String LOGGED_IN = 'LOGGED_IN';
 const String USERNAME = '';
 const double MIN_FONT_SIZE = 20;
 const double MAX_FONT_SIZE = 40;
-const String BASE_URL="http://54.254.41.200/";
+const String BASE_URL = "http://54.254.41.200";
 
 const int ITEMS_IN_ROW = 30;
 

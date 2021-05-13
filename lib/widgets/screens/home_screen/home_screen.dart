@@ -1,20 +1,11 @@
 import 'dart:async';
-import 'dart:collection';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:mongol_ebook/Api%20Manager/api_manager.dart';
-import 'package:mongol_ebook/Helper/AppConstant.dart';
-import 'package:mongol_ebook/Helper/DataReader.dart';
-import 'package:mongol_ebook/widgets/app.dart';
-import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/books_screen/books_screen.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/news_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uni_links/uni_links.dart';
-import 'books_screen/horizontal_items.dart';
 
 class HomeScreen extends StatefulWidget {
   static List currentData = <dynamic>[];
@@ -27,8 +18,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool _isLoading = true;
-
   late StreamSubscription _sub;
   int _selectedIndex = 0;
 
@@ -40,9 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<Null> initUniLinks() async {
     // Platform messages may fail, so we use a try/catch PlatformException.
-
     try {
-      String initialLink = await getInitialLink();
+      String? initialLink = await getInitialLink();
       // Parse the link and warn the user, if it is not correct,
       // but keep in mind it could be `null`.
       if (initialLink != null) {
@@ -59,11 +47,12 @@ class _HomeScreenState extends State<HomeScreen> {
       }
       _sub = getUriLinksStream().listen((event) {
         setState(() {
+          String? index = event?.pathSegments[1];
           print('Deep link listener: ' + event.toString());
-          print('title: ' + event.pathSegments[1].toString());
+          print('title: ' + index!);
           widget.deepLink = event.toString();
-          Navigator.of(context).pushNamed('/detail',
-              arguments: {'index': event.pathSegments[1].toString()});
+          Navigator.of(context)
+              .pushNamed('/detail', arguments: {'index': index});
         });
       });
     } on PlatformException {
@@ -72,23 +61,8 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  _resetData() {
-    setState(() {
-      HomeScreen.isSearching = false;
-      print("Api Data: " + MongolBookApp.apiData.length.toString());
-      HomeScreen.currentData = List.from(MongolBookApp.apiData);
-    });
-  }
-
-
   _bodyView() {
-    // int numberOfRow = DataReader.instance.data.length ~/ ITEMS_IN_ROW;
-    // if (DataReader.instance.data.length % ITEMS_IN_ROW > 0) {
-    //   numberOfRow++;
-    // }
-
-    switch(_selectedIndex)
-    {
+    switch (_selectedIndex) {
       case 0:
         {
           return NewsScreen();
@@ -102,7 +76,6 @@ class _HomeScreenState extends State<HomeScreen> {
           return Container();
         }
     }
-
   }
 
   @override
@@ -124,12 +97,8 @@ class _HomeScreenState extends State<HomeScreen> {
             actions: [
               GestureDetector(
                 onTap: () {
-                  // if (HomeScreen.isSearching) {
-                  //   _resetData();
-                  //   return;
-                  // }
-                  HomeScreen.itemsIndex=_selectedIndex;
-                   Navigator.of(context).pushNamed('/search');
+                  HomeScreen.itemsIndex = _selectedIndex;
+                  Navigator.of(context).pushNamed('/search');
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(right: 16.0),
