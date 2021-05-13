@@ -90,15 +90,14 @@ class _NewsScreenState extends State<NewsScreen> {
           Row(
             children: [
               Image.network(
-                topArticles.isNotEmpty ?
-                topArticles[0]['image'] : "",
+                "http://east-mod.oss-cn-beijing.aliyuncs.com/Zcode%20123.JPG@!content-image",
                 width: deviceWidth * 0.75,
                 height: 200,
               ),
               Expanded(
                 child: Container(
                   height: 200,
-                  //width: deviceWidth * 0.25,
+                  width: deviceWidth * 0.35,
                   margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

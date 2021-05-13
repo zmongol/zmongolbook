@@ -72,7 +72,7 @@ class _SearchScreenState extends State<SearchResultScreen> {
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  return SingleItem(index, currentData[index]['garqag'],currentData[index]['image']);
+                  return SingleItem(index, currentData[index]['garqag']);
                 },
                 itemCount: (currentData.length))),
         _isLoading
