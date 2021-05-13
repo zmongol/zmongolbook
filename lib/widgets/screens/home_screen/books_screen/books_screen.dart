@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Helper/AppConstant.dart';
 import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/network/api_service.dart';
@@ -38,33 +39,149 @@ class _BooksScreenState extends State<BooksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          width: double.infinity,
-          height: double.infinity,
-          padding: EdgeInsets.symmetric(vertical: 16),
-          child: GridView.builder(
-              controller: _scrollController,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                childAspectRatio: 1 / 2,
-              ),
-              scrollDirection: Axis.vertical,
-              itemBuilder: (context, index) {
-                return BookWidget(
-                  book: _books[index],
-                );
-              },
-              itemCount: _books.length),
-        ),
-        _isLoading
-            ? Center(
-                child: LoadingIndicator(),
-              )
-            : Container(),
-      ],
+    return Container(
+      color: Colors.grey[200],
+      width: double.infinity,
+      height: double.infinity,
+      padding: EdgeInsets.only(top: 16.0),
+      child: ListView(
+        children: [
+          ClipRRect(
+            // borderRadius: BorderRadius.circular(8.0),
+            child: Image.network(
+                "https://i.guim.co.uk/img/media/77e3e93d6571da3a5d77f74be57e618d5d930430/0_0_2560_1536/master/2560.jpg?width=1300&quality=45&auto=format&fit=max&dpr=2&s=3dfa0308ea70c0afa873298b3f505ec1",
+                fit: BoxFit.cover,
+                height: 160.0,
+                width: double.infinity),
+          ),
+          _buildBooksList()
+        ],
+      ),
     );
+  }
+
+  Widget _buildBooksList() {
+    return _isLoading
+        ? Container(
+            child: LoadingIndicator(),
+          )
+        : _newBooksList();
+  }
+
+  Widget _newBooksList() {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 24.0,
+        vertical: 24.0,
+      ),
+      child: ListView.separated(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: _books.length,
+        itemBuilder: (context, index) {
+          var book = _books[index];
+
+          return Container(
+            height: 180.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.0),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey[300]!,
+                    blurRadius: 12.0,
+                    spreadRadius: 2.0,
+                    offset: Offset(0, 5)),
+              ],
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8.0),
+                    bottomLeft: Radius.circular(8.0),
+                  ),
+                  child: Image.network(
+                    book.id % 2 == 0
+                        ? "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348322381l/3450744.jpg"
+                        : "https://m.media-amazon.com/images/I/41k+WVPLwZL.jpg",
+                    fit: BoxFit.cover,
+                    height: double.infinity,
+                    width: 120,
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    height: double.infinity,
+                    padding: const EdgeInsets.all(12.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        MongolText(
+                          book.title,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.headline2!,
+                        ),
+                        SizedBox(
+                          width: 16.0,
+                        ),
+                        MongolText(
+                          book.content,
+                          maxLines: 4,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(fontSize: 16.0),
+                        ),
+                        Spacer(),
+                        Column(
+                          children: [
+                            MongolText(
+                              book.author!,
+                              style: TextStyle(fontFamily: 'haratig'),
+                            ),
+                            Spacer(),
+                            MongolText(
+                              "4.5/5",
+                              style: TextStyle(
+                                fontFamily: 'haratig',
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+        separatorBuilder: (context, index) {
+          return SizedBox(height: 24.0);
+        },
+      ),
+    );
+  }
+
+  // Old version of the UI
+  Widget _oldBooksGrid() {
+    return GridView.builder(
+        controller: _scrollController,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 4,
+          childAspectRatio: 1 / 2,
+        ),
+        scrollDirection: Axis.vertical,
+        itemBuilder: (context, index) {
+          return BookWidget(
+            book: _books[index],
+          );
+        },
+        itemCount: _books.length);
   }
 
   loadData() async {
