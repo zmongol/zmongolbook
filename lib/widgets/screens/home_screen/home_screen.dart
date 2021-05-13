@@ -18,9 +18,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  static const labelHome = "ᢌᡪᢙᡪᢊᡪᡨ";
-  static const labelBook = "ᡯᡭᢍ";
-  static const labelProfile = "ᢘᡭᢊᡬᢞᡪᡱᡱᡭᢑᢉᡨ";
+  static const labelNews = "News";
+  static const labelBook = "Book";
+  static const labelProfile = "Profile";
 
   late StreamSubscription _sub;
   int _selectedIndex = 0;
@@ -151,11 +151,11 @@ class _HomeScreenState extends State<HomeScreen> {
           body: _bodyView(),
           bottomNavigationBar: BottomNavigationBar(
             selectedLabelStyle:
-                Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18.0),
+                Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14.0),
             unselectedLabelStyle:
-                Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18.0),
+                Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14.0),
             items: [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: labelHome),
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: labelNews),
               BottomNavigationBarItem(icon: Icon(Icons.book), label: labelBook),
               BottomNavigationBarItem(
                   icon: Icon(Icons.perm_identity), label: labelProfile)
@@ -172,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var ending;
     switch (_selectedIndex) {
       case 0:
-        ending = labelHome;
+        ending = labelNews;
         break;
       case 1:
         ending = labelBook;
@@ -187,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (ending == null) {
       return title;
     } else {
-      return title + ' - ' + ending;
+      return title + ' ' + ending;
     }
   }
 
