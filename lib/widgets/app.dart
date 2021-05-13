@@ -35,18 +35,17 @@ class _MongolBookAppState extends State<MongolBookApp>
     importance: Importance.max,
   );
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
+      FlutterLocalNotificationsPlugin();
 
   @override
-   void initState() {
+  void initState() {
     WidgetsBinding.instance!.addObserver(this);
     super.initState();
     AppSetting.instance.get();
-     showForegroundNotification();
+    showForegroundNotification();
   }
 
   Future showForegroundNotification() async {
-
     FlutterLocalNotificationsPlugin flp = FlutterLocalNotificationsPlugin();
     var android = AndroidInitializationSettings('@mipmap/ic_launcher');
     var iOS = IOSInitializationSettings();
@@ -61,7 +60,7 @@ class _MongolBookAppState extends State<MongolBookApp>
     );
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("Firebase: "+message.notification!.body.toString());
+      print("Firebase: " + message.notification!.body.toString());
       RemoteNotification notification = message.notification!;
       AndroidNotification android = message.notification!.android!;
       if (notification != null && android != null) {
@@ -70,13 +69,12 @@ class _MongolBookAppState extends State<MongolBookApp>
     });
   }
 
-  void showNotification( v, flp) async {
+  void showNotification(v, flp) async {
     var android = AndroidNotificationDetails(
         'zmongolbook', 'channel NAME', 'CHANNEL DESCRIPTION',
         priority: Priority.high, importance: Importance.max);
     var platform = NotificationDetails(android: android);
-    await flp.show(0, 'Zmongolbook', '$v', platform,
-        payload: 'VIS \n $v');
+    await flp.show(0, 'Zmongolbook', '$v', platform, payload: 'VIS \n $v');
   }
 
   @override
@@ -173,7 +171,8 @@ class _MongolBookAppState extends State<MongolBookApp>
               if (settings.name == '/categoriesSearchResult') {
                 Map args = settings.arguments as Map;
                 return FadePageRoute(
-                    child: ScaffoldWrapper(CategoriesSearchResultScreen(args['category'])),
+                    child: ScaffoldWrapper(
+                        CategoriesSearchResultScreen(args['category'])),
                     settings: settings);
               }
               if (settings.name == '/setting')
