@@ -10,7 +10,7 @@ class ApiManager {
   static Future<List<dynamic>> getTitle() async {
     HttpClient client = new HttpClient();
 
-    var requestUrl = BASE_URL + "read_api.php";
+    var requestUrl = BASE_URL + "/read_api.php";
 
     HttpClientRequest request = await client.getUrl(Uri.parse(requestUrl));
 
