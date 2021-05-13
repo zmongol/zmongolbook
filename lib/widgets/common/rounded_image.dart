@@ -18,8 +18,12 @@ class RoundedImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(radius),
-      child:
-          Image.network(imageUrl, fit: BoxFit.cover, height: size, width: size),
+      child: Image.network(
+        imageUrl,
+        fit: BoxFit.cover,
+        height: size,
+        width: size,
+      ),
     );
   }
 }
