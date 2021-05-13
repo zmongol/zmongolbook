@@ -87,7 +87,7 @@ class _MongolBookAppState extends State<MongolBookApp>
     return ThemeData(
         textTheme: TextTheme(
           headline1: TextStyle(
-              fontFamily: 'z52ordostig',
+              fontFamily: 'haratig',
               fontSize: 25,
               fontWeight: FontWeight.w400,
               color: Colors.black),
