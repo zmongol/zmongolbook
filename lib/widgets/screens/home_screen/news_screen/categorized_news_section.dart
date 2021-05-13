@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
+import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/category_pills.dart';
 
 import 'categorized_news_list.dart';
 
@@ -22,15 +22,10 @@ class CategorizedNewsSection extends StatelessWidget {
             ? ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  Center(
-                    child: MongolText(
-                      categoryName,
-                      style: Theme.of(context).textTheme.headline2,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  CategoryPill(
+                    text: categoryName,
+                    isCenter: true,
                   ),
-                  VerticalDivider(),
                   SizedBox(
                     width: 16.0,
                   ),
