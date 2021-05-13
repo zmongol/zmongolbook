@@ -45,6 +45,7 @@ class _BooksScreenState extends State<BooksScreen> {
           height: double.infinity,
           padding: EdgeInsets.symmetric(vertical: 16),
           child: GridView.builder(
+              controller: _scrollController,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
                 childAspectRatio: 1 / 2,
@@ -57,7 +58,11 @@ class _BooksScreenState extends State<BooksScreen> {
               },
               itemCount: _books.length),
         ),
-        _isLoading ? LoadingIndicator() : Container(),
+        _isLoading
+            ? Center(
+                child: LoadingIndicator(),
+              )
+            : Container(),
       ],
     );
   }
