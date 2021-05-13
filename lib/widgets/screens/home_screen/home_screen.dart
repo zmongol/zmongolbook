@@ -18,6 +18,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  static const labelHome = "ᢌᡪᢙᡪᢊᡪᡨ";
+  static const labelBook = "ᡯᡭᢍ";
+  static const labelProfile = "ᢘᡭᢊᡬᢞᡪᡱᡱᡭᢑᢉᡨ";
+
   late StreamSubscription _sub;
   int _selectedIndex = 0;
 
@@ -91,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
             toolbarHeight: 40,
             centerTitle: true,
             title: Text(
-              'ZmongolBook',
+              _buildTitle(),
               style: Theme.of(context).textTheme.headline1,
             ),
             actions: [
@@ -146,17 +150,45 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           body: _bodyView(),
           bottomNavigationBar: BottomNavigationBar(
+            selectedLabelStyle:
+                Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18.0),
+            unselectedLabelStyle:
+                Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18.0),
             items: [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'News'),
-              BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Books'),
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: labelHome),
+              BottomNavigationBarItem(icon: Icon(Icons.book), label: labelBook),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.perm_identity), label: 'Profile')
+                  icon: Icon(Icons.perm_identity), label: labelProfile)
             ],
             currentIndex: _selectedIndex,
             selectedItemColor: Colors.green[500],
             onTap: _onItemTapped,
           )),
     );
+  }
+
+  String _buildTitle() {
+    var title = 'Z ᢌᡭᡪᢊᡱᡱᡭᢐ';
+    var ending;
+    switch (_selectedIndex) {
+      case 0:
+        ending = labelHome;
+        break;
+      case 1:
+        ending = labelBook;
+        break;
+      case 2:
+        ending = labelProfile;
+        break;
+      default:
+        break;
+    }
+
+    if (ending == null) {
+      return title;
+    } else {
+      return title + ' - ' + ending;
+    }
   }
 
   void _onItemTapped(int index) {
