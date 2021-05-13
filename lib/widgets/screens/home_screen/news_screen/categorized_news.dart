@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/Model/top_article.dart';
+import 'package:mongol_ebook/widgets/common/rounded_image.dart';
 
 class CategorizedNews extends StatelessWidget {
   static const placeholder1 =
@@ -48,14 +49,9 @@ class CategorizedNews extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(16.0),
-              child: Image.network(
-                  //TODO: Replace placeholder with image from backend
-                  imgUrl,
-                  fit: BoxFit.cover,
-                  height: _imageSize,
-                  width: _imageSize),
+            RoundedImage(
+              size: _imageSize,
+              imageUrl: imgUrl,
             ),
             SizedBox(
               height: 16.0,
