@@ -44,7 +44,7 @@ class _SearchScreenState extends State<SearchScreen> {
         builder: (kbCtrl) {
           return Scaffold(
             appBar: AppBar(
-              title: Text(HomeScreen.itemsIndex==0?"Search by Category":"Search by Title"),
+              title: Text("Search by Title"),
               elevation: 0,
               leading: GestureDetector(
                 onTap: () {
@@ -56,15 +56,7 @@ class _SearchScreenState extends State<SearchScreen> {
               actions: [
                 GestureDetector(
                   onTap: () {
-                    String text = kbCtrl.textEditingController.text;
-                    HomeScreen.itemsIndex == 0
-                        ? Navigator.of(context).pushReplacementNamed(
-                            '/categoriesSearchResult',
-                            arguments: {'category': text})
-                        : Navigator.of(context).pushReplacementNamed(
-                            '/searchResult',
-                            arguments: {'value': text});
-                    //Navigator.pop(context, text);
+                    _goToSearchResults(kbCtrl.textEditingController.text);
                     kbCtrl.textEditingController.text = '';
                   },
                   child: Padding(
@@ -231,5 +223,10 @@ class _SearchScreenState extends State<SearchScreen> {
         },
       )),
     );
+  }
+
+  void _goToSearchResults(String query) {
+    Navigator.of(context)
+        .pushReplacementNamed('/searchResult', arguments: {'value': query});
   }
 }
