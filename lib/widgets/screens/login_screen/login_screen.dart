@@ -1,17 +1,13 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:mongol_ebook/Api%20Manager/api_manager.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:mongol_ebook/Helper/AppConstant.dart';
 import 'package:mongol_ebook/network/api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uni_links/uni_links.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -30,31 +26,31 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     logIn();
   }
 
   void logIn() {
-    getUser().then((value) {
-      if (value) {
-        FirebaseMessaging.instance.getToken().then((token) {
-          print("Firebase Token: "+ token.toString());
-          ApiManager.sendToken(prefs.getString(USERNAME)!, token.toString())
-              .then((value) {
-                if(value.contains("success"))
-                  {
-                    print("Send token response: "+value);
-                    showToast('Notifications Subscribed');
-                  }
-          });
-        });
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    isLoggedIn().then((isLoggedIn) {
+      if(isLoggedIn) {
+        //   FirebaseMessaging.instance.getToken().then((token) {
+        //   print("Firebase Token: " + token.toString());
+        //   ApiManager.sendToken(prefs.getString(USERNAME)!, token.toString())
+        //       .then((value) {
+        //     if (value.contains("success")) {
+        //       print("Send token response: " + value);
+        //       showToast('Notifications Subscribed');
+        //     }
+        //   });
+
+        // });
+
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             duration: Duration(seconds: 2), content: Text("Logging In")));
-        Future.delayed(const Duration(seconds: 2), () {
+          Future.delayed(const Duration(seconds: 2), () {
           ScaffoldMessenger.of(context).removeCurrentSnackBar();
           Navigator.of(context).pushReplacementNamed('/home');
-        });
+          });
       }
     });
   }
@@ -70,106 +66,99 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Colors.white,
       ),
       body: Container(
-        height: MediaQuery
-            .of(context)
-            .size
-            .height,
+        height: MediaQuery.of(context).size.height,
         width: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Expanded(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Column(
                   children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          'ZmongolBook',
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .headline1,
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "Login to your account",
-                          style: TextStyle(
-                              fontSize: 15, color: Colors.grey[700]),
-                        )
-                      ],
+                    Text(
+                      'ZmongolBook',
+                      style: Theme.of(context).textTheme.headline1,
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 40),
-                      child: Column(
-                        children: <Widget>[
-                          inputFile(
-                              label: "Username", textController: usernameText),
-                          inputFile(
-                              label: "Password",
-                              obscureText: true,
-                              textController: passwordText)
-                        ],
-                      ),
+                    SizedBox(
+                      height: 20,
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 100),
-                      child: Container(
-                        padding: EdgeInsets.only(top: 3, left: 3),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            border: Border(
-                              bottom: BorderSide(color: Colors.black),
-                              top: BorderSide(color: Colors.black),
-                              left: BorderSide(color: Colors.black),
-                              right: BorderSide(color: Colors.black),
-                            )),
-                        child: MaterialButton(
-                          minWidth: double.infinity,
-                          height: 50,
-                          onPressed: () => _tryLogin(),
-                          color: Color(0xff0095FF),
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: Text(
-                            "Login",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text("Don't have an account?"),
-                      ],
-                    ),
-                    Container(
-                      child: Column(
-                        children: [
-                          SignInButtonBuilder(
-                              backgroundColor: Colors.blueGrey,
-                              onPressed: () {
-                                Navigator.of(context).pushNamed('/signup');
-                              },
-                              text: 'SignUp With Phone'),
-                          SignInButton(
-                            Buttons.FacebookNew,
-                            onPressed: () => fbLogin(context),
-                          ),
-                        ],
-                      ),
+                    Text(
+                      "Login to your account",
+                      style: TextStyle(fontSize: 15, color: Colors.grey[700]),
                     )
                   ],
-                ))
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40),
+                  child: Column(
+                    children: <Widget>[
+                      inputFile(
+                          label: "Username", textController: usernameText),
+                      inputFile(
+                          label: "Password",
+                          obscureText: true,
+                          textController: passwordText)
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 100),
+                  child: Container(
+                    padding: EdgeInsets.only(top: 3, left: 3),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        border: Border(
+                          bottom: BorderSide(color: Colors.black),
+                          top: BorderSide(color: Colors.black),
+                          left: BorderSide(color: Colors.black),
+                          right: BorderSide(color: Colors.black),
+                        )),
+                    child: MaterialButton(
+                      minWidth: double.infinity,
+                      height: 50,
+                      onPressed: () => _tryLogin(),
+                      color: Color(0xff0095FF),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: Text(
+                        "Login",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Don't have an account?"),
+                  ],
+                ),
+                Container(
+                  child: Column(
+                    children: [
+                      SignInButtonBuilder(
+                          backgroundColor: Colors.blueGrey,
+                          onPressed: () {
+                            Navigator.of(context).pushNamed('/signup');
+                          },
+                          text: 'SignUp With Phone'),
+                      // SignInButton(
+                      //   Buttons.FacebookNew,
+                      //   onPressed: () => fbLogin(context),
+                      // ),
+                    ],
+                  ),
+                )
+              ],
+            ))
           ],
         ),
       ),
@@ -180,43 +169,41 @@ class _LoginPageState extends State<LoginPage> {
     var result = await apiService.login(usernameText.text, passwordText.text);
 
     if (result.success) {
-        saveUser();
-        logIn();
+      saveAccessToken(result.accessToken!);
+      logIn();
     } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(result.errorMessage!)));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(result.errorMessage!)));
     }
   }
 
-  saveUser() async {
+  saveAccessToken(String token) async {
     prefs = await SharedPreferences.getInstance();
-    prefs.setString(USERNAME, usernameText.text);
-    prefs.setBool(LOGGED_IN, true);
+    prefs.setString(PREFS_ACCESS_TOKEN, token);
   }
 
-  Future<bool> getUser() async {
+  Future<bool> isLoggedIn() async {
     prefs = await SharedPreferences.getInstance();
-    if (prefs.getString(USERNAME) == null) {
-      return false;
-    }
-    return prefs.getBool(LOGGED_IN) ?? false;
+
+    return prefs.getString(PREFS_ACCESS_TOKEN) != null;
   }
 
-  Future<void> fbLogin(BuildContext ctx) async {
-    final LoginResult result = await FacebookAuth.instance
-        .login(); // by the fault we request the email and the public profile
-    if (result.status == LoginStatus.success) {
-      // you are logged
-      final AccessToken accessToken = result.accessToken!;
-      print('FB access token: ' + accessToken.token);
-      ScaffoldMessenger.of(ctx)
-          .showSnackBar(SnackBar(content: Text("LogIn Successful")));
-      saveUser();
-      Future.delayed(const Duration(seconds: 2), () {
-        ScaffoldMessenger.of(context).removeCurrentSnackBar();
-        Navigator.of(context).pushReplacementNamed('/home');
-      });
-    }
-  }
+  // Future<void> fbLogin(BuildContext ctx) async {
+  //   final LoginResult result = await FacebookAuth.instance
+  //       .login(); // by the fault we request the email and the public profile
+  //   if (result.status == LoginStatus.success) {
+  //     // you are logged
+  //     final AccessToken accessToken = result.accessToken!;
+  //     print('FB access token: ' + accessToken.token);
+  //     ScaffoldMessenger.of(ctx)
+  //         .showSnackBar(SnackBar(content: Text("LogIn Successful")));
+  //     saveUser();
+  //     Future.delayed(const Duration(seconds: 2), () {
+  //       ScaffoldMessenger.of(context).removeCurrentSnackBar();
+  //       Navigator.of(context).pushReplacementNamed('/home');
+  //     });
+  //   }
+  // }
 
   void showToast(String msg) {
     Fluttertoast.showToast(
