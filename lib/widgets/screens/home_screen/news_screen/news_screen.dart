@@ -135,7 +135,6 @@ class _NewsScreenState extends State<NewsScreen> {
     return !_isLoadingTopArticles
         ? TopStories(
             articles: _topArticles,
-            onTap: () => _openDetailPage(context, priorityArticle!.id),
           )
         : Row(children: [
             Flexible(
