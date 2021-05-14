@@ -80,11 +80,18 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 32.0,
                 ),
-                _inputField(usernameText, "Username"),
+                _inputField(
+                  controller: usernameText,
+                  label: "Username",
+                ),
                 SizedBox(
                   height: 16.0,
                 ),
-                _inputField(passwordText, "Password"),
+                _inputField(
+                  controller: passwordText,
+                  label: "Password",
+                  obscureText: true,
+                ),
                 SizedBox(
                   height: 24.0,
                 ),
@@ -150,7 +157,10 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _inputField(TextEditingController controller, String label) {
+  Widget _inputField(
+      {TextEditingController? controller,
+      String? label,
+      bool obscureText = false}) {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -167,6 +177,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       child: TextFormField(
         controller: controller,
+        obscureText: obscureText,
         decoration: InputDecoration.collapsed(
           hintText: label,
         ),
