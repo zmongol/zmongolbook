@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:mongol_ebook/Helper/AppConstant.dart';
+import 'package:mongol_ebook/Helper/AppStyles.dart';
 import 'package:mongol_ebook/network/api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,12 +17,11 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final apiService = ApiService(Dio(), BASE_URL + ":8080");
   final usernameText = TextEditingController();
-
   final passwordText = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   late bool userLogged;
   late SharedPreferences prefs;
-  bool _isSnackbarActive = false;
 
   @override
   void initState() {
@@ -32,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void logIn() {
     isLoggedIn().then((isLoggedIn) {
-      if(isLoggedIn) {
+      if (isLoggedIn) {
         //   FirebaseMessaging.instance.getToken().then((token) {
         //   print("Firebase Token: " + token.toString());
         //   ApiManager.sendToken(prefs.getString(USERNAME)!, token.toString())
@@ -45,12 +44,12 @@ class _LoginPageState extends State<LoginPage> {
 
         // });
 
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             duration: Duration(seconds: 2), content: Text("Logging In")));
-          Future.delayed(const Duration(seconds: 2), () {
+        Future.delayed(const Duration(seconds: 2), () {
           ScaffoldMessenger.of(context).removeCurrentSnackBar();
           Navigator.of(context).pushReplacementNamed('/home');
-          });
+        });
       }
     });
   }
@@ -58,109 +57,181 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
-        brightness: Brightness.light,
-        backgroundColor: Colors.white,
-      ),
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Expanded(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Text(
-                      'ZmongolBook',
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "Login to your account",
-                      style: TextStyle(fontSize: 15, color: Colors.grey[700]),
-                    )
-                  ],
+      backgroundColor: Color(0xFFFAFAFA),
+      body: SafeArea(
+        child: Center(
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              padding: const EdgeInsets.all(40.0),
+              shrinkWrap: true,
+              children: [
+                Text(
+                  'Z ᢌᡭᡪᢊᡱᡱᡭᢐ',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1!
+                      .copyWith(fontSize: 40, fontWeight: FontWeight.w600),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 40),
-                  child: Column(
-                    children: <Widget>[
-                      inputFile(
-                          label: "Username", textController: usernameText),
-                      inputFile(
-                          label: "Password",
-                          obscureText: true,
-                          textController: passwordText)
-                    ],
+                Text(
+                  "Please login to continue",
+                  style: TextStyle(fontSize: 24, color: Colors.grey[800]),
+                ),
+                SizedBox(
+                  height: 32.0,
+                ),
+                _inputField(usernameText, "Username"),
+                SizedBox(
+                  height: 16.0,
+                ),
+                _inputField(passwordText, "Password"),
+                SizedBox(
+                  height: 24.0,
+                ),
+                _button(
+                  label: "Login",
+                  onTap: _tryLogin,
+                  btnColor: Colors.green[700]!,
+                  textColor: Color(SOFT_WHITE),
+                ),
+                SizedBox(
+                  height: 32.0,
+                ),
+                _forgotPassword(),
+                SizedBox(
+                  height: 16.0,
+                ),
+                _textRegister(),
+                // SizedBox(
+                //   height: 48.0,
+                // ),
+                // Row(
+                //   children: [
+                //     Expanded(
+                //       child: Divider(),
+                //     ),
+                //     Text('or'),
+                //     Expanded(
+                //       child: Divider(),
+                //     )
+                //   ],
+                // ),
+                SizedBox(
+                  height: 48.0,
+                ),
+                _button(
+                  label: "Register",
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/signup');
+                  },
+                  btnColor: Color(SOFT_BLACK),
+                  textColor: Color(SOFT_WHITE),
+                ),
+                SizedBox(
+                  height: 12.0,
+                ),
+                _button(
+                  label: "Login with Facebook",
+                  leading: SvgPicture.asset(
+                    "assets/icon/facebook.svg",
+                    color: Colors.white,
+                    height: 20.0,
+                    width: 20.0,
                   ),
+                  onTap: () => null,
+                  btnColor: Color(FACEBOOK_COLOR),
+                  textColor: Color(SOFT_WHITE),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 100),
-                  child: Container(
-                    padding: EdgeInsets.only(top: 3, left: 3),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border(
-                          bottom: BorderSide(color: Colors.black),
-                          top: BorderSide(color: Colors.black),
-                          left: BorderSide(color: Colors.black),
-                          right: BorderSide(color: Colors.black),
-                        )),
-                    child: MaterialButton(
-                      minWidth: double.infinity,
-                      height: 50,
-                      onPressed: () => _tryLogin(),
-                      color: Color(0xff0095FF),
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text("Don't have an account?"),
-                  ],
-                ),
-                Container(
-                  child: Column(
-                    children: [
-                      SignInButtonBuilder(
-                          backgroundColor: Colors.blueGrey,
-                          onPressed: () {
-                            Navigator.of(context).pushNamed('/signup');
-                          },
-                          text: 'SignUp With Phone'),
-                      // SignInButton(
-                      //   Buttons.FacebookNew,
-                      //   onPressed: () => fbLogin(context),
-                      // ),
-                    ],
-                  ),
-                )
               ],
-            ))
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _inputField(TextEditingController controller, String label) {
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(32.0),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey[200]!,
+            blurRadius: 4.0,
+            spreadRadius: 0.5,
+            offset: Offset(0, 0),
+          ),
+        ],
+      ),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration.collapsed(
+          hintText: label,
+        ),
+      ),
+    );
+  }
+
+  Widget _button(
+      {required String label,
+      required VoidCallback onTap,
+      required Color btnColor,
+      required Color textColor,
+      Widget? leading}) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(32.0),
+        color: btnColor,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey[300]!,
+            blurRadius: 12.0,
+            spreadRadius: 4.0,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: TextButton(
+        onPressed: onTap,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            leading != null
+                ? Container(
+                    child: leading,
+                    margin: EdgeInsets.only(right: 8.0),
+                  )
+                : Container(),
+            Text(
+              label,
+              style: Theme.of(context).textTheme.button!.copyWith(
+                    color: textColor,
+                    fontWeight: FontWeight.w600,
+                  ),
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _forgotPassword() {
+    return Text(
+      "Forgot password?",
+      textAlign: TextAlign.center,
+      style: TextStyle(color: Color(SOFT_BLACK), fontWeight: FontWeight.w300),
+    );
+  }
+
+  Widget _textRegister() {
+    return GestureDetector(
+      onTap: null,
+      child: Text(
+        "Don't have an account yet?",
+        textAlign: TextAlign.center,
+        style: TextStyle(color: Color(SOFT_BLACK), fontWeight: FontWeight.w300),
       ),
     );
   }
