@@ -22,6 +22,7 @@ class NewArticle {
   final String? imageUrl;
   final String? author;
   final String? websiteUrl;
+  final DateTime? dateCreated;
 
   NewArticle.fromJson(Map<String, dynamic> json)
       : id = json['id'],
@@ -31,5 +32,6 @@ class NewArticle {
         categoryId = json['category'],
         imageUrl = json['image_url'],
         author = json['author'],
-        websiteUrl = json['websiteUrl'];
+        websiteUrl = json['websiteUrl'],
+        dateCreated = DateTime.tryParse(json['date_created']);
 }
