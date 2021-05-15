@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
           extendBodyBehindAppBar: false,
           backgroundColor: Theme.of(context).backgroundColor,
           appBar: AppBar(
-            backgroundColor: Color(SOFT_WHITE),
+            backgroundColor: Colors.transparent,
             elevation: 0,
             toolbarHeight: 40,
             centerTitle: true,
@@ -154,7 +154,6 @@ class _HomeScreenState extends State<HomeScreen> {
             child: _bodyView(),
           ),
           bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: Color(SOFT_WHITE),
             selectedLabelStyle:
                 Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14.0),
             unselectedLabelStyle:

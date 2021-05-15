@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mongol_ebook/Api%20Manager/api_manager.dart';
 import 'package:mongol_ebook/Helper/AppConstant.dart';
+import 'package:mongol_ebook/Helper/AppStyles.dart';
 import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/Model/news_category.dart';
 import 'package:mongol_ebook/Model/top_article.dart';
@@ -99,7 +100,6 @@ class _NewsScreenState extends State<NewsScreen> {
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
     return Container(
-      color: Colors.grey[200],
       child: SingleChildScrollView(
         child: Column(
           children: [
