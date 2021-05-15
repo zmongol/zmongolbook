@@ -42,11 +42,10 @@ class _LoginPageState extends State<LoginPage> {
         //       showToast('Notifications Subscribed');
         //     }
         //   });
-
         // });
 
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            duration: Duration(seconds: 2), content: Text("ᡯᡪᡳᢙᡪᢞᡪᢋᡭ")));
+            duration: Duration(seconds: 2), content: Text("loging in 正在登陆")));
         Future.delayed(const Duration(seconds: 2), () {
           ScaffoldMessenger.of(context).removeCurrentSnackBar();
           Navigator.of(context).pushReplacementNamed('/home');
