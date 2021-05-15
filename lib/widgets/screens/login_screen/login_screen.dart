@@ -158,18 +158,18 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 12.0,
                 ),
-                _button(
-                  label: "ᢡᡪᡬᡬᢔᡴᡭᢣ ᡬᡬᡪᢝ ᡯᡪᡳᢙᡪᢞᡪᢋᡭ Facebook login 脸书登陆",
-                  leading: SvgPicture.asset(
-                    "assets/icon/facebook.svg",
-                    color: Colors.white,
-                    height: 20.0,
-                    width: 20.0,
-                  ),
-                  onTap: () => null,
-                  btnColor: Color(FACEBOOK_COLOR),
-                  textColor: Color(SOFT_WHITE),
-                ),
+                // _button(
+                //   label: "ᢡᡪᡬᡬᢔᡴᡭᢣ ᡬᡬᡪᢝ ᡯᡪᡳᢙᡪᢞᡪᢋᡭ Facebook login 脸书登陆",
+                //   leading: SvgPicture.asset(
+                //     "assets/icon/facebook.svg",
+                //     color: Colors.white,
+                //     height: 20.0,
+                //     width: 20.0,
+                //   ),
+                //   onTap: () => null,
+                //   btnColor: Color(FACEBOOK_COLOR),
+                //   textColor: Color(SOFT_WHITE),
+                // ),
               ],
             ),
           ),
