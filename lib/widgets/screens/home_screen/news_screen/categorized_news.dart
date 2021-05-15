@@ -87,9 +87,12 @@ class CategorizedNews extends StatelessWidget {
                       SizedBox(
                         height: 24.0,
                       ),
-                      MongolText(
-                        article.author,
-                        style: Theme.of(context).textTheme.bodyText1!,
+                      Flexible(
+                        child: MongolText(
+                          article.author,
+                          style: Theme.of(context).textTheme.bodyText1!,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ],
                   ),
