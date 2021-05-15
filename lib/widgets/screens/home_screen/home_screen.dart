@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
           extendBodyBehindAppBar: false,
           backgroundColor: Theme.of(context).backgroundColor,
           appBar: AppBar(
-            backgroundColor: Colors.grey[200],
+            backgroundColor: Color(SOFT_WHITE),
             elevation: 0,
             toolbarHeight: 40,
             centerTitle: true,
