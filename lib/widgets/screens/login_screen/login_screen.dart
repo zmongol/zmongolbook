@@ -8,6 +8,7 @@ import 'package:mongol_ebook/Helper/AppConstant.dart';
 import 'package:mongol_ebook/Helper/AppStyles.dart';
 import 'package:mongol_ebook/network/api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mongol/mongol.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -45,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
         // });
 
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            duration: Duration(seconds: 2), content: Text("Logging In")));
+            duration: Duration(seconds: 2), content: Text("ᡯᡪᡳᢙᡪᢞᡪᢋᡭ")));
         Future.delayed(const Duration(seconds: 2), () {
           ScaffoldMessenger.of(context).removeCurrentSnackBar();
           Navigator.of(context).pushReplacementNamed('/home');
@@ -66,37 +67,42 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.all(40.0),
               shrinkWrap: true,
               children: [
-                Text(
-                  'Z ᢌᡭᡪᢊᡱᡱᡭᢐ',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1!
-                      .copyWith(fontSize: 40, fontWeight: FontWeight.w600),
+                Center(
+                  child: MongolText(
+                    'Z ᢌᡭᡪᢊᡱᡱᡭᢐ',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline1!
+                        .copyWith(fontSize: 45, fontWeight: FontWeight.w600),
+                  ),
+                ),
+                SizedBox(
+                  height: 8.0,
                 ),
                 Text(
-                  "Please login to continue",
-                  style: TextStyle(fontSize: 24, color: Colors.grey[800]),
+                  "ᡯᡪᡳᢙᡪᢞᡪᢊᡪᡭᡧ ᡥᡭᡪᢊᢔᡬᡱᡱᡪᢞᡪᡫ Please login to continue 请先登陆",
+                  style: TextStyle(fontFamily: 'haratig', fontSize: 16, color: Colors.grey[800]),
                 ),
                 SizedBox(
                   height: 32.0,
                 ),
                 _inputField(
                   controller: usernameText,
-                  label: "Username",
+                  label: "ᡯᡪᢝᡨ user name 用户姓名",
                 ),
                 SizedBox(
                   height: 16.0,
                 ),
                 _inputField(
                   controller: passwordText,
-                  label: "Password",
+                  label: "ᡯᡬᡱᡱᡭᢚᡧ ᢙᡭᡱᡱᡪᢝ password 密码",
                   obscureText: true,
                 ),
                 SizedBox(
                   height: 24.0,
                 ),
                 _button(
-                  label: "Login",
+                  label: "ᡯᡪᡳᢙᡪᢞᡪᢋᡭ login 登陆",
                   onTap: _tryLogin,
                   btnColor: Colors.green[700]!,
                   textColor: Color(SOFT_WHITE),
@@ -127,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 48.0,
                 ),
                 _button(
-                  label: "Register",
+                  label: "ᢘᡪᡪᢊᢔᡪᢑᡪᡪᡪᡳ Register 注册",
                   onTap: () {
                     Navigator.of(context).pushNamed('/signup');
                   },
@@ -138,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 12.0,
                 ),
                 _button(
-                  label: "Login with Facebook",
+                  label: "ᢡᡪᡬᡬᢔᡴᡭᢣ ᡬᡬᡪᢝ ᡯᡪᡳᢙᡪᢞᡪᢋᡭ Facebook login 脸书登陆",
                   leading: SvgPicture.asset(
                     "assets/icon/facebook.svg",
                     color: Colors.white,
@@ -230,9 +236,9 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _forgotPassword() {
     return Text(
-      "Forgot password?",
+      "ᡯᡬᡱᡱᡭᢚᡧ ᢙᡭᡱᡱᡪᢝ ᡬᡬᡪᡧ ᢌᡪᢞᢙᡪᡪᡪᢔᡪᡧ Forgot your password 忘记密码?",
       textAlign: TextAlign.center,
-      style: TextStyle(color: Color(SOFT_BLACK), fontWeight: FontWeight.w300),
+      style: TextStyle(fontFamily: 'haratig', color: Color(SOFT_BLACK), fontWeight: FontWeight.w300),
     );
   }
 
@@ -240,9 +246,9 @@ class _LoginPageState extends State<LoginPage> {
     return GestureDetector(
       onTap: null,
       child: Text(
-        "Don't have an account yet?",
+        "ᡯᡪᡳᢙᡪᢞᡪᢋᡭ ᢙᡭᡱᡱᡪᢝ ᡥᡭᡬᢊᡪᡫ ᡳᡪᡬᡬᡪᡪᢔᡪᡱᡱᡪᢝ Do not have an account 没有账号?",
         textAlign: TextAlign.center,
-        style: TextStyle(color: Color(SOFT_BLACK), fontWeight: FontWeight.w300),
+        style: TextStyle(fontFamily: 'haratig', color: Color(SOFT_BLACK), fontWeight: FontWeight.w300),
       ),
     );
   }
