@@ -6,7 +6,7 @@ import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/network/api_service.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
 import 'package:mongol_ebook/widgets/common/rounded_image.dart';
-
+import 'package:mongol_ebook/extensions/scroll_controller_extension.dart';
 
 class SearchResultScreen extends StatefulWidget {
   final dynamic value;
@@ -23,10 +23,20 @@ class _SearchScreenState extends State<SearchResultScreen> {
   List<NewArticle> _articles = [];
 
   late ApiService _apiService;
+  late ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      if (_scrollController.isEndOfPage() && !_isLoading) {
+        setState(() {
+          _isLoading = true;
+          _search(widget.value);
+        });
+      }
+    });
     _apiService = ApiService(Dio(), BASE_URL + ":8080");
     _search(widget.value);
   }
@@ -46,56 +56,55 @@ class _SearchScreenState extends State<SearchResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
-        child: SafeArea(
-          child: Scaffold(
-            extendBodyBehindAppBar: false,
-            backgroundColor: Theme.of(context).backgroundColor,
-            appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              toolbarHeight: 40,
-              centerTitle: true,
-              title: Text(
-                'ZmongolBook',
-                style: Theme.of(context).textTheme.headline1,
-              ),
-              actions: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context, '');
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 16.0),
-                    child: Icon(
-                      Icons.search_off,
-                      color: Colors.black,
-                      size: 32,
-                    ),
+      decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+      child: SafeArea(
+        child: Scaffold(
+          extendBodyBehindAppBar: false,
+          backgroundColor: Theme.of(context).backgroundColor,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            toolbarHeight: 40,
+            centerTitle: true,
+            title: Text(
+              'ZmongolBook',
+              style: Theme.of(context).textTheme.headline1,
+            ),
+            actions: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context, '');
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: Icon(
+                    Icons.search_off,
+                    color: Colors.black,
+                    size: 32,
                   ),
                 ),
-              ],
-            ),
-            body: _content(),
+              ),
+            ],
           ),
-        ));
-  }
-
-  Widget _content() {
-    return _isLoading
-        ? Center(
-            child: LoadingIndicator(),
-          )
-        : Container(
-            height: double.infinity,
-            width: double.infinity,
-            padding: EdgeInsets.all(16),
-            child: _articles.length > 0
-                ? _resultsList()
-                : Center(
-                    child: Text('No data found'),
-                  ),
-          );
+          body: !_isLoading && _articles.isEmpty
+              ? Center(
+                  child: Text("No data found"),
+                )
+              : ListView(
+                  controller: _scrollController,
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    _resultsList(),
+                    _isLoading
+                        ? Container(
+                            child: LoadingIndicator(),
+                          )
+                        : Container(),
+                  ],
+                ),
+        ),
+      ),
+    );
   }
 
   Widget _resultsList() {
@@ -113,18 +122,25 @@ class _SearchScreenState extends State<SearchResultScreen> {
           },
           child: Container(
             padding: const EdgeInsets.all(8.0),
-            child: Column(children: [
-              RoundedImage(size: 120.0, imageUrl: article.imageUrl ?? _getImageUrl(article)),
-              SizedBox(height: 16.0,),Flexible(
-                child: MongolText(
-                  article.title,
-                  maxLines: 4,
-                  style: Theme.of(context).textTheme.headline2!,
-                  softWrap: true,
-                  overflow: TextOverflow.ellipsis,
+            child: Column(
+              children: [
+                RoundedImage(
+                    size: 120.0,
+                    imageUrl: article.imageUrl ?? _getImageUrl(article)),
+                SizedBox(
+                  height: 16.0,
                 ),
-              ),
-            ],),
+                Flexible(
+                  child: MongolText(
+                    article.title,
+                    maxLines: 4,
+                    style: Theme.of(context).textTheme.headline2!,
+                    softWrap: true,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
