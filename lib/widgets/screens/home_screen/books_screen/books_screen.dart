@@ -6,6 +6,7 @@ import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/network/api_service.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/books_screen/book_widget.dart';
+import 'package:mongol_ebook/extensions/scroll_controller_extension.dart';
 
 class BooksScreen extends StatefulWidget {
   @override
@@ -27,10 +28,7 @@ class _BooksScreenState extends State<BooksScreen> {
     super.initState();
     _scrollController = ScrollController();
     _scrollController.addListener(() {
-      bool isEndOfPage = _scrollController.offset >=
-              _scrollController.position.maxScrollExtent &&
-          !_scrollController.position.outOfRange;
-      if (isEndOfPage && !_isLoading) {
+      if (_scrollController.isEndOfPage() && !_isLoading) {
         setState(() {
           _isLoading = true;
           loadData();
@@ -59,8 +57,12 @@ class _BooksScreenState extends State<BooksScreen> {
                 height: 160.0,
                 width: double.infinity),
           ),
-           _newBooksList(),
-          _isLoading ? Container(child: LoadingIndicator(),) : Container(),
+          _newBooksList(),
+          _isLoading
+              ? Container(
+                  child: LoadingIndicator(),
+                )
+              : Container(),
         ],
       ),
     );
