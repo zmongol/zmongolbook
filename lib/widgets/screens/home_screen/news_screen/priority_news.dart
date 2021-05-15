@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Model/article.dart';
 
@@ -12,13 +13,16 @@ class PriorityNews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = DateFormat('yyyy-MM-dd');
+    String date = article.dateCreated != null
+        ? formatter.format(article.dateCreated!)
+        : '';
     return InkWell(
       onTap: onTap,
       child: Container(
           height: _height,
           child: Stack(
             children: [
-              //TODO: Replace placeholder with iamge from backend
               Image.network(
                 article.imageUrl ??
                     "https://images.barrons.com/im-335962?width=1260&size=1.5",
@@ -45,9 +49,10 @@ class PriorityNews extends StatelessWidget {
               Align(
                   alignment: Alignment.topRight,
                   child: Container(
-                      width: 100.0,
-                      margin: EdgeInsets.all(8.0),
+                      margin: EdgeInsets.all(16.0),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           MongolText(
                             article.title,
@@ -59,17 +64,45 @@ class PriorityNews extends StatelessWidget {
                             softWrap: true,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          Flexible(
-                            child: MongolText(
-                              article.content,
-                              maxLines: 4,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline2!
-                                  .copyWith(color: Colors.white),
-                              softWrap: true,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                          SizedBox(
+                            width: 8.0,
+                          ),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              MongolText(
+                                date,
+                                maxLines: 1,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .copyWith(color: Colors.white),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              SizedBox(
+                                height: 24.0,
+                              ),
+                              MongolText(
+                                article.author,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .copyWith(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            width: 16.0,
+                          ),
+                          MongolText(
+                            article.content,
+                            maxLines: 2,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline2!
+                                .copyWith(color: Colors.white),
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
                           )
                         ],
                       )))
