@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/Model/auth/login_result.dart';
+import 'package:mongol_ebook/Model/auth/register_result.dart';
 import 'package:mongol_ebook/Model/news_category.dart';
 
 class ApiService {
@@ -9,8 +10,8 @@ class ApiService {
 
   ApiService(this._dio, this._baseUrl);
 
-  Future<String?> register(String username, String password, String email,
-      String firstName, String? lastName) async {
+  Future<RegisterResult> register(String username, String password,
+      String email, String firstName, String? lastName) async {
     var endpoint = _baseUrl + "/api/auth/register";
     try {
       await _dio.post(endpoint, data: {
@@ -21,14 +22,12 @@ class ApiService {
         "last_name": lastName,
       });
     } on DioError catch (e) {
-      if (e.response != null) {
-        return e.response!.data["result"];
-      } else {
-        return "Unknown error";
-      }
+      String? errorMsg =
+          e.response != null ? e.response!.data["result"] : "Unknown error";
+      return RegisterResult(false, errorMsg);
     }
 
-    return null;
+    return RegisterResult(true, null);
   }
 
   Future<LoginResult> login(String username, String password) async {

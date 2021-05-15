@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mongol_ebook/Helper/AppConstant.dart';
+import 'package:mongol_ebook/Model/auth/register_result.dart';
 import 'package:mongol_ebook/network/api_service.dart';
 
 class SignupPage extends StatelessWidget {
@@ -13,6 +14,8 @@ class SignupPage extends StatelessWidget {
   final firstNameText = TextEditingController();
   final lastNameText = TextEditingController();
   // final phoneText = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,84 +42,139 @@ class SignupPage extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 40),
           height: MediaQuery.of(context).size.height - 50,
           width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Text(
-                    "Sign up",
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Text(
+                      "Sign up",
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Create an account, It's free ",
-                    style: TextStyle(fontSize: 15, color: Colors.grey[700]),
-                  )
-                ],
-              ),
-              Column(
-                children: [
-                  inputFile(label: "Username", textController: usernameText),
-                  inputFile(
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Create an account, It's free ",
+                      style: TextStyle(fontSize: 15, color: Colors.grey[700]),
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    inputFile(
+                      label: "Username",
+                      textController: usernameText,
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return "Username is required";
+                        }
+
+                        if (val.length < 4) {
+                          return "Username has to be at least 4 characters long.";
+                        }
+                      },
+                    ),
+                    inputFile(
                       label: "Password",
                       obscureText: true,
-                      textController: passwordText),
-                  inputFile(
+                      textController: passwordText,
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return "Password is required";
+                        }
+
+                        if (val.length < 8) {
+                          return "Password has to be at least 8 characters long.";
+                        }
+                      },
+                    ),
+                    inputFile(
                       label: "Confirm Password",
                       obscureText: true,
-                      textController: confirmPasswordText),
-                  inputFile(label: "Email", textController: emailText),
-                  inputFile(label: "First Name", textController: firstNameText),
-                  inputFile(label: "Last Name", textController: lastNameText),
-                  // inputFile(label: "Phone Number", textController: phoneText),
-                ],
-              ),
-              Container(
-                padding: EdgeInsets.only(top: 3, left: 3),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    border: Border(
-                      bottom: BorderSide(color: Colors.black),
-                      top: BorderSide(color: Colors.black),
-                      left: BorderSide(color: Colors.black),
-                      right: BorderSide(color: Colors.black),
-                    )),
-                child: MaterialButton(
-                  minWidth: double.infinity,
-                  height: 60,
-                  onPressed: () => _signUp(context),
-                  color: Color(0xff0095FF),
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Text(
-                    "Sign up",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
-                      color: Colors.white,
+                      textController: confirmPasswordText,
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return "Confirm Password is required";
+                        }
+
+                        if (val != passwordText.text) {
+                          return "Confirm Password and Password have to be the same";
+                        }
+                      },
+                    ),
+                    inputFile(
+                      label: "Email",
+                      textController: emailText,
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return "Email is required";
+                        }
+                      },
+                    ),
+                    inputFile(
+                      label: "First Name",
+                      textController: firstNameText,
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return "First Name is required";
+                        }
+                      },
+                    ),
+                    inputFile(
+                      label: "Last Name",
+                      textController: lastNameText,
+                    ),
+                    // inputFile(label: "Phone Number", textController: phoneText),
+                  ],
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 3, left: 3),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      border: Border(
+                        bottom: BorderSide(color: Colors.black),
+                        top: BorderSide(color: Colors.black),
+                        left: BorderSide(color: Colors.black),
+                        right: BorderSide(color: Colors.black),
+                      )),
+                  child: MaterialButton(
+                    minWidth: double.infinity,
+                    height: 60,
+                    onPressed: () => _signUp(context),
+                    color: Color(0xff0095FF),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: Text(
+                      "Sign up",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text("Already have an account?"),
-                  Text(
-                    " Login",
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-                  )
-                ],
-              )
-            ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Already have an account?"),
+                    Text(
+                      " Login",
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -124,24 +182,33 @@ class SignupPage extends StatelessWidget {
   }
 
   void _signUp(BuildContext context) async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
     var username = usernameText.text;
     var email = emailText.text;
     var password = passwordText.text;
     var firstName = firstNameText.text;
     var lastName = lastNameText.text;
-    String? errorMsg = await apiService.register(
+    RegisterResult result = await apiService.register(
         username, password, email, firstName, lastName);
 
     var snackbarText;
-    if (errorMsg == null) {
+
+    if (result.success) {
       Navigator.of(context).pushReplacementNamed('/login');
       snackbarText = "Signup successful";
     } else {
-      snackbarText = "Failed to sign up: " + errorMsg;
+      String errorMessage = result.errorMessage ?? "Unknown error";
+      snackbarText = "Failed to sign up: " + errorMessage;
     }
 
-     ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(snackbarText),),);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(snackbarText),
+      ),
+    );
   }
 
   void showToast(String msg) {
@@ -156,7 +223,11 @@ class SignupPage extends StatelessWidget {
   }
 
   // we will be creating a widget for text field
-  Widget inputFile({label, textController, obscureText = false}) {
+  Widget inputFile(
+      {label,
+      textController,
+      obscureText = false,
+      FormFieldValidator<String>? validator}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -168,8 +239,9 @@ class SignupPage extends StatelessWidget {
         SizedBox(
           height: 5,
         ),
-        TextField(
+        TextFormField(
           obscureText: obscureText,
+          validator: validator,
           controller: textController,
           decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
