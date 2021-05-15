@@ -103,9 +103,6 @@ class _NewsScreenState extends State<NewsScreen> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
-              height: 14.0,
-            ),
             _priorityNewsWidget(),
             SizedBox(
               height: 14.0,

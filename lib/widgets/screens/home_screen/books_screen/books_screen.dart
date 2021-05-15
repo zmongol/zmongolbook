@@ -48,7 +48,6 @@ class _BooksScreenState extends State<BooksScreen> {
       color: Colors.grey[200],
       width: double.infinity,
       height: double.infinity,
-      padding: EdgeInsets.only(top: 16.0),
       child: ListView(
         controller: _scrollController,
         children: [

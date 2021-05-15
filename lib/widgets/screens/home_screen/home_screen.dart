@@ -149,7 +149,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          body: _bodyView(),
+          body: Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: _bodyView(),
+          ),
           bottomNavigationBar: BottomNavigationBar(
             backgroundColor: Color(SOFT_WHITE),
             selectedLabelStyle:
