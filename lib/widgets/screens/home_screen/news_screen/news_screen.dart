@@ -11,6 +11,7 @@ import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/categorized
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/category_list.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/priority_news.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/top_stories.dart';
+import 'package:mongol_ebook/extensions/scroll_controller_extension.dart';
 
 class NewsScreen extends StatefulWidget {
   static List categoryTitles = <dynamic>[];
@@ -20,6 +21,8 @@ class NewsScreen extends StatefulWidget {
 }
 
 class _NewsScreenState extends State<NewsScreen> {
+  static const CATEGORIZED_NEWS_PAGE_SIZE = 25;
+
   int categorySelected = 0;
   int currentPage = 0;
   String categoryName = '';
@@ -38,7 +41,14 @@ class _NewsScreenState extends State<NewsScreen> {
   void initState() {
     super.initState();
     _controller = ScrollController();
-    _controller.addListener(_scrollListener);
+    _controller.addListener(() {
+      if (_controller.isEndOfPage() && !_isLoadingCategorizedNews) {
+        setState(() {
+          _isLoadingCategorizedNews = true;
+          loadArticles();
+        });
+      }
+    });
     _apiService = ApiService(Dio(), BASE_URL + ":8080");
     getTopArticles();
     loadCategories();
@@ -56,13 +66,6 @@ class _NewsScreenState extends State<NewsScreen> {
         );
   }
 
-  _scrollListener() {
-    if (_controller.offset >= _controller.position.maxScrollExtent &&
-        !_controller.position.outOfRange) {
-      loadArticles();
-    }
-  }
-
   loadCategories() async {
     _apiService.getCategories().then((value) {
       setState(() {
@@ -78,7 +81,11 @@ class _NewsScreenState extends State<NewsScreen> {
 
   loadArticles() async {
     _apiService
-        .getArticles(categoryId: categorySelected, limit: 25, page: currentPage)
+        .getArticles(
+      categoryId: categorySelected,
+      limit: CATEGORIZED_NEWS_PAGE_SIZE,
+      page: currentPage,
+    )
         .then((value) {
       setState(() {
         currentPage += 1;
@@ -113,7 +120,6 @@ class _NewsScreenState extends State<NewsScreen> {
             height: 14.0,
           ),
           _categorizedNewsWidget(),
-
         ],
       ),
     );
@@ -157,14 +163,12 @@ class _NewsScreenState extends State<NewsScreen> {
   }
 
   Widget _categorizedNewsWidget() {
-    return !_isLoadingCategorizedNews
-        ? CategorizedNewsSection(
-            articles: _categorizedArticles, categoryName: categoryName)
-        : Container(
-            child: LoadingIndicator(),
-            height: 200.0,
-            alignment: Alignment.center,
-          );
+    return CategorizedNewsSection(
+      scrollController: _controller,
+      articles: _categorizedArticles,
+      categoryName: categoryName,
+      isLoading: _isLoadingCategorizedNews,
+    );
   }
 
   void _openDetailPage(BuildContext context, int id) {
