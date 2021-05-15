@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mongol_ebook/Helper/AppStyles.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/books_screen/books_screen.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/news_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -90,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
           extendBodyBehindAppBar: false,
           backgroundColor: Theme.of(context).backgroundColor,
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
+            backgroundColor: Colors.grey[200],
             elevation: 0,
             toolbarHeight: 40,
             centerTitle: true,
@@ -150,6 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           body: _bodyView(),
           bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: Color(SOFT_WHITE),
             selectedLabelStyle:
                 Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14.0),
             unselectedLabelStyle:
