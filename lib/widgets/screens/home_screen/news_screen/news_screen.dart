@@ -98,29 +98,35 @@ class _NewsScreenState extends State<NewsScreen> {
   @override
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(
-            height: 14.0,
-          ),
-          _priorityNewsWidget(),
-          SizedBox(
-            height: 14.0,
-          ),
-          _topStoriesWidget(),
-          SizedBox(
-            height: 14.0,
-          ),
-          CategoryList(
-            categories: _categories,
-            setCategoryCallback: setCategory,
-          ),
-          SizedBox(
-            height: 14.0,
-          ),
-          _categorizedNewsWidget(),
-        ],
+    return Container(
+      color: Colors.grey[200],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 14.0,
+            ),
+            _priorityNewsWidget(),
+            SizedBox(
+              height: 14.0,
+            ),
+            _topStoriesWidget(),
+            SizedBox(
+              height: 14.0,
+            ),
+            CategoryList(
+              categories: _categories,
+              setCategoryCallback: setCategory,
+            ),
+            SizedBox(
+              height: 14.0,
+            ),
+            _categorizedNewsWidget(),
+            SizedBox(
+              height: 16.0,
+            ),
+          ],
+        ),
       ),
     );
   }
