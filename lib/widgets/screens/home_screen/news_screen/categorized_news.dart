@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/Model/top_article.dart';
@@ -40,6 +41,11 @@ class CategorizedNews extends StatelessWidget {
         imgUrl = placeholder4;
     }
 
+    final formatter = DateFormat('yyyy-MM-dd');
+    String date = article.dateCreated != null
+        ? formatter.format(article.dateCreated!)
+        : '';
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -56,15 +62,40 @@ class CategorizedNews extends StatelessWidget {
             SizedBox(
               height: 16.0,
             ),
-            Flexible(
-              child: MongolText(
-                article.title,
-                maxLines: 3,
-                style: Theme.of(context).textTheme.headline2!,
-                softWrap: true,
-                overflow: TextOverflow.ellipsis,
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: MongolText(
+                      article.title,
+                      maxLines: 2,
+                      style: Theme.of(context).textTheme.headline2!,
+                      softWrap: true,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      MongolText(
+                        date,
+                        maxLines: 1,
+                        style: Theme.of(context).textTheme.bodyText1!,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      SizedBox(
+                        height: 24.0,
+                      ),
+                      MongolText(
+                        article.author,
+                        style: Theme.of(context).textTheme.bodyText1!,
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ),
+            )
           ],
         ),
       ),
