@@ -14,6 +14,7 @@ class BooksScreen extends StatefulWidget {
 }
 
 class _BooksScreenState extends State<BooksScreen> {
+  static const PAGE_SIZE = 20;
   bool _isLoading = true;
   int _currentPage = 0;
 
@@ -188,7 +189,9 @@ class _BooksScreenState extends State<BooksScreen> {
   }
 
   loadData() async {
-    _apiService.getArticles(limit: 50, page: _currentPage).then((articles) {
+    _apiService
+        .getArticles(limit: PAGE_SIZE, page: _currentPage)
+        .then((articles) {
       setState(() {
         _currentPage++;
         _books.addAll(articles);
