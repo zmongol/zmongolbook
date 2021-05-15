@@ -81,82 +81,85 @@ class _BooksScreenState extends State<BooksScreen> {
         itemBuilder: (context, index) {
           var book = _books[index];
 
-          return Container(
-            height: 180.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16.0),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.grey[300]!,
-                    blurRadius: 12.0,
-                    spreadRadius: 2.0,
-                    offset: Offset(0, 5)),
-              ],
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8.0),
-                    bottomLeft: Radius.circular(8.0),
-                  ),
-                  child: Image.network(
-                    book.id % 2 == 0
-                        ? "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348322381l/3450744.jpg"
-                        : "https://m.media-amazon.com/images/I/41k+WVPLwZL.jpg",
-                    fit: BoxFit.cover,
-                    height: double.infinity,
-                    width: 120,
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    height: double.infinity,
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        MongolText(
-                          book.title,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.headline2!,
-                        ),
-                        SizedBox(
-                          width: 16.0,
-                        ),
-                        MongolText(
-                          book.content,
-                          maxLines: 4,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(fontSize: 16.0),
-                        ),
-                        Spacer(),
-                        Column(
-                          children: [
-                            MongolText(
-                              book.author!,
-                              style: TextStyle(fontFamily: 'haratig'),
-                            ),
-                            Spacer(),
-                            MongolText(
-                              "4.5/5",
-                              style: TextStyle(
-                                fontFamily: 'haratig',
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
+          return GestureDetector(
+            onTap: () => _openDetailPage(context, book.id),
+                      child: Container(
+              height: 180.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16.0),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey[300]!,
+                      blurRadius: 12.0,
+                      spreadRadius: 2.0,
+                      offset: Offset(0, 5)),
+                ],
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8.0),
+                      bottomLeft: Radius.circular(8.0),
+                    ),
+                    child: Image.network(
+                      book.id % 2 == 0
+                          ? "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348322381l/3450744.jpg"
+                          : "https://m.media-amazon.com/images/I/41k+WVPLwZL.jpg",
+                      fit: BoxFit.cover,
+                      height: double.infinity,
+                      width: 120,
                     ),
                   ),
-                )
-              ],
+                  Expanded(
+                    child: Container(
+                      height: double.infinity,
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MongolText(
+                            book.title,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.headline2!,
+                          ),
+                          SizedBox(
+                            width: 16.0,
+                          ),
+                          MongolText(
+                            book.content,
+                            maxLines: 4,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(fontSize: 16.0),
+                          ),
+                          Spacer(),
+                          Column(
+                            children: [
+                              MongolText(
+                                book.author!,
+                                style: TextStyle(fontFamily: 'haratig'),
+                              ),
+                              Spacer(),
+                              MongolText(
+                                "4.5/5",
+                                style: TextStyle(
+                                  fontFamily: 'haratig',
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           );
         },
@@ -192,5 +195,9 @@ class _BooksScreenState extends State<BooksScreen> {
         _isLoading = false;
       });
     });
+  }
+
+  void _openDetailPage(BuildContext context, int id) {
+    Navigator.of(context).pushNamed('/detail', arguments: {'index': id});
   }
 }
