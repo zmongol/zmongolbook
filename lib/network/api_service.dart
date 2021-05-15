@@ -22,7 +22,7 @@ class ApiService {
       });
     } on DioError catch (e) {
       if (e.response != null) {
-        return e.response!.data["error"];
+        return e.response!.data["result"];
       } else {
         return "Unknown error";
       }
@@ -34,7 +34,6 @@ class ApiService {
   Future<LoginResult> login(String username, String password) async {
     var endpoint = _baseUrl + "/api/auth/login";
     try {
-      print(username + " | " + password);
       var response = await _dio.post(endpoint, data: {
         "username": username,
         "password": password,
@@ -44,7 +43,7 @@ class ApiService {
     } on DioError catch (e) {
       var errorMsg;
       if (e.response != null) {
-        errorMsg = e.response!.data["error"];
+        errorMsg = e.response!.data["result"];
       } else {
         errorMsg = "Unknown error";
       }
