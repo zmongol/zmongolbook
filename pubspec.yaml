@@ -46,6 +46,7 @@ dependencies:
   firebase_core: ^1.1.0
   dio: ^4.0.0
   flutter_svg: ^0.22.0
+  intl: ^0.17.0
 
 
 
