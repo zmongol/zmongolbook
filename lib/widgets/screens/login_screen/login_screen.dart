@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mongol_ebook/Helper/AppConstant.dart';
 import 'package:mongol_ebook/Helper/AppStyles.dart';
 import 'package:mongol_ebook/network/api_service.dart';
+import 'package:mongol_ebook/widgets/common/custom_text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mongol/mongol.dart';
 
@@ -45,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
         // });
 
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            duration: Duration(seconds: 2), content: Text("loging in 正在登陆")));
+            duration: Duration(seconds: 2), content: Text("logging in 正在登陆")));
         Future.delayed(const Duration(seconds: 2), () {
           ScaffoldMessenger.of(context).removeCurrentSnackBar();
           Navigator.of(context).pushReplacementNamed('/home');
@@ -80,22 +81,36 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Text(
                   "ᡯᡪᡳᢙᡪᢞᡪᢊᡪᡭᡧ ᡥᡭᡪᢊᢔᡬᡱᡱᡪᢞᡪᡫ Please login to continue 请先登陆",
-                  style: TextStyle(fontFamily: 'haratig', fontSize: 16, color: Colors.grey[800]),
+                  style: TextStyle(
+                    fontFamily: 'haratig',
+                    fontSize: 16,
+                    color: Colors.grey[800],
+                  ),
                 ),
                 SizedBox(
                   height: 32.0,
                 ),
-                _inputField(
+                CustomTextField(
                   controller: usernameText,
                   label: "ᡯᡪᢝᡨ user name 用户姓名",
+                  validator: (val) {
+                    if (val == null || val.isEmpty) {
+                      return "Username is required";
+                    }
+                  },
                 ),
                 SizedBox(
                   height: 16.0,
                 ),
-                _inputField(
+                CustomTextField(
                   controller: passwordText,
                   label: "ᡯᡬᡱᡱᡭᢚᡧ ᢙᡭᡱᡱᡪᢝ password 密码",
                   obscureText: true,
+                  validator: (val) {
+                    if (val == null || val.isEmpty) {
+                      return "Password is required";
+                    }
+                  },
                 ),
                 SizedBox(
                   height: 24.0,
@@ -237,7 +252,11 @@ class _LoginPageState extends State<LoginPage> {
     return Text(
       "ᡯᡬᡱᡱᡭᢚᡧ ᢙᡭᡱᡱᡪᢝ ᡬᡬᡪᡧ ᢌᡪᢞᢙᡪᡪᡪᢔᡪᡧ Forgot your password 忘记密码?",
       textAlign: TextAlign.center,
-      style: TextStyle(fontFamily: 'haratig', color: Color(SOFT_BLACK), fontWeight: FontWeight.w300),
+      style: TextStyle(
+        fontFamily: 'haratig',
+        color: Color(SOFT_BLACK),
+        fontWeight: FontWeight.w300,
+      ),
     );
   }
 
@@ -247,12 +266,20 @@ class _LoginPageState extends State<LoginPage> {
       child: Text(
         "ᡯᡪᡳᢙᡪᢞᡪᢋᡭ ᢙᡭᡱᡱᡪᢝ ᡥᡭᡬᢊᡪᡫ ᡳᡪᡬᡬᡪᡪᢔᡪᡱᡱᡪᢝ Do not have an account 没有账号?",
         textAlign: TextAlign.center,
-        style: TextStyle(fontFamily: 'haratig', color: Color(SOFT_BLACK), fontWeight: FontWeight.w300),
+        style: TextStyle(
+          fontFamily: 'haratig',
+          color: Color(SOFT_BLACK),
+          fontWeight: FontWeight.w300,
+        ),
       ),
     );
   }
 
   _tryLogin() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
     var result = await apiService.login(usernameText.text, passwordText.text);
 
     if (result.success) {
