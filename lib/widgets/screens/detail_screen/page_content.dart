@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Helper/AppSetting.dart';
 import 'package:mongol_ebook/Model/article.dart';
@@ -10,6 +11,10 @@ class PageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    String date = article.dateCreated != null
+        ? formatter.format(article.dateCreated!)
+        : '';
     return Container(
       decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
       child: SafeArea(
@@ -20,13 +25,51 @@ class PageContent extends StatelessWidget {
           ),
           width: double.infinity,
           height: double.infinity,
-          child: SingleChildScrollView(
+          child: ListView(
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.all(16),
-            child: MongolText(
-              article.content,
-              style: AppSetting.instance.contentTextStyle,
-            ),
+            children: [
+              MongolText(
+                article.title,
+                style: AppSetting.instance.contentTextStyle
+                    .copyWith(fontWeight: FontWeight.w600),
+              ),
+              SizedBox(
+                width: 16.0,
+              ),
+              Column(
+                children: [
+                  MongolText(
+                    date,
+                    style: AppSetting.instance.contentTextStyle.copyWith(
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 24.0,
+                  ),
+                  MongolText(
+                    article.author,
+                    style: AppSetting.instance.contentTextStyle
+                        .copyWith(fontWeight: FontWeight.w300),
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: 24.0,
+              ),
+              VerticalDivider(
+                width: 1.0,
+                color: Colors.grey[400],
+              ),
+              SizedBox(
+                width: 24.0,
+              ),
+              MongolText(
+                article.content,
+                style: AppSetting.instance.contentTextStyle,
+              ),
+            ],
           ),
         ),
       ),
