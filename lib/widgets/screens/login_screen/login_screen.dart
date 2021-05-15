@@ -124,7 +124,8 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 32.0,
                 ),
-                _forgotPassword(),
+                // Temporarily hide Forgot Password
+                // _forgotPassword(),
                 SizedBox(
                   height: 16.0,
                 ),
