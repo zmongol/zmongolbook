@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Helper/AppConstant.dart';
 import 'package:mongol_ebook/Model/article.dart';
@@ -20,6 +21,7 @@ class _BooksScreenState extends State<BooksScreen> {
 
   late ApiService _apiService;
   late ScrollController _scrollController;
+  final formatter = DateFormat('yyyy-MM-dd');
 
   // Currently fetches list of articles
   List<NewArticle> _books = [];
@@ -81,6 +83,9 @@ class _BooksScreenState extends State<BooksScreen> {
         itemCount: _books.length,
         itemBuilder: (context, index) {
           var book = _books[index];
+          String date = book.dateCreated != null
+              ? formatter.format(book.dateCreated!)
+              : '';
 
           return GestureDetector(
             onTap: () => _openDetailPage(context, book.id),
@@ -147,14 +152,26 @@ class _BooksScreenState extends State<BooksScreen> {
                               ),
                               Spacer(),
                               MongolText(
-                                "4.5/5",
-                                style: TextStyle(
-                                  fontFamily: 'haratig',
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                date,
+                                style: TextStyle(fontFamily: 'haratig'),
                               ),
                             ],
-                          )
+                          ),
+                          SizedBox(
+                            width: 8.0,
+                          ),
+                          Container(
+                            alignment: Alignment.bottomCenter,
+                            height: double.infinity,
+                            child: MongolText(
+                              "4.5/5",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                fontFamily: 'haratig',
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
