@@ -27,10 +27,14 @@ class _BooksScreenState extends State<BooksScreen> {
     super.initState();
     _scrollController = ScrollController();
     _scrollController.addListener(() {
-      if (_scrollController.offset >=
+      bool isEndOfPage = _scrollController.offset >=
               _scrollController.position.maxScrollExtent &&
-          !_scrollController.position.outOfRange) {
-        loadData();
+          !_scrollController.position.outOfRange;
+      if (isEndOfPage && !_isLoading) {
+        setState(() {
+          _isLoading = true;
+          loadData();
+        });
       }
     });
     _apiService = ApiService(Dio(), BASE_URL + ":8080");
@@ -45,6 +49,7 @@ class _BooksScreenState extends State<BooksScreen> {
       height: double.infinity,
       padding: EdgeInsets.only(top: 16.0),
       child: ListView(
+        controller: _scrollController,
         children: [
           ClipRRect(
             // borderRadius: BorderRadius.circular(8.0),
@@ -54,18 +59,11 @@ class _BooksScreenState extends State<BooksScreen> {
                 height: 160.0,
                 width: double.infinity),
           ),
-          _buildBooksList()
+           _newBooksList(),
+          _isLoading ? Container(child: LoadingIndicator(),) : Container(),
         ],
       ),
     );
-  }
-
-  Widget _buildBooksList() {
-    return _isLoading
-        ? Container(
-            child: LoadingIndicator(),
-          )
-        : _newBooksList();
   }
 
   Widget _newBooksList() {
@@ -83,7 +81,7 @@ class _BooksScreenState extends State<BooksScreen> {
 
           return GestureDetector(
             onTap: () => _openDetailPage(context, book.id),
-                      child: Container(
+            child: Container(
               height: 180.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.0),
