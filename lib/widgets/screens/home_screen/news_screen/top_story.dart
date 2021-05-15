@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Model/article.dart';
 
@@ -17,6 +18,11 @@ class TopStory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = DateFormat('yyyy-MM-dd');
+    String date = article.dateCreated != null
+        ? formatter.format(article.dateCreated!)
+        : '';
+
     return GestureDetector(
       onTap: onTap,
       child: ClipRRect(
@@ -55,11 +61,12 @@ class TopStory extends StatelessWidget {
                         width: 100.0,
                         margin: EdgeInsets.all(8.0),
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             MongolText(
                               article.title,
-                              maxLines: 3,
+                              maxLines: 2,
                               style: Theme.of(context)
                                   .textTheme
                                   .headline2!
@@ -67,18 +74,45 @@ class TopStory extends StatelessWidget {
                               softWrap: true,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            Flexible(
-                              child: MongolText(
-                                article.content,
-                                maxLines: 4,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .copyWith(color: Colors.white),
-                                softWrap: true,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            )
+                            SizedBox(
+                              width: 8.0,
+                            ),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                MongolText(
+                                  date,
+                                  maxLines: 1,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(color: Colors.white),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                SizedBox(
+                                  height: 24.0,
+                                ),
+                                MongolText(
+                                  article.author,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                            // Flexible(
+                            //   child: MongolText(
+                            //     article.content,
+                            //     maxLines: 4,
+                            //     style: Theme.of(context)
+                            //         .textTheme
+                            //         .headline2!
+                            //         .copyWith(color: Colors.white),
+                            //     softWrap: true,
+                            //     overflow: TextOverflow.ellipsis,
+                            //   ),
+                            // )
                           ],
                         )))
               ],
