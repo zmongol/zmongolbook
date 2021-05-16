@@ -73,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: Theme.of(context)
                         .textTheme
                         .headline1!
-                        .copyWith(fontSize: 45, fontWeight: FontWeight.w600),
+                        .copyWith(fontFamily: 'z52ordostig',fontSize: 45, fontWeight: FontWeight.w600),
                   ),
                 ),
                 SizedBox(

@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mongol_ebook/Helper/AppConstant.dart';
 import 'package:mongol_ebook/Model/auth/register_result.dart';
 import 'package:mongol_ebook/network/api_service.dart';
+import 'package:mongol/mongol.dart';
 
 class SignupPage extends StatelessWidget {
   final apiService = ApiService(Dio(), BASE_URL + ":8080");
@@ -49,18 +50,19 @@ class SignupPage extends StatelessWidget {
               children: <Widget>[
                 Column(
                   children: <Widget>[
-                    Text(
-                      "Sign up",
+                    MongolText(
+                      "ᡴᡭᡬᢞᡬᡭᡪᢊᡪᢋᡭ",
                       style: TextStyle(
-                        fontSize: 30,
+                        fontFamily: 'z52ordostig',
+                        fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 15,
                     ),
                     Text(
-                      "Create an account, It's free ",
+                      "ᠨᠡᠷ᠎ᠡ ᠪᠡᠨ ᠪᠦᠷᠢᠳᠬᠡᠭᠡᠷᠡᠢ Create an account 注册用户",
                       style: TextStyle(fontSize: 15, color: Colors.grey[700]),
                     )
                   ],
@@ -68,66 +70,66 @@ class SignupPage extends StatelessWidget {
                 Column(
                   children: [
                     inputFile(
-                      label: "Username",
+                      label: "ᠨᠡᠷ᠎ᠡ Username 用户名",
                       textController: usernameText,
                       validator: (val) {
                         if (val == null || val.isEmpty) {
-                          return "Username is required";
+                          return "ᠨᠡᠷ᠎ᠡ ᠪᠡᠨ ᠪᠢᠴᠢᠭᠡᠷᠡᠢ Username is required 需要用户名";
                         }
 
                         if (val.length < 4) {
-                          return "Username has to be at least 4 characters long.";
+                          return "ᠳᠦᠷᠪᠡ ᠡᠴᠡ ᠤᠷᠲᠤ ᠨᠡᠷ᠎ᠡ ᠪᠢᠴᠢᠭᠡᠷᠡᠢ Username has to be at least 4 characters long.用户名最短是4位";
                         }
                       },
                     ),
                     inputFile(
-                      label: "Password",
+                      label: "ᠨᠢᠭᠤᠴᠠ  ᠳ᠋ᠤᠭᠠᠷ Password 密码",
                       obscureText: true,
                       textController: passwordText,
                       validator: (val) {
                         if (val == null || val.isEmpty) {
-                          return "Password is required";
+                          return "ᠨᠢᠭᠤᠴᠠ  ᠳ᠋ᠤᠭᠠᠷ  ᠬᠡᠷᠡᠭᠲᠡᠢ Password is required 需要密码";
                         }
 
                         if (val.length < 8) {
-                          return "Password has to be at least 8 characters long.";
+                          return "ᠨᠢᠭᠤᠴᠠ  ᠳ᠋ᠤᠭᠠᠷ 8  ᠡᠴᠡ ᠤᠷᠲᠤ ᠪᠠᠶ᠋ᠢᠬᠤ Password has to be at least 8 characters long.";
                         }
                       },
                     ),
                     inputFile(
-                      label: "Confirm Password",
+                      label: "ᠨᠢᠭᠤᠴᠠ  ᠳ᠋ᠤᠭᠠᠷ ᠵᠢᠠᠨ ᠳᠠᠪᠲᠠᠬᠤ Confirm Password 确认密码",
                       obscureText: true,
                       textController: confirmPasswordText,
                       validator: (val) {
                         if (val == null || val.isEmpty) {
-                          return "Confirm Password is required";
+                          return "ᠨᠢᠭᠤᠴᠠ  ᠳ᠋ᠤᠭᠠᠷ ᠵᠢᠠᠨ ᠳᠠᠪᠲᠠᠬᠤ  ᠬᠡᠷᠡᠭᠲᠡᠢ Confirm Password is required 需要确认密码";
                         }
 
                         if (val != passwordText.text) {
-                          return "Confirm Password and Password have to be the same";
+                          return "ᠳᠠᠪᠲᠠᠬᠤ  ᠳ᠋ᠤᠭᠠᠷ ᠠᠳᠠᠯᠢ ᠪᠠᠶ᠋ᠢᠬᠤ Confirm Password and Password have to be the same 确认密码必须同一";
                         }
                       },
                     ),
                     inputFile(
-                      label: "Email",
+                      label: "ᠢᠮᠡᠸᠯ Email 邮箱",
                       textController: emailText,
                       validator: (val) {
                         if (val == null || val.isEmpty) {
-                          return "Email is required";
+                          return "ᠢᠮᠡᠸᠯ ᠬᠡᠷᠡᠭᠲᠡᠢ Email is required 需要邮箱";
                         }
                       },
                     ),
                     inputFile(
-                      label: "First Name",
+                      label: "ᠨᠡᠷ᠎ᠡ First Name 名字",
                       textController: firstNameText,
                       validator: (val) {
                         if (val == null || val.isEmpty) {
-                          return "First Name is required";
+                          return "ᠨᠡᠷ᠎ᠡ ᠬᠡᠷᠡᠭᠲᠡᠢ First Name is required 需要名字";
                         }
                       },
                     ),
                     inputFile(
-                      label: "Last Name",
+                      label: "ᠤᠪᠤᠭ Last Name 姓氏",
                       textController: lastNameText,
                     ),
                     // inputFile(label: "Phone Number", textController: phoneText),
@@ -147,13 +149,13 @@ class SignupPage extends StatelessWidget {
                     minWidth: double.infinity,
                     height: 60,
                     onPressed: () => _signUp(context),
-                    color: Color(0xff0095FF),
+                    color: Colors.green[700],
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50),
                     ),
                     child: Text(
-                      "Sign up",
+                      "ᡴᡭᡬᢞᡬᡭᡪᢊᡪᢋᡭ Sign up 注册",
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 18,
@@ -167,7 +169,7 @@ class SignupPage extends StatelessWidget {
                   children: <Widget>[
                     Text("Already have an account?"),
                     Text(
-                      " Login",
+                      "  Login",
                       style:
                           TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
                     )
