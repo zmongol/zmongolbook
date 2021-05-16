@@ -138,7 +138,7 @@ flutter:
         - asset: assets/fonts/z52togtig.ttf
     - family: z52qimedtig
       fonts:
-        - asset: assets/fonts/z52qimedtig.otf
+        - asset: assets/fonts/z52qimedtig.ttf
     - family: z52qingmingtig
       fonts:
         - asset: assets/fonts/z52qingmingtig.otf
