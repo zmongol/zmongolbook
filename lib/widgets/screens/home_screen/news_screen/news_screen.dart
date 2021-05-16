@@ -10,12 +10,16 @@ import 'package:mongol_ebook/network/api_service.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/categorized_news_section.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/category_list.dart';
+import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/non_categorized_news_section.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/priority_news.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/top_stories.dart';
 import 'package:mongol_ebook/extensions/scroll_controller_extension.dart';
 
 class NewsScreen extends StatefulWidget {
   static List categoryTitles = <dynamic>[];
+  final bool useMobileLayout;
+
+  const NewsScreen({Key? key, required this.useMobileLayout}) : super(key: key);
 
   @override
   _NewsScreenState createState() => _NewsScreenState();
@@ -26,17 +30,21 @@ class _NewsScreenState extends State<NewsScreen> {
 
   int categorySelected = 0;
   int currentPage = 0;
+  int currentPageNonCategorized = 0;
   String categoryName = '';
 
   NewArticle? priorityArticle;
   List<NewArticle> _topArticles = [];
   List<NewArticle> _categorizedArticles = [];
+  List<NewArticle> _nonCategorizedArticles = []; // For tablets
   List<NewsCategory> _categories = [];
 
   late ScrollController _controller;
+  late ScrollController _nonCategorizedArticlesController;
   late ApiService _apiService;
   bool _isLoadingTopArticles = true;
   bool _isLoadingCategorizedNews = true;
+  bool _isLoadingNonCategorizedArticles = true;
 
   @override
   void initState() {
@@ -53,6 +61,23 @@ class _NewsScreenState extends State<NewsScreen> {
     _apiService = ApiService(Dio(), BASE_URL + ":8080");
     getTopArticles();
     loadCategories();
+    if (!widget.useMobileLayout) {
+      loadArticlesForTablets();
+    }
+  }
+
+  void loadArticlesForTablets() async {
+    _nonCategorizedArticlesController = ScrollController();
+    _nonCategorizedArticlesController.addListener(() {
+      if (_nonCategorizedArticlesController.isEndOfPage() &&
+          !_isLoadingNonCategorizedArticles) {
+        setState(() {
+          _isLoadingNonCategorizedArticles = true;
+          loadNonCategorizedArticles();
+        });
+      }
+    });
+    loadNonCategorizedArticles();
   }
 
   getTopArticles() async {
@@ -96,6 +121,21 @@ class _NewsScreenState extends State<NewsScreen> {
     });
   }
 
+  loadNonCategorizedArticles() async {
+    _apiService
+        .getArticles(
+      limit: CATEGORIZED_NEWS_PAGE_SIZE,
+      page: currentPageNonCategorized,
+    )
+        .then((articles) {
+      setState(() {
+        currentPageNonCategorized += 1;
+        _isLoadingNonCategorizedArticles = false;
+        _nonCategorizedArticles.addAll(articles);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
@@ -122,6 +162,18 @@ class _NewsScreenState extends State<NewsScreen> {
             SizedBox(
               height: 16.0,
             ),
+            // Only available for tablets
+            !widget.useMobileLayout
+                ? Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _nonCategorizedNewsWidget(),
+                      SizedBox(
+                        height: 16.0,
+                      ),
+                    ],
+                  )
+                : Container()
           ],
         ),
       ),
@@ -171,6 +223,14 @@ class _NewsScreenState extends State<NewsScreen> {
       articles: _categorizedArticles,
       categoryName: categoryName,
       isLoading: _isLoadingCategorizedNews,
+    );
+  }
+
+  Widget _nonCategorizedNewsWidget() {
+    return NonCategorizedNewsSection(
+      scrollController: _nonCategorizedArticlesController,
+      articles: _nonCategorizedArticles,
+      isLoading: _isLoadingNonCategorizedArticles,
     );
   }
 

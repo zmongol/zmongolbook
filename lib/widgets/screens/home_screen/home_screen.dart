@@ -66,11 +66,19 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  _bodyView() {
+  _bodyView(BuildContext context) {
+    // The equivalent of the "smallestWidth" qualifier on Android.
+    var shortestSide = MediaQuery.of(context).size.shortestSide;
+
+    // Determine if we should use mobile layout or not, 600 here is
+    // a common breakpoint for a typical 7-inch tablet.
+    bool useMobileLayout = shortestSide < 600;
     switch (_selectedIndex) {
       case 0:
         {
-          return NewsScreen();
+          return NewsScreen(
+            useMobileLayout: useMobileLayout,
+          );
         }
       case 1:
         {
@@ -104,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: () {
                   HomeScreen.itemsIndex = _selectedIndex;
                   Navigator.of(context).pushNamed('/search', arguments: {
-                    'suffix' : _selectedIndex == 0 ? "News" : "Book"
+                    'suffix': _selectedIndex == 0 ? "News" : "Book"
                   });
                 },
                 child: Padding(
@@ -153,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           body: Padding(
             padding: const EdgeInsets.only(top: 16.0),
-            child: _bodyView(),
+            child: _bodyView(context),
           ),
           bottomNavigationBar: BottomNavigationBar(
             selectedLabelStyle:
