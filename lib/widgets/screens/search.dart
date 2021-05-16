@@ -8,6 +8,10 @@ import 'package:mongol_ebook/widgets/Keyboard/MongolKeyboard.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/home_screen.dart';
 
 class SearchScreen extends StatefulWidget {
+  final String titleSuffix;
+
+  const SearchScreen({Key? key, required this.titleSuffix}) : super(key: key);
+
   @override
   _SearchScreenState createState() => _SearchScreenState();
 }
@@ -226,7 +230,9 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   void _goToSearchResults(String query) {
-    Navigator.of(context)
-        .pushReplacementNamed('/searchResult', arguments: {'value': query});
+    Navigator.of(context).pushReplacementNamed('/searchResult', arguments: {
+      'value': query,
+      'suffix': widget.titleSuffix,
+    });
   }
 }

@@ -103,7 +103,9 @@ class _HomeScreenState extends State<HomeScreen> {
               GestureDetector(
                 onTap: () {
                   HomeScreen.itemsIndex = _selectedIndex;
-                  Navigator.of(context).pushNamed('/search');
+                  Navigator.of(context).pushNamed('/search', arguments: {
+                    'suffix' : _selectedIndex == 0 ? "News" : "Book"
+                  });
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(right: 16.0),

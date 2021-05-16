@@ -159,13 +159,21 @@ class _MongolBookAppState extends State<MongolBookApp>
               if (settings.name == '/login')
                 return FadePageRoute(
                     child: ScaffoldWrapper(LoginPage()), settings: settings);
-              if (settings.name == '/search')
+              if (settings.name == '/search') {
+                Map args = settings.arguments as Map;
                 return FadePageRoute(
-                    child: ScaffoldWrapper(SearchScreen()), settings: settings);
+                    child: ScaffoldWrapper(
+                      SearchScreen(
+                        titleSuffix: args['suffix'],
+                      ),
+                    ),
+                    settings: settings);
+              }
               if (settings.name == '/searchResult') {
                 Map args = settings.arguments as Map;
                 return FadePageRoute(
-                    child: ScaffoldWrapper(SearchResultScreen(args['value'])),
+                    child: ScaffoldWrapper(
+                        SearchResultScreen(args['value'], args['suffix'])),
                     settings: settings);
               }
               if (settings.name == '/categoriesSearchResult') {

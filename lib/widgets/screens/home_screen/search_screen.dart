@@ -10,8 +10,9 @@ import 'package:mongol_ebook/extensions/scroll_controller_extension.dart';
 
 class SearchResultScreen extends StatefulWidget {
   final dynamic value;
+  final String suffix;
 
-  SearchResultScreen(this.value);
+  SearchResultScreen(this.value, this.suffix);
 
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -67,7 +68,7 @@ class _SearchScreenState extends State<SearchResultScreen> {
             toolbarHeight: 40,
             centerTitle: true,
             title: Text(
-              'ZmongolBook',
+              'Z ᢌᡭᡪᢊᡱᡱᡭᢐ ' + widget.suffix,
               style: Theme.of(context).textTheme.headline1,
             ),
             actions: [
@@ -149,14 +150,14 @@ class _SearchScreenState extends State<SearchResultScreen> {
   }
 
   String _getImageUrl(NewArticle article) {
-   const placeholder1 =
-      "https://pbs.twimg.com/profile_images/883859744498176000/pjEHfbdn_400x400.jpg";
-   const placeholder2 =
-      "https://discovery.sndimg.com/content/dam/images/discovery/fullset/2020/1/8/honeybees_articleimage.jpg.rend.hgtvcom.616.347.suffix/1578499708500.jpeg";
-   const placeholder3 =
-      "https://shopee.co.id/inspirasi-shopee/wp-content/uploads/2019/01/coveteur_marie_kondo_238_preview_maxwidth_2000_maxheight_2000_ppi_300_embedmetadata_true.jpg";
-   const placeholder4 =
-      "https://st2.depositphotos.com/2256213/12010/i/950/depositphotos_120104944-stock-photo-colloseum-rome-italy.jpg";
+    const placeholder1 =
+        "https://pbs.twimg.com/profile_images/883859744498176000/pjEHfbdn_400x400.jpg";
+    const placeholder2 =
+        "https://discovery.sndimg.com/content/dam/images/discovery/fullset/2020/1/8/honeybees_articleimage.jpg.rend.hgtvcom.616.347.suffix/1578499708500.jpeg";
+    const placeholder3 =
+        "https://shopee.co.id/inspirasi-shopee/wp-content/uploads/2019/01/coveteur_marie_kondo_238_preview_maxwidth_2000_maxheight_2000_ppi_300_embedmetadata_true.jpg";
+    const placeholder4 =
+        "https://st2.depositphotos.com/2256213/12010/i/950/depositphotos_120104944-stock-photo-colloseum-rome-italy.jpg";
 
     String imgUrl = "";
 
