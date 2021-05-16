@@ -23,7 +23,7 @@ class ApiService {
       });
     } on DioError catch (e) {
       String? errorMsg =
-          e.response != null ? e.response!.data["result"] : "Unknown error";
+          e.response != null ? e.response!.data["result"] : e.message;
       return RegisterResult(false, errorMsg);
     }
 
@@ -44,7 +44,7 @@ class ApiService {
       if (e.response != null) {
         errorMsg = e.response!.data["result"];
       } else {
-        errorMsg = "Unknown error";
+        errorMsg = e.message;
       }
       return LoginResult(false, errorMessage: errorMsg);
     }
