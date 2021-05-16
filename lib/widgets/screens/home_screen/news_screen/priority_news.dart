@@ -82,12 +82,14 @@ class PriorityNews extends StatelessWidget {
                               SizedBox(
                                 height: 24.0,
                               ),
-                              MongolText(
-                                article.author,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .copyWith(color: Colors.white),
+                              Flexible(
+                                child: MongolText(
+                                  article.author,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(color: Colors.white),
+                                ),
                               ),
                             ],
                           ),
