@@ -38,15 +38,14 @@ class SignupPage extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 40),
-          height: MediaQuery.of(context).size.height - 50,
           width: double.infinity,
           child: Form(
             key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child: ListView(
+              padding: EdgeInsets.symmetric(horizontal: 32),
+              shrinkWrap: true,
               children: <Widget>[
                 Column(
                   children: <Widget>[
@@ -66,6 +65,9 @@ class SignupPage extends StatelessWidget {
                       style: TextStyle(fontSize: 15, color: Colors.grey[700]),
                     )
                   ],
+                ),
+                SizedBox(
+                  height: 32.0,
                 ),
                 Column(
                   children: [
@@ -97,7 +99,8 @@ class SignupPage extends StatelessWidget {
                       },
                     ),
                     inputFile(
-                      label: "ᠨᠢᠭᠤᠴᠠ  ᠳ᠋ᠤᠭᠠᠷ ᠵᠢᠠᠨ ᠳᠠᠪᠲᠠᠬᠤ Confirm Password 确认密码",
+                      label:
+                          "ᠨᠢᠭᠤᠴᠠ  ᠳ᠋ᠤᠭᠠᠷ ᠵᠢᠠᠨ ᠳᠠᠪᠲᠠᠬᠤ Confirm Password 确认密码",
                       obscureText: true,
                       textController: confirmPasswordText,
                       validator: (val) {
@@ -135,6 +138,9 @@ class SignupPage extends StatelessWidget {
                     // inputFile(label: "Phone Number", textController: phoneText),
                   ],
                 ),
+                SizedBox(
+                  height: 32.0,
+                ),
                 Container(
                   padding: EdgeInsets.only(top: 3, left: 3),
                   decoration: BoxDecoration(
@@ -164,6 +170,9 @@ class SignupPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: 32.0,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -174,7 +183,10 @@ class SignupPage extends StatelessWidget {
                           TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
                     )
                   ],
-                )
+                ),
+                SizedBox(
+                  height: 32.0,
+                ),
               ],
             ),
           ),
