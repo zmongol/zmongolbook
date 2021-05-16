@@ -67,18 +67,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _bodyView(BuildContext context) {
-    // The equivalent of the "smallestWidth" qualifier on Android.
-    var shortestSide = MediaQuery.of(context).size.shortestSide;
+    // // The equivalent of the "smallestWidth" qualifier on Android.
+    // var shortestSide = MediaQuery.of(context).size.shortestSide;
 
-    // Determine if we should use mobile layout or not, 600 here is
-    // a common breakpoint for a typical 7-inch tablet.
-    bool useMobileLayout = shortestSide < 600;
+    // // Determine if we should use mobile layout or not, 600 here is
+    // // a common breakpoint for a typical 7-inch tablet.
+    // bool useMobileLayout = shortestSide < 600;
     switch (_selectedIndex) {
       case 0:
         {
-          return NewsScreen(
-            useMobileLayout: useMobileLayout,
-          );
+          return NewsScreen();
         }
       case 1:
         {

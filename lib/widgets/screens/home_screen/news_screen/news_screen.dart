@@ -17,9 +17,6 @@ import 'package:mongol_ebook/extensions/scroll_controller_extension.dart';
 
 class NewsScreen extends StatefulWidget {
   static List categoryTitles = <dynamic>[];
-  final bool useMobileLayout;
-
-  const NewsScreen({Key? key, required this.useMobileLayout}) : super(key: key);
 
   @override
   _NewsScreenState createState() => _NewsScreenState();
@@ -61,12 +58,10 @@ class _NewsScreenState extends State<NewsScreen> {
     _apiService = ApiService(Dio(), BASE_URL + ":8080");
     getTopArticles();
     loadCategories();
-    if (!widget.useMobileLayout) {
-      loadArticlesForTablets();
-    }
+    initializeNonCategorizedNews();
   }
 
-  void loadArticlesForTablets() async {
+  void initializeNonCategorizedNews() async {
     _nonCategorizedArticlesController = ScrollController();
     _nonCategorizedArticlesController.addListener(() {
       if (_nonCategorizedArticlesController.isEndOfPage() &&
@@ -162,18 +157,15 @@ class _NewsScreenState extends State<NewsScreen> {
             SizedBox(
               height: 16.0,
             ),
-            // Only available for tablets
-            !widget.useMobileLayout
-                ? Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      _nonCategorizedNewsWidget(),
-                      SizedBox(
-                        height: 16.0,
-                      ),
-                    ],
-                  )
-                : Container()
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _nonCategorizedNewsWidget(),
+                SizedBox(
+                  height: 16.0,
+                ),
+              ],
+            )
           ],
         ),
       ),
