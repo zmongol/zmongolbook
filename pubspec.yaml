@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+3
+version: 1.0.1+10
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -112,7 +112,7 @@ flutter:
     - family: z52ordostig
       fonts:
         - asset: assets/fonts/z52ordostig.otf
-    - family: z52sayatig
+    - family: z52saitig
       fonts:
         - asset: assets/fonts/z52saitig.otf
     - family: z52sanstig
@@ -124,6 +124,12 @@ flutter:
     - family: z52holsnujugtig
       fonts:
         - asset: assets/fonts/z52holsnujugtig.otf
+    - family: z52horqtsagaantig
+      fonts:
+        - asset: assets/fonts/z52horqtsagaantig.ttf
+    - family: z52munggunujugtig
+      fonts:
+        - asset: assets/fonts/z52munggunujugtig.ttf
     - family: z52uljitig
       fonts:
         - asset: assets/fonts/z52uljitig.ttf
@@ -145,9 +151,9 @@ flutter:
     - family: z52tsagaantig
       fonts:
         - asset: assets/fonts/z52tsagaantig.otf
-    - family: z52onontig
+    - family: z52ononsansseriftig
       fonts:
-        - asset: assets/fonts/z52onontig.otf
+        - asset: assets/fonts/z52ononsansseriftig.ttf
 
   # fonts:
   #   - family: Schyler
