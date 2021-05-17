@@ -22,7 +22,7 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   void initState() {
     super.initState();
-    _apiService = ApiService(Dio(), BASE_URL + ":8080");
+    _apiService = ApiService(Dio(), BASE_URL);
   }
 
   @override

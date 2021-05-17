@@ -7,7 +7,7 @@ import 'package:mongol_ebook/network/api_service.dart';
 import 'package:mongol/mongol.dart';
 
 class SignupPage extends StatelessWidget {
-  final apiService = ApiService(Dio(), BASE_URL + ":8080");
+  final apiService = ApiService(Dio(), BASE_URL);
   final usernameText = TextEditingController();
   final passwordText = TextEditingController();
   final confirmPasswordText = TextEditingController();

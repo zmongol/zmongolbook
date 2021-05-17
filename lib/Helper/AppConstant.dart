@@ -5,7 +5,7 @@ const String CONTENT_FONT_FAMILY = 'CONTENT_FONT_FAMILY';
 const String PREFS_ACCESS_TOKEN = 'ACCESS_TOKEN';
 const double MIN_FONT_SIZE = 20;
 const double MAX_FONT_SIZE = 40;
-const String BASE_URL = "http://54.254.41.200";
+const String BASE_URL = "https://api.zcodetech.com";
 
 const int ITEMS_IN_ROW = 30;
 

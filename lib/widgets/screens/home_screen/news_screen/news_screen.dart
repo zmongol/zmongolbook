@@ -55,7 +55,7 @@ class _NewsScreenState extends State<NewsScreen> {
         });
       }
     });
-    _apiService = ApiService(Dio(), BASE_URL + ":8080");
+    _apiService = ApiService(Dio(), BASE_URL);
     getTopArticles();
     loadCategories();
     initializeNonCategorizedNews();

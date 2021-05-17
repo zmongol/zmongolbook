@@ -38,7 +38,7 @@ class _SearchScreenState extends State<SearchResultScreen> {
         });
       }
     });
-    _apiService = ApiService(Dio(), BASE_URL + ":8080");
+    _apiService = ApiService(Dio(), BASE_URL);
     _search(widget.value);
   }
 

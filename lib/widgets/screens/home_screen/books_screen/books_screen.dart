@@ -38,7 +38,7 @@ class _BooksScreenState extends State<BooksScreen> {
         });
       }
     });
-    _apiService = ApiService(Dio(), BASE_URL + ":8080");
+    _apiService = ApiService(Dio(), BASE_URL);
     loadData();
   }
 

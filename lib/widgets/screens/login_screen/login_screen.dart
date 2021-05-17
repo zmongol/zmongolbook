@@ -17,7 +17,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final apiService = ApiService(Dio(), BASE_URL + ":8080");
+  final apiService = ApiService(Dio(), BASE_URL);
   final usernameText = TextEditingController();
   final passwordText = TextEditingController();
   final _formKey = GlobalKey<FormState>();
