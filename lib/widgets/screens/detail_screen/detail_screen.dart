@@ -41,7 +41,7 @@ class _DetailScreenState extends State<DetailScreen> {
             actions: [
               GestureDetector(
                 onTap: () {
-                  Share.share("http://Zmongol/detail/${widget.id}");
+                  Share.share("https://api.zcodetech.com/zmongolbook?articleId=${widget.id}");
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(right: 16.0),

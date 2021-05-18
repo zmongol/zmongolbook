@@ -45,8 +45,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                    android:scheme="zmongolbook"
-                    android:pathPattern="/article" />
+                    android:scheme="https"
+                    android:host="api.zcodetech.com"
+                    android:pathPattern="/zmongolbook" />
             </intent-filter>
 
             <intent-filter>
