@@ -58,22 +58,32 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _parseDeepLink(Uri uri) {
     print('Parsing deep link: ' + uri.toString());
+    String? articleId = uri.queryParameters["articleId"];
 
-    if (uri.scheme == 'zmongolbook') {
-      switch (uri.host) {
-        case 'articles':
-          String? id = uri.queryParameters["id"];
-
-          if (id != null) {
-            int? index = int.tryParse(id);
-            if (index != null) {
-              Navigator.of(context)
-                  .pushNamed('/detail', arguments: {'index': int.parse(id)});
-            }
-          }
-          break;
+    if (articleId != null) {
+      int? index = int.tryParse(articleId);
+      if (index != null) {
+        Navigator.of(context).pushNamed(
+          '/detail',
+          arguments: {'index': index},
+        );
       }
     }
+    // if (uri.scheme == 'zmongolbook') {
+    //   switch (uri.host) {
+    //     case 'articles':
+    //       String? id = uri.queryParameters["id"];
+
+    //       if (id != null) {
+    //         int? index = int.tryParse(id);
+    //         if (index != null) {
+    //           Navigator.of(context)
+    //               .pushNamed('/detail', arguments: {'index': int.parse(id)});
+    //         }
+    //       }
+    //       break;
+    //   }
+    // }
   }
 
   _bodyView(BuildContext context) {
