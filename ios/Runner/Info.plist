@@ -26,10 +26,11 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>Zmongol</string>
+			<string>zmongolbook</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb2851087648449554</string>
+				<string>zmongolbook</string>
 				<string>http</string>
 			</array>
 		</dict>
