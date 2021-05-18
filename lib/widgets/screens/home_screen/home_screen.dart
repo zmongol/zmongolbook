@@ -39,30 +39,40 @@ class _HomeScreenState extends State<HomeScreen> {
       // Parse the link and warn the user, if it is not correct,
       // but keep in mind it could be `null`.
       if (initialLink != null) {
-        if (initialLink.contains('Zmongol')) {
+        if (initialLink.contains('zmongol')) {
           Uri uri = Uri.parse(initialLink);
-          setState(() {
-            print('Initial Deep link : ' + uri.toString());
-            print('title: ' + uri.pathSegments[1].toString());
-            widget.deepLink = uri.toString();
-            Navigator.of(context).pushNamed('/detail',
-                arguments: {'index': uri.pathSegments[1].toString()});
-          });
+          _parseDeepLink(uri);
         }
       }
-      _sub = getUriLinksStream().listen((event) {
-        setState(() {
-          String? index = event?.pathSegments[1];
-          print('Deep link listener: ' + event.toString());
-          print('title: ' + index!);
-          widget.deepLink = event.toString();
-          Navigator.of(context)
-              .pushNamed('/detail', arguments: {'index': index});
-        });
+      _sub = uriLinkStream.listen((Uri? uri) {
+        if (uri != null) {
+          _parseDeepLink(uri);
+        }
       });
     } on PlatformException {
       // Handle exception by warning the user their action did not succeed
       // return?
+      print('Failed to parse deep link');
+    }
+  }
+
+  void _parseDeepLink(Uri uri) {
+    print('Parsing deep link: ' + uri.toString());
+
+    if (uri.scheme == 'zmongolbook') {
+      switch (uri.host) {
+        case 'articles':
+          String? id = uri.queryParameters["id"];
+
+          if (id != null) {
+            int? index = int.tryParse(id);
+            if (index != null) {
+              Navigator.of(context)
+                  .pushNamed('/detail', arguments: {'index': int.parse(id)});
+            }
+          }
+          break;
+      }
     }
   }
 
@@ -212,5 +222,11 @@ class _HomeScreenState extends State<HomeScreen> {
   clearData() async {
     var prefs = await SharedPreferences.getInstance();
     prefs.clear();
+  }
+
+  @override
+  void dispose() {
+    _sub.cancel();
+    super.dispose();
   }
 }
