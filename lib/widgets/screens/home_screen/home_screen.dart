@@ -161,11 +161,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ],
-            leading: LogoutButton(onTap: () {
-              clearData();
-              Navigator.of(context).pushReplacementNamed('/');
-            },
-            )
+            // leading: LogoutButton(onTap: () {
+            //   clearData();
+            //   Navigator.of(context).pushReplacementNamed('/');
+            // },)
           ),
           body: Padding(
             padding: const EdgeInsets.only(top: 16.0),
