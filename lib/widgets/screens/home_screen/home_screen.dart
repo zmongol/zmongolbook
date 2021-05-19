@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mongol_ebook/Helper/AppStyles.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/books_screen/books_screen.dart';
+import 'package:mongol_ebook/widgets/screens/home_screen/logout_button.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/news_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uni_links/uni_links.dart';
@@ -160,22 +161,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ],
-            leading: GestureDetector(
-              onTap: () {
-                clearData();
-                Navigator.of(context).pushReplacementNamed('/');
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: _selectedIndex == 2
-                    ? Icon(
-                        Icons.logout,
-                        color: Colors.black,
-                        size: 32,
-                      )
-                    : null,
-              ),
-            ),
+            leading: LogoutButton(onTap: () {
+              clearData();
+              Navigator.of(context).pushReplacementNamed('/');
+            },
+            )
           ),
           body: Padding(
             padding: const EdgeInsets.only(top: 16.0),
