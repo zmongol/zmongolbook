@@ -118,7 +118,7 @@ class _MongolBookAppState extends State<MongolBookApp>
             initialRoute: '/',
             routes: {
               '/': (BuildContext context) {
-                return LoginPage();
+                return HomeScreen();
               },
             },
             onGenerateRoute: (settings) {
