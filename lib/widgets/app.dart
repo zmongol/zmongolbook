@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -27,7 +26,6 @@ class _MongolBookAppState extends State<MongolBookApp>
     with WidgetsBindingObserver {
   GlobalKey<NavigatorState> navigatorKey =
       GlobalKey<NavigatorState>(debugLabel: 'navigatorKey');
-  FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   static const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'zmongolbook', // id
     'High Importance Notifications', // title
@@ -51,22 +49,6 @@ class _MongolBookAppState extends State<MongolBookApp>
     var iOS = IOSInitializationSettings();
     var initSetttings = InitializationSettings(android: android, iOS: iOS);
     flp.initialize(initSetttings);
-
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("Firebase: " + message.notification!.body.toString());
-      RemoteNotification notification = message.notification!;
-      AndroidNotification android = message.notification!.android!;
-      if (notification != null && android != null) {
-        showNotification(message.notification!.body.toString(), flp);
-      }
-    });
   }
 
   void showNotification(v, flp) async {
