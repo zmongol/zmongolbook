@@ -94,13 +94,16 @@ class PageContent extends StatelessWidget {
     if (doc == null) {
       return [];
     }
-
+    const margin = const SizedBox(
+      width: 16.0,
+    );
     List<Widget> list = [];
     var elems = doc.body!.children;
     elems.forEach((element) {
       if (element.toString().startsWith("<img")) {
         var imgSrc = element.attributes["src"];
         if (imgSrc != null) {
+          list.add(margin);
           list.add(
             Image.network(
               imgSrc,
@@ -109,6 +112,7 @@ class PageContent extends StatelessWidget {
           );
         }
       } else if (element.toString().startsWith("<p")) {
+        list.add(margin);
         list.add(
           MongolText(
             element.text,
@@ -118,6 +122,7 @@ class PageContent extends StatelessWidget {
       } else if (element.toString().startsWith("<a")) {
         var url = element.attributes["href"];
         var label = element.text;
+        list.add(margin);
         list.add(_buildHyperlink(url: url!, text: label!));
       }
     });
