@@ -5,6 +5,7 @@ import 'package:mongol_ebook/Helper/AppSetting.dart';
 import 'package:mongol_ebook/Model/article.dart';
 import 'package:universal_html/html.dart';
 import 'package:universal_html/parsing.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PageContent extends StatelessWidget {
   final NewArticle article;
@@ -114,8 +115,29 @@ class PageContent extends StatelessWidget {
             style: AppSetting.instance.contentTextStyle,
           ),
         );
+      } else if (element.toString().startsWith("<a")) {
+        var url = element.attributes["href"];
+        var label = element.text;
+        list.add(_buildHyperlink(url: url!, text: label!));
       }
     });
     return list;
+  }
+
+  Widget _buildHyperlink({required String url, required String text}) {
+    return InkWell(
+        child: new MongolText(
+          text,
+          style: new TextStyle(
+            color: Colors.blue,
+            decoration: TextDecoration.underline,
+          ),
+        ),
+        onTap: () async {
+          var validUrl = await canLaunch(url);
+          if (validUrl) {
+            await launch(url);
+          }
+        });
   }
 }
