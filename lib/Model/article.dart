@@ -17,6 +17,7 @@ class NewArticle {
   final int id;
   final String title;
   final String? content;
+  final String? contentHtml;
   final int priority;
   final int? categoryId;
   final String? imageUrl;
@@ -28,6 +29,7 @@ class NewArticle {
       : id = json['id'],
         title = json['title'],
         content = json['content'],
+        contentHtml = json['content_html'],
         priority = json['priority'],
         categoryId = json['category'],
         imageUrl = json['image_url'],
