@@ -108,6 +108,7 @@ class PageContent extends StatelessWidget {
             Image.network(
               imgSrc,
               height: double.infinity,
+              fit: BoxFit.fitHeight,
             ),
           );
         }
