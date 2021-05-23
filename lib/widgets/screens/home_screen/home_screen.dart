@@ -123,8 +123,8 @@ class _HomeScreenState extends State<HomeScreen> {
             toolbarHeight: 40,
             centerTitle: true,
             title: Text(
-              _buildTitle(),
-              style: Theme.of(context).textTheme.headline1,
+              'ZmongolBook',
+              style: APP_BAR_TITLE_STYLE,
             ),
             actions: [
               GestureDetector(
@@ -188,29 +188,29 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  String _buildTitle() {
-    var title = 'Z ᢌᡭᡪᢊᡱᡱᡭᢐ';
-    var ending;
-    switch (_selectedIndex) {
-      case 0:
-        ending = labelNews;
-        break;
-      case 1:
-        ending = labelBook;
-        break;
-      case 2:
-        ending = labelProfile;
-        break;
-      default:
-        break;
-    }
+  // String _buildTitle() {
+  //   var title = 'Z ᢌᡭᡪᢊᡱᡱᡭᢐ';
+  //   var ending;
+  //   switch (_selectedIndex) {
+  //     case 0:
+  //       ending = labelNews;
+  //       break;
+  //     case 1:
+  //       ending = labelBook;
+  //       break;
+  //     case 2:
+  //       ending = labelProfile;
+  //       break;
+  //     default:
+  //       break;
+  //   }
 
-    if (ending == null) {
-      return title;
-    } else {
-      return title + ' ' + ending;
-    }
-  }
+  //   if (ending == null) {
+  //     return title;
+  //   } else {
+  //     return title + ' ' + ending;
+  //   }
+  // }
 
   void _onItemTapped(int index) {
     setState(() {

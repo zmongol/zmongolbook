@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mongol_ebook/Helper/AppConstant.dart';
+import 'package:mongol_ebook/Helper/AppStyles.dart';
 import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/network/api_service.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
@@ -38,6 +39,10 @@ class _DetailScreenState extends State<DetailScreen> {
             elevation: 0,
             toolbarHeight: 40,
             centerTitle: true,
+            title: Text(
+              "ZmongolBook",
+              style: APP_BAR_TITLE_STYLE,
+            ),
             actions: [
               GestureDetector(
                 onTap: () {
