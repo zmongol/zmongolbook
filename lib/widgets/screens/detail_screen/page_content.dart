@@ -77,17 +77,17 @@ class PageContent extends StatelessWidget {
   }
 
   List<Widget> _buildContent() {
-    if (article.contentHtml != null) {
-      var doc = parseHtmlDocument(article.contentHtml!);
-      return _buildFromHtml(doc);
-    } else {
+    // if (article.contentHtml != null) {
+    //   var doc = parseHtmlDocument(article.contentHtml!);
+    //   return _buildFromHtml(doc);
+    // } else {
       return [
         MongolText(
           article.content,
           style: AppSetting.instance.contentTextStyle,
         ),
       ];
-    }
+    // }
   }
 
   List<Widget> _buildFromHtml(HtmlDocument? doc) {
