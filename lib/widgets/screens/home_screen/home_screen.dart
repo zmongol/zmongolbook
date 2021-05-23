@@ -124,7 +124,8 @@ class _HomeScreenState extends State<HomeScreen> {
             centerTitle: true,
             title: Text(
               'ZmongolBook',
-              style: APP_BAR_TITLE_STYLE,
+              style: APP_BAR_TITLE_STYLE.copyWith(
+              fontSize: 25,),
             ),
             actions: [
               GestureDetector(
