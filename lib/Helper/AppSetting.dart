@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AppSetting {
   Color contentBackgroundColor = Colors.grey[50]!;
-  TextStyle contentTextStyle = TextStyle(fontFamily: 'qimedtig', fontSize: 22, fontWeight: FontWeight.w400, color: Colors.black);
+  TextStyle contentTextStyle = TextStyle(fontFamily: 'z52tsagaantig', fontSize: 22, fontWeight: FontWeight.w400, color: Colors.black);
 
   AppSetting._privateConstructor();
   static final AppSetting _appSetting = AppSetting._privateConstructor();
@@ -22,7 +22,7 @@ class AppSetting {
 
   get() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String fontFamily = prefs.getString(CONTENT_FONT_FAMILY) ?? 'z52qimedtig';
+    String fontFamily = prefs.getString(CONTENT_FONT_FAMILY) ?? 'z52tsagaantig';
     double fontSize = prefs.getDouble(CONTENT_FONT_SIZE) ?? 22;
     String textColorHex = prefs.getString(CONTENT_TEXT_COLOR) ?? 'ff000000';
     Color textColor = Color(int.parse('0x$textColorHex'));
