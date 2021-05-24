@@ -85,7 +85,7 @@ class ApiService {
   }
 
   Future<NewArticle> findArticleById(int id) async {
-    var endpoint = _baseUrl + "/api/articles/$id";
+    var endpoint = _baseUrl + "/api/articles/$id?source=mobile";
 
     var response = await _dio.get(endpoint);
     var result = List<Map<String, dynamic>>.from(response.data["result"]);
