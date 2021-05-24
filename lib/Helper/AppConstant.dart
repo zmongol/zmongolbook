@@ -10,3 +10,4 @@ const String BASE_URL = "https://api.zcodetech.com";
 const int ITEMS_IN_ROW = 30;
 
 const String MONGOL_VIEWS = "ᡥᡭᡪᢊᢔᡬᡪᡪᢔᡪᡧ";
+const String MONGOL_RELATED_ARTICLES = "ᢘᡪᡧ ᡳ ᢔᡭᡱᡬᢞᡪᡪᡪᢐ ᢙᡳ";

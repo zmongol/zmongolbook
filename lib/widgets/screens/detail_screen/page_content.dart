@@ -3,15 +3,20 @@ import 'package:intl/intl.dart';
 import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Helper/AppConstant.dart';
 import 'package:mongol_ebook/Helper/AppSetting.dart';
+import 'package:mongol_ebook/Helper/AppStyles.dart';
 import 'package:mongol_ebook/Model/article.dart';
-import 'package:universal_html/html.dart';
+import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/categorized_news.dart';
+import 'package:universal_html/html.dart' hide Navigator;
 import 'package:universal_html/parsing.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PageContent extends StatelessWidget {
   final NewArticle article;
+  final List<NewArticle> relatedArticles;
 
-  const PageContent({Key? key, required this.article}) : super(key: key);
+  const PageContent(
+      {Key? key, required this.article, required this.relatedArticles})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +33,9 @@ class PageContent extends StatelessWidget {
           child: ListView(
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.all(16),
-            children: _buildInfoSection() + _buildContent(),
+            children: _buildInfoSection() +
+                _buildContent() +
+                _buildRelatedArticlesSection(),
           ),
         ),
       ),
@@ -183,5 +190,50 @@ class PageContent extends StatelessWidget {
             await launch(url);
           }
         });
+  }
+
+  List<Widget> _buildRelatedArticlesSection() {
+    return relatedArticles.isNotEmpty
+        ? [
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: VerticalDivider(
+                width: 1.0,
+                color: Colors.grey[400],
+              ),
+            ),
+            MongolText(
+              MONGOL_RELATED_ARTICLES,
+              style: AppSetting.instance.contentTextStyle.copyWith(
+                fontWeight: FontWeight.w600,
+                color: Color(SOFT_BLACK),
+              ),
+            ),
+            SizedBox(
+              width: 24.0,
+            ),
+            ListView.separated(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  var relatedArticle = relatedArticles[index];
+                  return CategorizedNews(
+                    imageSize: 120.0,
+                    article: relatedArticle,
+                    onTap: () => _openDetailPage(context, relatedArticle.id),
+                  );
+                },
+                separatorBuilder: (_, index) => SizedBox(
+                      width: 24.0,
+                    ),
+                itemCount: relatedArticles.length),
+          ]
+        : [];
+  }
+
+  _openDetailPage(context, id) {
+    Navigator.of(context)
+        .pushReplacementNamed('/detail', arguments: {'index': id});
   }
 }

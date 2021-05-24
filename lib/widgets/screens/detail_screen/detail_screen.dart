@@ -19,11 +19,26 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   late ApiService _apiService;
+  NewArticle? _article;
+  List<NewArticle>? _relatedArticles;
 
   @override
   void initState() {
     super.initState();
     _apiService = ApiService(Dio(), BASE_URL);
+
+    _apiService.findArticleById(widget.id).then((article) {
+      setState(() {
+        print("Fetched article with ID: " + widget.id.toString());
+        _article = article;
+      });
+    });
+
+    _apiService.getRelatedArticles(widget.id).then((articles) {
+      setState(() {
+        _relatedArticles = articles;
+      });
+    });
   }
 
   @override
@@ -46,7 +61,8 @@ class _DetailScreenState extends State<DetailScreen> {
             actions: [
               GestureDetector(
                 onTap: () {
-                  Share.share("https://api.zcodetech.com/zmongolbook?articleId=${widget.id}");
+                  Share.share(
+                      "https://api.zcodetech.com/zmongolbook?articleId=${widget.id}");
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(right: 16.0),
@@ -75,28 +91,11 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   Widget _pageContent() {
-    return FutureBuilder<NewArticle>(
-        future: _apiService.findArticleById(widget.id),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              {
-                return LoadingIndicator();
-              }
-            case ConnectionState.done:
-              {
-                print("Opening article with ID: " + widget.id.toString());
-                if (snapshot.data != null) {
-                  return PageContent(
-                    article: snapshot.data!,
-                  );
-                }
-                break;
-              }
-            default:
-              return Container();
-          }
-          return Container();
-        });
+    return _article != null && _relatedArticles != null
+        ? PageContent(
+            article: _article!,
+            relatedArticles: _relatedArticles!,
+          )
+        : LoadingIndicator();
   }
 }
