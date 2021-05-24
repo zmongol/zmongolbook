@@ -91,4 +91,13 @@ class ApiService {
     var result = List<Map<String, dynamic>>.from(response.data["result"]);
     return NewArticle.fromJson(result[0]);
   }
+
+  Future<List<NewArticle>> getRelatedArticles(int id) async {
+    var endpoint = _baseUrl + "/api/articles/related/$id";
+
+    var response = await _dio.get(endpoint);
+    var result = List<Map<String, dynamic>>.from(response.data["result"]);
+
+    return result.map((json) => NewArticle.fromJson(json)).toList();
+  }
 }
