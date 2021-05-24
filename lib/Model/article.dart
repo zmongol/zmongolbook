@@ -24,6 +24,8 @@ class NewArticle {
   final String? author;
   final String? websiteUrl;
   final DateTime? dateCreated;
+  final int viewCount;
+  final int viewCountMobile;
 
   NewArticle.fromJson(Map<String, dynamic> json)
       : id = json['id'],
@@ -35,5 +37,7 @@ class NewArticle {
         imageUrl = json['image_url'],
         author = json['author'],
         websiteUrl = json['websiteUrl'],
-        dateCreated = DateTime.tryParse(json['date_created']);
+        dateCreated = DateTime.tryParse(json['date_created']),
+        viewCount = json['view_count'] ?? 0,
+        viewCountMobile = json['view_count_mobile'] ?? 0;
 }
