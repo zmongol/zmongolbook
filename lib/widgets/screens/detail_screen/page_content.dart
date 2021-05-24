@@ -14,11 +14,6 @@ class PageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DateFormat formatter = DateFormat('yyyy-MM-dd');
-    String date = article.dateCreated != null
-        ? formatter.format(article.dateCreated!)
-        : '';
-
     return Container(
       decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
       child: SafeArea(
@@ -30,50 +25,55 @@ class PageContent extends StatelessWidget {
           width: double.infinity,
           height: double.infinity,
           child: ListView(
-              scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.all(16),
-              children: [
-                    MongolText(
-                      article.title,
-                      style: AppSetting.instance.contentTextStyle
-                          .copyWith(fontWeight: FontWeight.w600),
-                    ),
-                    SizedBox(
-                      width: 16.0,
-                    ),
-                    Column(
-                      children: [
-                        MongolText(
-                          date,
-                          style: AppSetting.instance.contentTextStyle.copyWith(
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 24.0,
-                        ),
-                        MongolText(
-                          article.author,
-                          style: AppSetting.instance.contentTextStyle
-                              .copyWith(fontWeight: FontWeight.w300),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 24.0,
-                    ),
-                    VerticalDivider(
-                      width: 1.0,
-                      color: Colors.grey[400],
-                    ),
-                    SizedBox(
-                      width: 24.0,
-                    ),
-                  ] +
-                  _buildContent()),
+            scrollDirection: Axis.horizontal,
+            padding: EdgeInsets.all(16),
+            children: _buildInfoSection() + _buildContent(),
+          ),
         ),
       ),
     );
+  }
+
+  List<Widget> _buildInfoSection() {
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    String date = article.dateCreated != null
+        ? formatter.format(article.dateCreated!)
+        : '';
+    return [
+      MongolText(
+        article.title,
+        style: AppSetting.instance.contentTextStyle
+            .copyWith(fontWeight: FontWeight.w600),
+      ),
+      SizedBox(
+        width: 16.0,
+      ),
+      Column(
+        children: [
+          MongolText(
+            date,
+            style: AppSetting.instance.contentTextStyle.copyWith(
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+          SizedBox(
+            height: 24.0,
+          ),
+          MongolText(
+            article.author,
+            style: AppSetting.instance.contentTextStyle
+                .copyWith(fontWeight: FontWeight.w300),
+          ),
+        ],
+      ),
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: VerticalDivider(
+          width: 1.0,
+          color: Colors.grey[400],
+        ),
+      ),
+    ];
   }
 
   List<Widget> _buildContent() {
