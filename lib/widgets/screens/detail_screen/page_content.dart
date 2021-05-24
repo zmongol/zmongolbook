@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mongol/mongol.dart';
+import 'package:mongol_ebook/Helper/AppConstant.dart';
 import 'package:mongol_ebook/Helper/AppSetting.dart';
 import 'package:mongol_ebook/Model/article.dart';
 import 'package:universal_html/html.dart';
@@ -64,6 +65,28 @@ class PageContent extends StatelessWidget {
             style: AppSetting.instance.contentTextStyle
                 .copyWith(fontWeight: FontWeight.w300),
           ),
+          SizedBox(
+            height: 24.0,
+          ),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(
+                  Icons.remove_red_eye_outlined,
+                  size: 24,
+                  color: Colors.green[800],
+                ),
+              ),
+              MongolText(
+                article.viewCountMobile.toString() + " " + MONGOL_VIEWS,
+                style: AppSetting.instance.contentTextStyle.copyWith(
+                  fontWeight: FontWeight.w300,
+                  color: Colors.green[800],
+                ),
+              )
+            ],
+          )
         ],
       ),
       Container(
