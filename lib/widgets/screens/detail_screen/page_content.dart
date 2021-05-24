@@ -77,17 +77,17 @@ class PageContent extends StatelessWidget {
   }
 
   List<Widget> _buildContent() {
-    // if (article.contentHtml != null) {
-    //   var doc = parseHtmlDocument(article.contentHtml!);
-    //   return _buildFromHtml(doc);
-    // } else {
+    if (article.contentHtml != null) {
+      var doc = parseHtmlDocument(article.contentHtml!);
+      return _buildFromHtml(doc);
+    } else {
       return [
         MongolText(
           article.content,
           style: AppSetting.instance.contentTextStyle,
         ),
       ];
-    // }
+    }
   }
 
   List<Widget> _buildFromHtml(HtmlDocument? doc) {
@@ -100,8 +100,8 @@ class PageContent extends StatelessWidget {
     List<Widget> list = [];
     var elems = doc.body!.children;
     elems.forEach((element) {
-      if (element.toString().startsWith("<img")) {
-        var imgSrc = element.attributes["src"];
+      if (element is ImageElement) {
+        var imgSrc = element.src;
         if (imgSrc != null) {
           list.add(margin);
           list.add(
@@ -127,7 +127,7 @@ class PageContent extends StatelessWidget {
             ),
           );
         }
-      } else if (element.toString().startsWith("<p")) {
+      } else if (element is ParagraphElement) {
         list.add(margin);
         list.add(
           MongolText(
@@ -135,11 +135,11 @@ class PageContent extends StatelessWidget {
             style: AppSetting.instance.contentTextStyle,
           ),
         );
-      } else if (element.toString().startsWith("<a")) {
-        var url = element.attributes["href"];
+      } else if (element is AnchorElement) {
+        var url = element.href;
         var label = element.text;
         list.add(margin);
-        list.add(_buildHyperlink(url: url!, text: label!));
+        list.add(_buildHyperlink(url: url!, text: label ?? "Link"));
       }
     });
     return list;
