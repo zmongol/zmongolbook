@@ -15,12 +15,11 @@ class CategorizedNews extends StatelessWidget {
   static const placeholder4 =
       "https://st2.depositphotos.com/2256213/12010/i/950/depositphotos_120104944-stock-photo-colloseum-rome-italy.jpg";
 
-  static const _imageSize = 80.0;
-
   final NewArticle article;
   final VoidCallback onTap;
+  final double imageSize;
 
-  const CategorizedNews({Key? key, required this.article, required this.onTap})
+  const CategorizedNews({Key? key, required this.article, required this.onTap, this.imageSize = 80.0})
       : super(key: key);
 
   @override
@@ -49,14 +48,14 @@ class CategorizedNews extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: _imageSize,
+        width: imageSize,
         height: 300,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             RoundedImage(
-              size: _imageSize,
+              size: imageSize,
               imageUrl: imgUrl,
             ),
             SizedBox(
