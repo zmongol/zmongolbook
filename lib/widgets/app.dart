@@ -10,6 +10,7 @@ import 'package:mongol_ebook/widgets/screens/home_screen/search_screen.dart';
 import 'package:mongol_ebook/widgets/screens/login_screen/login_screen.dart';
 import 'package:mongol_ebook/widgets/screens/login_screen/signup_screen.dart';
 import 'package:mongol_ebook/widgets/screens/search.dart';
+import 'package:mongol_ebook/widgets/screens/view_image_screen/view_image_screen.dart';
 import 'package:mongol_ebook/widgets/widget_index.dart';
 
 import 'common/fade_page_route.dart';
@@ -164,6 +165,15 @@ class _MongolBookAppState extends State<MongolBookApp>
                     child: ScaffoldWrapper(
                         CategoriesSearchResultScreen(args['category'])),
                     settings: settings);
+              }
+              if (settings.name == '/viewImage') {
+                Map args = settings.arguments as Map;
+                return FadePageRoute(
+                  child: ViewImageScreen(
+                    imageUrl: args['imageUrl'],
+                  ),
+                  settings: settings,
+                );
               }
               if (settings.name == '/setting')
                 return FadePageRoute(
