@@ -124,57 +124,74 @@ class PageContent extends StatelessWidget {
     if (doc == null) {
       return [];
     }
-    const margin = const SizedBox(
-      width: 16.0,
-    );
+
     List<Widget> list = [];
     var elems = doc.body!.children;
     elems.forEach((element) {
-      if (element is ImageElement) {
-        var imgSrc = element.src;
-        if (imgSrc != null) {
-          list.add(margin);
-          list.add(
-            Image.network(
-              imgSrc,
-              height: double.infinity,
-              fit: BoxFit.fitHeight,
-              loadingBuilder: (BuildContext context, Widget child,
-                  ImageChunkEvent? loadingProgress) {
-                if (loadingProgress == null) return child;
-                return Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(24.0),
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes!
-                          : null,
-                    ),
-                  ),
-                );
-              },
-            ),
-          );
-        }
-      } else if (element is ParagraphElement) {
-        list.add(margin);
-        list.add(
-          MongolText(
-            element.text,
-            style: AppSetting.instance.contentTextStyle,
-          ),
-        );
-      } else if (element is AnchorElement) {
-        var url = element.href;
-        var label = element.text;
-        list.add(margin);
-        list.add(_buildHyperlink(url: url!, text: label ?? "Link"));
-      }
+      var htmlElement = element as HtmlElement;
+      list = list + _parseHtmlElement(htmlElement);
     });
     return list;
   }
 
+  /// Method to build a single Widget along with left margin
+  /// From a HTML Element 
+  List<Widget> _parseHtmlElement(HtmlElement element) {
+    const margin = const SizedBox(
+      width: 16.0,
+    );
+
+    List<Widget> list = [];
+
+    if (element is ImageElement) {
+      var imgSrc = element.src;
+      if (imgSrc != null) {
+        list.add(margin);
+        list.add(_buildImage(imageUrl: imgSrc));
+      }
+    } else if (element is ParagraphElement) {
+      list.add(margin);
+      list.add(
+        MongolText(
+          element.text,
+          style: AppSetting.instance.contentTextStyle,
+        ),
+      );
+    } else if (element is AnchorElement) {
+      var url = element.href;
+      var label = element.text;
+      list.add(margin);
+      list.add(_buildHyperlink(url: url!, text: label ?? "Link"));
+    }
+
+    return list;
+  }
+
+  /// Build image widget
+  Widget _buildImage({required String imageUrl}) {
+    return Image.network(
+      imageUrl,
+      height: double.infinity,
+      fit: BoxFit.fitHeight,
+      loadingBuilder: (BuildContext context, Widget child,
+          ImageChunkEvent? loadingProgress) {
+        if (loadingProgress == null) return child;
+        return Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: CircularProgressIndicator(
+              value: loadingProgress.expectedTotalBytes != null
+                  ? loadingProgress.cumulativeBytesLoaded /
+                      loadingProgress.expectedTotalBytes!
+                  : null,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  /// Build a hyperlink
   Widget _buildHyperlink({required String url, required String text}) {
     return InkWell(
         child: new MongolText(
