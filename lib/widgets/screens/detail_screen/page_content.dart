@@ -222,9 +222,9 @@ class PageContent extends StatelessWidget {
     return InkWell(
         child: new MongolText(
           text,
-          style: new TextStyle(
-            color: Colors.blue,
+          style: AppSetting.instance.contentTextStyle.copyWith(
             decoration: TextDecoration.underline,
+            color: Colors.blue,
           ),
         ),
         onTap: () async {
