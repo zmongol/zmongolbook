@@ -91,10 +91,13 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   Widget _pageContent() {
+    var deviceSize = MediaQuery.of(context).size;
     return _article != null && _relatedArticles != null
         ? PageContent(
             article: _article!,
             relatedArticles: _relatedArticles!,
+            pageWidth: deviceSize.width,
+            pageHeight: deviceSize.height,
           )
         : LoadingIndicator();
   }

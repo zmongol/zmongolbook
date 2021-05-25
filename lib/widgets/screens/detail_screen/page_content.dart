@@ -13,10 +13,16 @@ import 'package:url_launcher/url_launcher.dart';
 class PageContent extends StatelessWidget {
   final NewArticle article;
   final List<NewArticle> relatedArticles;
+  final double pageWidth;
+  final double pageHeight;
 
-  const PageContent(
-      {Key? key, required this.article, required this.relatedArticles})
-      : super(key: key);
+  const PageContent({
+    Key? key,
+    required this.article,
+    required this.relatedArticles,
+    required this.pageWidth,
+    required this.pageHeight,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +113,8 @@ class PageContent extends StatelessWidget {
 
   List<Widget> _buildContent() {
     if (article.contentHtml != null) {
-      var doc = parseHtmlDocument(article.contentHtml!.replaceAll(RegExp("<br>", caseSensitive: false), "\n"));
+      var doc = parseHtmlDocument(article.contentHtml!
+          .replaceAll(RegExp("<br>", caseSensitive: false), "\n"));
       return _buildFromHtml(doc);
     } else {
       return [
@@ -134,7 +141,7 @@ class PageContent extends StatelessWidget {
   }
 
   /// Method to build a single Widget along with left margin
-  /// From a HTML Element 
+  /// From a HTML Element
   List<Widget> _parseHtmlElement(HtmlElement element) {
     const margin = const SizedBox(
       width: 16.0,
@@ -152,7 +159,7 @@ class PageContent extends StatelessWidget {
       var imgSrc = element.src;
       if (imgSrc != null) {
         list.add(margin);
-        list.add(_buildImage(imageUrl: imgSrc));
+        list.add(_buildImage(imageUrl: imgSrc, width: pageWidth));
       }
     } else if (element is ParagraphElement) {
       list.add(margin);
@@ -173,26 +180,31 @@ class PageContent extends StatelessWidget {
   }
 
   /// Build image widget
-  Widget _buildImage({required String imageUrl}) {
-    return Image.network(
-      imageUrl,
-      height: double.infinity,
-      fit: BoxFit.fitHeight,
-      loadingBuilder: (BuildContext context, Widget child,
-          ImageChunkEvent? loadingProgress) {
-        if (loadingProgress == null) return child;
-        return Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: CircularProgressIndicator(
-              value: loadingProgress.expectedTotalBytes != null
-                  ? loadingProgress.cumulativeBytesLoaded /
-                      loadingProgress.expectedTotalBytes!
-                  : null,
+  Widget _buildImage({required String imageUrl, required double width}) {
+    return Container(
+      constraints: BoxConstraints(
+        maxHeight: pageHeight,
+        maxWidth: pageWidth - 16,
+      ),
+      alignment: Alignment.topCenter,
+      child: Image.network(
+        imageUrl,
+        loadingBuilder: (BuildContext context, Widget child,
+            ImageChunkEvent? loadingProgress) {
+          if (loadingProgress == null) return child;
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: CircularProgressIndicator(
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded /
+                        loadingProgress.expectedTotalBytes!
+                    : null,
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
