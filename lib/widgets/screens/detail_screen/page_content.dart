@@ -108,7 +108,7 @@ class PageContent extends StatelessWidget {
 
   List<Widget> _buildContent() {
     if (article.contentHtml != null) {
-      var doc = parseHtmlDocument(article.contentHtml!);
+      var doc = parseHtmlDocument(article.contentHtml!.replaceAll(RegExp("<br>", caseSensitive: false), "\n"));
       return _buildFromHtml(doc);
     } else {
       return [
