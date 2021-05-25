@@ -143,6 +143,12 @@ class PageContent extends StatelessWidget {
 
     List<Widget> list = [];
 
+    if (element.children.length > 0) {
+      element.children.forEach((child) {
+        list = list + _parseHtmlElement(child as HtmlElement);
+      });
+    }
+
     if (element is ImageElement) {
       var imgSrc = element.src;
       if (imgSrc != null) {
