@@ -4,6 +4,7 @@ import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Helper/AppConstant.dart';
 import 'package:mongol_ebook/Helper/AppSetting.dart';
 import 'package:mongol_ebook/Helper/AppStyles.dart';
+import 'package:mongol_ebook/Helper/RouteHelper.dart';
 import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/categorized_news.dart';
 import 'package:universal_html/html.dart' hide Navigator;
@@ -181,30 +182,38 @@ class PageContent extends StatelessWidget {
 
   /// Build image widget
   Widget _buildImage({required String imageUrl, required double width}) {
-    return Container(
-      constraints: BoxConstraints(
-        maxHeight: pageHeight,
-        maxWidth: pageWidth - 16,
-      ),
-      alignment: Alignment.topCenter,
-      child: Image.network(
-        imageUrl,
-        loadingBuilder: (BuildContext context, Widget child,
-            ImageChunkEvent? loadingProgress) {
-          if (loadingProgress == null) return child;
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: CircularProgressIndicator(
-                value: loadingProgress.expectedTotalBytes != null
-                    ? loadingProgress.cumulativeBytesLoaded /
-                        loadingProgress.expectedTotalBytes!
-                    : null,
-              ),
+    return Builder(
+      builder: (context) {
+        return Container(
+          constraints: BoxConstraints(
+            maxHeight: pageHeight,
+            maxWidth: pageWidth - 16,
+          ),
+          alignment: Alignment.topCenter,
+          child: GestureDetector(
+            onTap: () =>
+                RouteHelper.openViewImageScreen(context, imageUrl: imageUrl),
+            child: Image.network(
+              imageUrl,
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  ),
+                );
+              },
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
