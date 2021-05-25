@@ -24,7 +24,6 @@ class PageContent extends StatelessWidget {
       decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
       child: SafeArea(
         child: Container(
-          padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: AppSetting.instance.contentBackgroundColor,
           ),
@@ -32,7 +31,7 @@ class PageContent extends StatelessWidget {
           height: double.infinity,
           child: ListView(
             scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.all(32),
             children: _buildInfoSection() +
                 _buildContent() +
                 _buildRelatedArticlesSection(),
