@@ -10,6 +10,7 @@ import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/categorized
 import 'package:universal_html/html.dart' hide Navigator;
 import 'package:universal_html/parsing.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class PageContent extends StatelessWidget {
   final NewArticle article;
@@ -175,6 +176,20 @@ class PageContent extends StatelessWidget {
       var label = element.text;
       list.add(margin);
       list.add(_buildHyperlink(url: url!, text: label ?? "Link"));
+    } else if (element is IFrameElement) {
+      var url = element.src ?? "";
+      var width = element.width != null ? double.parse(element.width!) : 300.0;
+      var height =
+          element.height != null ? double.parse(element.height!) : 300.0;
+
+      list.add(margin);
+      list.add(
+        _buildWebviewForIframe(
+          url: url,
+          width: width,
+          height: height,
+        ),
+      );
     }
 
     return list;
@@ -233,6 +248,22 @@ class PageContent extends StatelessWidget {
             await launch(url);
           }
         });
+  }
+
+  /// Show iframe with Webview
+  Widget _buildWebviewForIframe(
+      {required String url, required double width, required double height}) {
+    var iframeHtml =
+        "<html><body><iframe src='$url' width=$width height=$height></iframe></body></html>";
+    var uri = Uri.dataFromString(iframeHtml, mimeType: 'text/html').toString();
+
+    return Container(
+        height: height,
+        width: width,
+        child: WebView(
+          initialUrl: uri,
+          javascriptMode: JavascriptMode.unrestricted,
+        ));
   }
 
   List<Widget> _buildRelatedArticlesSection() {
