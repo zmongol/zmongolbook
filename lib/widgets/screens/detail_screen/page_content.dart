@@ -56,6 +56,13 @@ class PageContent extends StatelessWidget {
         ? formatter.format(article.dateCreated!)
         : '';
     return [
+      Column(
+        children: [
+          article.newsCategory != null
+              ? _categoryPill(text: article.newsCategory!.name)
+              : Container(),
+        ],
+      ),
       MongolText(
         article.title,
         style: AppSetting.instance.contentTextStyle
@@ -112,9 +119,6 @@ class PageContent extends StatelessWidget {
           article.source != null
               ? _source(source: article.source!)
               : Container(),
-          article.newsCategory != null
-              ? _categoryPill(text: article.newsCategory!.name)
-              : Container(),
         ],
       ),
       Container(
@@ -129,7 +133,7 @@ class PageContent extends StatelessWidget {
 
   Widget _categoryPill({required String text}) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 24.0),
+      margin: const EdgeInsets.only(bottom: 24.0, right: 16.0),
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24.0),
@@ -147,7 +151,8 @@ class PageContent extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 24.0),
       child: MongolText(
         "ᡥᡬᢞᡪᢑᢙᡧ ᠄ " + source,
-        style: AppSetting.instance.contentTextStyle.copyWith(color: Color(SOFT_BLACK)),
+        style: AppSetting.instance.contentTextStyle
+            .copyWith(color: Color(SOFT_BLACK)),
       ),
     );
   }
