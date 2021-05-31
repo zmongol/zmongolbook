@@ -24,6 +24,7 @@ class NewArticle {
   final NewsCategory? newsCategory;
   final String? imageUrl;
   final String? author;
+  final String? source;
   final String? websiteUrl;
   final DateTime? dateCreated;
   final int viewCount;
@@ -40,6 +41,7 @@ class NewArticle {
             : null,
         imageUrl = json['image_url'],
         author = json['author'],
+        source = json['source'],
         websiteUrl = json['websiteUrl'],
         dateCreated = DateTime.tryParse(json['date_created']),
         viewCount = json['view_count'] ?? 0,

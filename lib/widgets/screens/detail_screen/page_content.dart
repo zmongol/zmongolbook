@@ -109,6 +109,9 @@ class PageContent extends StatelessWidget {
       ),
       Column(
         children: [
+          article.source != null
+              ? _source(source: article.source!)
+              : Container(),
           article.newsCategory != null
               ? _categoryPill(text: article.newsCategory!.name)
               : Container(),
@@ -135,6 +138,16 @@ class PageContent extends StatelessWidget {
       child: MongolText(
         text,
         style: AppSetting.instance.contentTextStyle,
+      ),
+    );
+  }
+
+  Widget _source({required String source}) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 24.0),
+      child: MongolText(
+        "ᡥᡬᢞᡪᢑᢙᡧ ᠄ " + source,
+        style: AppSetting.instance.contentTextStyle.copyWith(color: Color(SOFT_BLACK)),
       ),
     );
   }
