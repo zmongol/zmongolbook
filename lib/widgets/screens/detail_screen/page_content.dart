@@ -7,6 +7,7 @@ import 'package:mongol_ebook/Helper/AppStyles.dart';
 import 'package:mongol_ebook/Helper/RouteHelper.dart';
 import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/categorized_news.dart';
+import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/category_pills.dart';
 import 'package:universal_html/html.dart' hide Navigator;
 import 'package:universal_html/parsing.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -100,7 +101,17 @@ class PageContent extends StatelessWidget {
                 ),
               )
             ],
-          )
+          ),
+        ],
+      ),
+      SizedBox(
+        width: 16.0,
+      ),
+      Column(
+        children: [
+          article.newsCategory != null
+              ? _categoryPill(text: article.newsCategory!.name)
+              : Container(),
         ],
       ),
       Container(
@@ -111,6 +122,21 @@ class PageContent extends StatelessWidget {
         ),
       ),
     ];
+  }
+
+  Widget _categoryPill({required String text}) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 24.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24.0),
+        color: Colors.green[300],
+      ),
+      child: MongolText(
+        text,
+        style: AppSetting.instance.contentTextStyle,
+      ),
+    );
   }
 
   List<Widget> _buildContent() {

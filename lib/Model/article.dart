@@ -1,3 +1,5 @@
+import 'package:mongol_ebook/Model/news_category.dart';
+
 class Article {
   final String title;
   final String content;
@@ -20,6 +22,7 @@ class NewArticle {
   final String? contentHtml;
   final int priority;
   final int? categoryId;
+  final NewsCategory? newsCategory;
   final String? imageUrl;
   final String? author;
   final String? websiteUrl;
@@ -34,6 +37,9 @@ class NewArticle {
         contentHtml = json['content_html'],
         priority = json['priority'],
         categoryId = json['category'],
+        newsCategory = json['category_object'] != null
+            ? NewsCategory.fromJson(json['category_object'])
+            : null,
         imageUrl = json['image_url'],
         author = json['author'],
         websiteUrl = json['websiteUrl'],
