@@ -21,7 +21,6 @@ class NewArticle {
   final String? content;
   final String? contentHtml;
   final int priority;
-  final int? categoryId;
   final NewsCategory? newsCategory;
   final String? imageUrl;
   final String? author;
@@ -36,7 +35,6 @@ class NewArticle {
         content = json['content'],
         contentHtml = json['content_html'],
         priority = json['priority'],
-        categoryId = json['category'],
         newsCategory = json['category_object'] != null
             ? NewsCategory.fromJson(json['category_object'])
             : null,
