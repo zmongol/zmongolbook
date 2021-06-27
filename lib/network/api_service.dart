@@ -3,6 +3,7 @@ import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/Model/auth/login_result.dart';
 import 'package:mongol_ebook/Model/auth/register_result.dart';
 import 'package:mongol_ebook/Model/news_category.dart';
+import 'package:mongol_ebook/Model/version_check/app_version_check.dart';
 
 class ApiService {
   final Dio _dio;
@@ -18,6 +19,17 @@ class ApiService {
         },
       ),
     );
+  }
+
+  Future<AppVersionCheck?> getLatestAppVersion() async {
+    var endpoint = _baseUrl + "/api/version-check";
+
+    try {
+      var response = await _dio.get(endpoint);
+      return AppVersionCheck.fromJson(response.data["result"]);
+    } on Error catch (e) {
+      return null;
+    }
   }
 
   Future<RegisterResult> register(String username, String password,
