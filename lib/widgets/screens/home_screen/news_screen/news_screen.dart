@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:mongol_ebook/Api%20Manager/api_manager.dart';
+import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Helper/AppConstant.dart';
-import 'package:mongol_ebook/Helper/AppStyles.dart';
 import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/Model/news_category.dart';
-import 'package:mongol_ebook/Model/top_article.dart';
+import 'package:mongol_ebook/Model/version_check/app_version_check.dart';
+import 'package:mongol_ebook/Utils/dialog_utils.dart';
 import 'package:mongol_ebook/network/api_service.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/categorized_news_section.dart';
@@ -14,6 +14,7 @@ import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/non_categor
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/priority_news.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/top_stories.dart';
 import 'package:mongol_ebook/extensions/scroll_controller_extension.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class NewsScreen extends StatefulWidget {
   static List categoryTitles = <dynamic>[];
@@ -56,9 +57,31 @@ class _NewsScreenState extends State<NewsScreen> {
       }
     });
     _apiService = ApiService(Dio(), BASE_URL);
+    getLatestAppVersion();
     getTopArticles();
     loadCategories();
     initializeNonCategorizedNews();
+  }
+
+  void getLatestAppVersion() async {
+    _apiService.getLatestAppVersion().then((result) async {
+      if (result == null) return;
+
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      String currentVersion = packageInfo.version;
+
+      bool isAndroid = Theme.of(context).platform == TargetPlatform.android;
+
+      final resultVersionStr =
+          isAndroid ? result.latestVersionAndroid : result.latestVersionIos;
+
+      if (resultVersionStr != currentVersion) {
+        final isForcedUpdate =
+            isAndroid ? result.isForcedUpdateAndroid : result.isForcedUpdateIos;
+        DialogUtils.instance
+            .createUpdateDialog(context, isForcedUpdate, isAndroid);
+      }
+    });
   }
 
   void initializeNonCategorizedNews() async {
