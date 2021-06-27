@@ -8,7 +8,17 @@ class ApiService {
   final Dio _dio;
   final String _baseUrl;
 
-  ApiService(this._dio, this._baseUrl);
+  ApiService(this._dio, this._baseUrl) {
+    // Default headers
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          options.headers['X-API-Key'] = "b25fa5fe-432d-442f-8f1f-55e8e89aedea";
+          return handler.next(options);
+        },
+      ),
+    );
+  }
 
   Future<RegisterResult> register(String username, String password,
       String email, String firstName, String? lastName) async {
