@@ -59,8 +59,11 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
             actions: [
               IconButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/setting');
+                onPressed: () async {
+                  await Navigator.of(context).pushNamed('/setting');
+                  setState(() {
+                    
+                  });
                 },
                 icon: Icon(Icons.settings, color: Colors.black,),
               ),
