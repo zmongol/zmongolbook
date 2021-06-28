@@ -4,8 +4,8 @@ import 'package:mongol_ebook/Helper/AppConstant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppSetting {
-  Color contentBackgroundColor = Colors.grey[50]!;
-  TextStyle contentTextStyle = TextStyle(fontFamily: 'z52tsagaantig', fontSize: 22, fontWeight: FontWeight.w400, color: Colors.black);
+  Color contentBackgroundColor = Colors.grey[200]!;
+  TextStyle contentTextStyle = TextStyle(fontFamily: 'z52ordostig', fontSize: 18, fontWeight: FontWeight.w400, color: Colors.black);
 
   AppSetting._privateConstructor();
   static final AppSetting _appSetting = AppSetting._privateConstructor();

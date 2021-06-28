@@ -52,13 +52,18 @@ class _DetailScreenState extends State<DetailScreen> {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            toolbarHeight: 40,
             centerTitle: true,
             title: Text(
               "ZmongolBook",
-              style: APP_BAR_TITLE_STYLE,
+              style: APP_BAR_TITLE_STYLE.copyWith(fontSize: 28),
             ),
             actions: [
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/setting');
+                },
+                icon: Icon(Icons.settings, color: Colors.black,),
+              ),
               GestureDetector(
                 onTap: () {
                   Share.share(
@@ -69,7 +74,6 @@ class _DetailScreenState extends State<DetailScreen> {
                   child: Icon(
                     Icons.share,
                     color: Colors.black,
-                    size: 25,
                   ),
                 ),
               ),

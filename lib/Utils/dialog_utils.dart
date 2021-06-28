@@ -6,15 +6,15 @@ class DialogUtils {
   static const androidAppID = "zmongol.zmongolbook"; // package name
   static const iosAppID = "1562552502";
 
-  static const title = "New Update";
+  static const title = "ᢔᡬᡰᡨ ᢊᡪᡲ ᡫ ᢘᡪᢙᡪᡱᡱᡪᢞᡪᡫ";
   //To signify the importance of this update
   static const contentForced =
-      "Please update to the latest version \n for optimal app experience.";
+      "ᢔᡬᡰᡨ ᢊᡪᡲ ᡫ ᡬᡪᡳᡪᢐ ᢘᡪᢙᡪᡳᡪᢐ \nᢔᡪᢜᡫ ᡥᡭᡬᢞᢋᡭᢑᢛᡬᢑᡪᡧ ᢊᡪᢞᡪᢊᢑᡪᢛᡳ ᢘᡪᡬᡬᢑᡭᡰᡨ";
   // Just a minor update
-  static const contentNormal = "A new update is available.";
+  static const contentNormal = "ᢔᡬᡰᡨ ᢊᡪᡲ ᡫ ᢘᡪᢙᡪᡪᡪᡳ ᡴᡭᢑᡳᡪᡳ";
 
-  static const btnTextForced = "Download now";
-  static const btnTextNormal = "OK";
+  static const btnTextForced = "ᢘᡪᢙᡪᡪᡪᡳ";
+  static const btnTextNormal = "ᢌᡪᢙᡪᢐᡨ";
 
   DialogUtils._privateConstructor();
   static final _instance = DialogUtils._privateConstructor();
@@ -42,7 +42,7 @@ class DialogUtils {
           TextButton(
             child: MongolText(
               buttonText,
-              style: Theme.of(context).textTheme.bodyText1!,
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(fontWeight: FontWeight.bold),
             ),
             onPressed: () {
               Navigator.of(context).pop();

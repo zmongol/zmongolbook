@@ -120,7 +120,6 @@ class _HomeScreenState extends State<HomeScreen> {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            toolbarHeight: 40,
             centerTitle: true,
             title: Text(
               'ZmongolBook',
