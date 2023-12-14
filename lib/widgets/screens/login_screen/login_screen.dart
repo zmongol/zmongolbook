@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mongol_ebook/Helper/AppConstant.dart';
 import 'package:mongol_ebook/Helper/AppStyles.dart';
@@ -72,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                     'Z ᢌᡭᡪᢊᡱᡱᡭᢐ',
                     style: Theme.of(context)
                         .textTheme
-                        .headline1!
+                        .displayLarge!
                         .copyWith(fontFamily: 'z52ordostig',fontSize: 45, fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -97,6 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                     if (val == null || val.isEmpty) {
                       return "Username is required";
                     }
+                    return null;
                   },
                 ),
                 SizedBox(
@@ -110,6 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                     if (val == null || val.isEmpty) {
                       return "Password is required";
                     }
+                    return null;
                   },
                 ),
                 SizedBox(
@@ -238,7 +239,7 @@ class _LoginPageState extends State<LoginPage> {
                 : Container(),
             Text(
               label,
-              style: Theme.of(context).textTheme.button!.copyWith(
+              style: Theme.of(context).textTheme.labelLarge!.copyWith(
                     color: textColor,
                     fontWeight: FontWeight.w600,
                   ),

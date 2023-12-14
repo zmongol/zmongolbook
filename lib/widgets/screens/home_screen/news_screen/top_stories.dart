@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mongol_ebook/Model/article.dart';
-import 'package:mongol_ebook/Model/top_article.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/top_story.dart';
 
 class TopStories extends StatelessWidget {

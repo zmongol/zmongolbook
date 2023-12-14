@@ -31,7 +31,9 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 android {
-    compileSdkVersion 30
+    namespace "com.zmongol.zmongolbook"
+
+    compileSdkVersion 33
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -40,37 +42,39 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "zmongol.zmongolbook"
-        minSdkVersion 19
-        targetSdkVersion 30
+        minSdkVersion 21
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
     }
 
-    signingConfigs {
-        debug{
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-        }
-        release{
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-        }
-    }
+    // signingConfigs {
+    //     debug{
+    //         keyAlias keystoreProperties['keyAlias']
+    //         keyPassword keystoreProperties['keyPassword']
+    //         storeFile file(keystoreProperties['storeFile'])
+    //         storePassword keystoreProperties['storePassword']
+    //     }
+    //     release{
+    //         keyAlias keystoreProperties['keyAlias']
+    //         keyPassword keystoreProperties['keyPassword']
+    //         storeFile file(keystoreProperties['storeFile'])
+    //         storePassword keystoreProperties['storePassword']
+    //     }
+    // }
 
     buildTypes {
         release {
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.release
+            // signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
         }
         debug {
             signingConfig signingConfigs.debug
         }
     }
+    namespace 'com.example.mongol_ebook'
 }
 
 flutter {

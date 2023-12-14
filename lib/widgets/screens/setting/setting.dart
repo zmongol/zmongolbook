@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Helper/AppConstant.dart';
@@ -128,7 +127,7 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+      decoration: BoxDecoration(color: Theme.of(context).colorScheme.background),
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(

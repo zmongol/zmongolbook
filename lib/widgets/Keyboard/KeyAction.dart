@@ -5,8 +5,7 @@ class KeyAction extends StatelessWidget {
   /// The [icon] and [lable] arguments must not be used at the same time.
   KeyAction(
       {Key? key, this.icon, this.text, required this.function, this.color})
-      : assert(function != null),
-        assert(icon == null || text == null),
+      : assert(icon == null || text == null),
         // assert(icon != null || lable != null),
         super(key: key);
   final IconData? icon;

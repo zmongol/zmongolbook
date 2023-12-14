@@ -17,7 +17,7 @@ class CategoryItem extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: MongolText(
           article,
-          style: Theme.of(context).textTheme.headline2,
+          style: Theme.of(context).textTheme.displayMedium,
         ),
       ),
     );

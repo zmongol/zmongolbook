@@ -18,7 +18,7 @@ class BookWidget extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             border: Border.all(color: Colors.white),
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.circular(4)),
         child: Container(
           height: _height,
@@ -39,7 +39,7 @@ class BookWidget extends StatelessWidget {
                   alignment: Alignment.topLeft,
                   child: MongolText(
                     book.title,
-                    style: Theme.of(context).textTheme.headline2,
+                    style: Theme.of(context).textTheme.displayMedium,
                     //maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

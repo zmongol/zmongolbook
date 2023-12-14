@@ -35,7 +35,7 @@ class ApiManager {
       body: map,
     );
 
-    final reply = await response.body.toString();
+    final reply = response.body.toString();
 
     print("Response: " + reply.toString());
     var responseJson = json.decode(reply);
@@ -62,7 +62,7 @@ class ApiManager {
       body: map,
     );
 
-    final reply = await response.body.toString();
+    final reply = response.body.toString();
 
     print("Response: " + reply.toString());
 
@@ -80,7 +80,7 @@ class ApiManager {
       body: map,
     );
 
-    final reply = await response.body.toString();
+    final reply = response.body.toString();
 
     print("Response: " + reply.toString());
 
@@ -162,7 +162,7 @@ class ApiManager {
       body: map,
     );
 
-    final reply = await response.body.toString();
+    final reply = response.body.toString();
 
     print("Response: " + reply.toString());
 

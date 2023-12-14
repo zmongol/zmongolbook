@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mongol/mongol.dart';
-import 'package:mongol_ebook/Helper/DataReader.dart';
 import 'package:mongol_ebook/widgets/app.dart';
 
 class SingleItem extends StatelessWidget {
@@ -24,7 +23,7 @@ class SingleItem extends StatelessWidget {
         width: deviceWidth*0.25,
         decoration: BoxDecoration(
             border: Border.all(color: Colors.white),
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.circular(4)),
         child: Container(
           margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
@@ -36,7 +35,7 @@ class SingleItem extends StatelessWidget {
                 child: MongolText(
                   title,
                   //DataReader.instance.getTitleByIndex(index),
-                  style: Theme.of(context).textTheme.headline2,
+                  style: Theme.of(context).textTheme.displayMedium,
                  // textAlign: MongolTextAlign.justify,
                   //maxLines: 1,
                  // overflow: TextOverflow.ellipsis,

@@ -27,7 +27,7 @@ class ApiService {
     try {
       var response = await _dio.get(endpoint);
       return AppVersionCheck.fromJson(response.data["result"]);
-    } on Error catch (e) {
+    } on Error {
       return null;
     }
   }

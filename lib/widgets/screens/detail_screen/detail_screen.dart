@@ -5,8 +5,9 @@ import 'package:mongol_ebook/Helper/AppStyles.dart';
 import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/network/api_service.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
+import 'package:share_plus/share_plus.dart';
+
 import './page_content.dart';
-import 'package:share/share.dart';
 
 class DetailScreen extends StatefulWidget {
   final int id;
@@ -44,7 +45,8 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+      decoration:
+          BoxDecoration(color: Theme.of(context).colorScheme.background),
       child: SafeArea(
         child: Scaffold(
           extendBodyBehindAppBar: false,
@@ -61,16 +63,16 @@ class _DetailScreenState extends State<DetailScreen> {
               IconButton(
                 onPressed: () async {
                   await Navigator.of(context).pushNamed('/setting');
-                  setState(() {
-                    
-                  });
+                  setState(() {});
                 },
-                icon: Icon(Icons.settings, color: Colors.black,),
+                icon: Icon(
+                  Icons.settings,
+                  color: Colors.black,
+                ),
               ),
               GestureDetector(
                 onTap: () {
-                  Share.share(
-                      "https://api.zcodetech.com/zmongolbook?articleId=${widget.id}");
+                  Share.share("$BASE_URL/zmongolbook?articleId=${widget.id}");
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(right: 16.0),

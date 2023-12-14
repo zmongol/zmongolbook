@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mongol_ebook/Helper/AppStyles.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/books_screen/books_screen.dart';
-import 'package:mongol_ebook/widgets/screens/home_screen/logout_button.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/news_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uni_links/uni_links.dart';
@@ -29,8 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   initState() {
-    super.initState();
     initUniLinks();
+    super.initState();
   }
 
   Future<Null> initUniLinks() async {
@@ -50,10 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
           _parseDeepLink(uri);
         }
       });
-    } on PlatformException {
+    } catch (e) {
       // Handle exception by warning the user their action did not succeed
       // return?
-      print('Failed to parse deep link');
+      print('Failed to parse deep link : $e');
     }
   }
 
@@ -113,10 +111,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+      decoration:
+          BoxDecoration(color: Theme.of(context).colorScheme.background),
       child: Scaffold(
           extendBodyBehindAppBar: false,
-          backgroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.background,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -124,7 +123,8 @@ class _HomeScreenState extends State<HomeScreen> {
             title: Text(
               'ZmongolBook',
               style: APP_BAR_TITLE_STYLE.copyWith(
-              fontSize: 28,),
+                fontSize: 28,
+              ),
             ),
             actions: [
               GestureDetector(
@@ -171,10 +171,14 @@ class _HomeScreenState extends State<HomeScreen> {
             child: _bodyView(context),
           ),
           bottomNavigationBar: BottomNavigationBar(
-            selectedLabelStyle:
-                Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14.0),
-            unselectedLabelStyle:
-                Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14.0),
+            selectedLabelStyle: Theme.of(context)
+                .textTheme
+                .displayLarge!
+                .copyWith(fontSize: 14.0),
+            unselectedLabelStyle: Theme.of(context)
+                .textTheme
+                .displayLarge!
+                .copyWith(fontSize: 14.0),
             items: [
               BottomNavigationBarItem(icon: Icon(Icons.home), label: labelNews),
               BottomNavigationBarItem(icon: Icon(Icons.book), label: labelBook),

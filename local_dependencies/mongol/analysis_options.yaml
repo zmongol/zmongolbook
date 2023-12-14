@@ -1,0 +1,11 @@
+include: package:lints/recommended.yaml
+
+analyzer:
+  language:
+    strict-casts: true
+    strict-raw-types: true
+
+linter:
+  rules:
+    camel_case_types: true
+    omit_local_variable_types: false

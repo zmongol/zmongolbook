@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
 class ViewImageScreen extends StatelessWidget {
-
   final String imageUrl;
 
   const ViewImageScreen({Key? key, required this.imageUrl}) : super(key: key);
@@ -12,7 +11,7 @@ class ViewImageScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        brightness: Brightness.dark,
+        // brightness: Brightness.dark,
         leading: IconButton(
           onPressed: () => Navigator.of(context).pop(),
           icon: Icon(Icons.arrow_back),

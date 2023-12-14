@@ -7,7 +7,6 @@ import 'package:mongol_ebook/Helper/AppStyles.dart';
 import 'package:mongol_ebook/Helper/RouteHelper.dart';
 import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/categorized_news.dart';
-import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/category_pills.dart';
 import 'package:universal_html/html.dart' hide Navigator;
 import 'package:universal_html/parsing.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -30,7 +29,8 @@ class PageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+      decoration:
+          BoxDecoration(color: Theme.of(context).colorScheme.background),
       child: SafeArea(
         child: Container(
           decoration: BoxDecoration(
@@ -228,11 +228,7 @@ class PageContent extends StatelessWidget {
 
       list.add(margin);
       list.add(
-        _buildWebviewForIframe(
-          url: url,
-          width: width,
-          height: height,
-        ),
+        BuildWebViewForIframe(url: url, width: width, height: height),
       );
     }
 
@@ -294,22 +290,6 @@ class PageContent extends StatelessWidget {
         });
   }
 
-  /// Show iframe with Webview
-  Widget _buildWebviewForIframe(
-      {required String url, required double width, required double height}) {
-    var iframeHtml =
-        "<html><body><iframe src='$url' width=$width height=$height></iframe></body></html>";
-    var uri = Uri.dataFromString(iframeHtml, mimeType: 'text/html').toString();
-
-    return Container(
-        height: height,
-        width: width,
-        child: WebView(
-          initialUrl: uri,
-          javascriptMode: JavascriptMode.unrestricted,
-        ));
-  }
-
   List<Widget> _buildRelatedArticlesSection() {
     return relatedArticles.isNotEmpty
         ? [
@@ -353,5 +333,46 @@ class PageContent extends StatelessWidget {
   _openDetailPage(context, id) {
     Navigator.of(context)
         .pushReplacementNamed('/detail', arguments: {'index': id});
+  }
+}
+
+class BuildWebViewForIframe extends StatefulWidget {
+  const BuildWebViewForIframe({
+    Key? key,
+    required this.url,
+    required this.width,
+    required this.height,
+  }) : super(key: key);
+
+  final String url;
+  final double width;
+  final double height;
+
+  @override
+  State<BuildWebViewForIframe> createState() => _BuildWebViewForIframeState();
+}
+
+class _BuildWebViewForIframeState extends State<BuildWebViewForIframe> {
+  late WebViewController controller;
+  @override
+  void initState() {
+    var iframeHtml =
+        "<html><body><iframe src='${widget.url}' width=${widget.width} height=${widget.height}></iframe></body></html>";
+    var uri = Uri.dataFromString(iframeHtml, mimeType: 'text/html');
+    controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..loadRequest(uri);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: widget.height,
+      width: widget.width,
+      child: WebViewWidget(
+        controller: controller,
+      ),
+    );
   }
 }

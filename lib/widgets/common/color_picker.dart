@@ -1,13 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'dart:math';
 
 class MaterialPicker extends StatefulWidget {
   MaterialPicker({
     required this.pickerColor,
     required this.onColorChanged,
-    this.enableLabel: false,
+    this.enableLabel = false,
   });
 
   final Color pickerColor;
@@ -308,7 +306,7 @@ class _MaterialPickerState extends State<MaterialPicker> {
   }
 }
 
-bool useWhiteForeground(Color color, {double bias: 1.0}) {
+bool useWhiteForeground(Color color, {double bias = 1.0}) {
   // Old:
   // return 1.05 / (color.computeLuminance() + 0.05) > 4.5;
 

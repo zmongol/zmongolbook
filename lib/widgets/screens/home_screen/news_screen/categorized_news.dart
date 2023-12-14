@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Model/article.dart';
-import 'package:mongol_ebook/Model/top_article.dart';
 import 'package:mongol_ebook/widgets/common/rounded_image.dart';
 
 class CategorizedNews extends StatelessWidget {
@@ -69,7 +68,7 @@ class CategorizedNews extends StatelessWidget {
                     child: MongolText(
                       article.title,
                       maxLines: 2,
-                      style: Theme.of(context).textTheme.headline2!,
+                      style: Theme.of(context).textTheme.displayMedium!,
                       softWrap: true,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -80,7 +79,7 @@ class CategorizedNews extends StatelessWidget {
                       MongolText(
                         date,
                         maxLines: 1,
-                        style: Theme.of(context).textTheme.bodyText1!,
+                        style: Theme.of(context).textTheme.bodyLarge!,
                         overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(
@@ -89,7 +88,7 @@ class CategorizedNews extends StatelessWidget {
                       Flexible(
                         child: MongolText(
                           article.author,
-                          style: Theme.of(context).textTheme.bodyText1!,
+                          style: Theme.of(context).textTheme.bodyLarge!,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),

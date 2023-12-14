@@ -1063,7 +1063,6 @@ class MWordLogic {
           print('solving i after a, e, o');
           m = wordMap[x]![7];
         }
-        ;
       }
       //solving g after Positive or Negative i traceback
       // test yabogsan uggugsen jarlig jerlig

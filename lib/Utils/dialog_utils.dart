@@ -32,17 +32,17 @@ class DialogUtils {
       builder: (_) => new MongolAlertDialog(
         title: new MongolText(
           title,
-          style: Theme.of(context).textTheme.headline2!,
+          style: Theme.of(context).textTheme.displayMedium!,
         ),
         content: new MongolText(
           content,
-          style: Theme.of(context).textTheme.bodyText1!,
+          style: Theme.of(context).textTheme.bodyLarge!,
         ),
         actions: <Widget>[
           TextButton(
             child: MongolText(
               buttonText,
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
             ),
             onPressed: () {
               Navigator.of(context).pop();

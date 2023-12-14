@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
 

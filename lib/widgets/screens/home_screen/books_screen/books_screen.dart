@@ -129,7 +129,7 @@ class _BooksScreenState extends State<BooksScreen> {
                             book.title,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.headline2!,
+                            style: Theme.of(context).textTheme.displayMedium!,
                           ),
                           SizedBox(
                             width: 16.0,
@@ -139,7 +139,7 @@ class _BooksScreenState extends State<BooksScreen> {
                             maxLines: 4,
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1!
+                                .bodyLarge!
                                 .copyWith(fontSize: 16.0),
                           ),
                           Spacer(),

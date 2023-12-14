@@ -59,7 +59,7 @@ class PriorityNews extends StatelessWidget {
                             maxLines: 3,
                             style: Theme.of(context)
                                 .textTheme
-                                .headline2!
+                                .displayMedium!
                                 .copyWith(color: Colors.white),
                             softWrap: true,
                             overflow: TextOverflow.ellipsis,
@@ -75,7 +75,7 @@ class PriorityNews extends StatelessWidget {
                                 maxLines: 1,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1!
+                                    .bodyLarge!
                                     .copyWith(color: Colors.white),
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -87,7 +87,7 @@ class PriorityNews extends StatelessWidget {
                                   article.author,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1!
+                                      .bodyLarge!
                                       .copyWith(color: Colors.white),
                                 ),
                               ),
@@ -101,7 +101,7 @@ class PriorityNews extends StatelessWidget {
                             maxLines: 2,
                             style: Theme.of(context)
                                 .textTheme
-                                .headline2!
+                                .displayMedium!
                                 .copyWith(color: Colors.white),
                             softWrap: true,
                             overflow: TextOverflow.ellipsis,

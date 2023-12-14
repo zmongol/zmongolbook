@@ -1,10 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Api%20Manager/api_manager.dart';
 import 'package:mongol_ebook/Model/category_article.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';
-import 'package:mongol_ebook/widgets/screens/home_screen/books_screen/single_item.dart';
 import 'package:mongol_ebook/widgets/screens/home_screen/news_screen/news_screen.dart';
 
 class CategoriesSearchResultScreen extends StatefulWidget {
@@ -58,11 +56,11 @@ class _CategoriesSearchResultScreenState extends State<CategoriesSearchResultScr
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+        decoration: BoxDecoration(color: Theme.of(context).colorScheme.background),
         child: SafeArea(
           child: Scaffold(
             extendBodyBehindAppBar: false,
-            backgroundColor: Theme.of(context).backgroundColor,
+            backgroundColor: Theme.of(context).colorScheme.background,
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
@@ -70,7 +68,7 @@ class _CategoriesSearchResultScreenState extends State<CategoriesSearchResultScr
               centerTitle: true,
               title: Text(
                 'ZmongolBook',
-                style: Theme.of(context).textTheme.headline1,
+                style: Theme.of(context).textTheme.displayLarge,
               ),
               actions: [
                 GestureDetector(
@@ -119,7 +117,7 @@ class _CategoriesSearchResultScreenState extends State<CategoriesSearchResultScr
                       width: 100,
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.white),
-                          color: Theme.of(context).backgroundColor,
+                          color: Theme.of(context).colorScheme.background,
                           borderRadius: BorderRadius.circular(4)),
                       child: Container(
                         margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
@@ -132,7 +130,7 @@ class _CategoriesSearchResultScreenState extends State<CategoriesSearchResultScr
                               Expanded(
                                 child: Text(
                                   currentData[index].title,
-                                  style: Theme.of(context).textTheme.headline2,
+                                  style: Theme.of(context).textTheme.displayMedium,
                                   textAlign: TextAlign.right,
                                 ),
                               ),

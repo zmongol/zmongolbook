@@ -1,10 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Helper/AppConstant.dart';
 import 'package:mongol_ebook/Model/article.dart';
 import 'package:mongol_ebook/Model/news_category.dart';
-import 'package:mongol_ebook/Model/version_check/app_version_check.dart';
 import 'package:mongol_ebook/Utils/dialog_utils.dart';
 import 'package:mongol_ebook/network/api_service.dart';
 import 'package:mongol_ebook/widgets/common/loading_indicator.dart';

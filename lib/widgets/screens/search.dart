@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/screen_util.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Controller/KeyboardController.dart';
 import 'package:mongol_ebook/widgets/Keyboard/MongolKeyboard.dart';
-import 'package:mongol_ebook/widgets/screens/home_screen/home_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   final String titleSuffix;
@@ -43,7 +41,8 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+      decoration:
+          BoxDecoration(color: Theme.of(context).colorScheme.background),
       child: SafeArea(child: GetBuilder<KeyboardController>(
         builder: (kbCtrl) {
           return Scaffold(
@@ -81,7 +80,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       width: 50,
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey),
-                          color: Theme.of(context).backgroundColor,
+                          color: Theme.of(context).colorScheme.background,
                           borderRadius: BorderRadius.circular(4)),
                       child: MongolTextField(
                         scrollPadding: const EdgeInsets.only(),
@@ -143,7 +142,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .symmetric(
+                                                                  .symmetric(
                                                                   horizontal:
                                                                       4),
                                                           child: MongolText(
@@ -185,7 +184,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                           child: Padding(
                                                             padding:
                                                                 const EdgeInsets
-                                                                        .symmetric(
+                                                                    .symmetric(
                                                                     horizontal:
                                                                         4),
                                                             child: MongolText(

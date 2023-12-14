@@ -57,11 +57,11 @@ class _SearchScreenState extends State<SearchResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+      decoration: BoxDecoration(color: Theme.of(context).colorScheme.background),
       child: SafeArea(
         child: Scaffold(
           extendBodyBehindAppBar: false,
-          backgroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.background,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -69,7 +69,7 @@ class _SearchScreenState extends State<SearchResultScreen> {
             centerTitle: true,
             title: Text(
               'Z ᢌᡭᡪᢊᡱᡱᡭᢐ ' + widget.suffix,
-              style: Theme.of(context).textTheme.headline1,
+              style: Theme.of(context).textTheme.displayLarge,
             ),
             actions: [
               GestureDetector(
@@ -135,7 +135,7 @@ class _SearchScreenState extends State<SearchResultScreen> {
                   child: MongolText(
                     article.title,
                     maxLines: 4,
-                    style: Theme.of(context).textTheme.headline2!,
+                    style: Theme.of(context).textTheme.displayMedium!,
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,
                   ),

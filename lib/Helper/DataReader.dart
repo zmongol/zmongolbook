@@ -13,7 +13,7 @@ class DataReader {
 
   //NOTE: keep the data on searching
   List<Map<String, String>> data = [];
-  
+
   readData() async {
     this.data.clear();
     ByteData data = await rootBundle.load("assets/data.xlsx");
@@ -32,8 +32,8 @@ class DataReader {
           }
 
           Map<String, String> rowContent = {
-            'title': row[0]!.value,
-            'article': row[1]!.value
+            'title': row[0]!.value?.toString() ?? '',
+            'article': row[1]!.value?.toString() ?? '',
           };
 
           this.originalData.add(rowContent);

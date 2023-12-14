@@ -20,7 +20,7 @@ class CategoryPill extends StatelessWidget {
       ),
       child: MongolText(
         text,
-        style: Theme.of(context).textTheme.headline2,
+        style: Theme.of(context).textTheme.displayMedium,
       ),
     );
   }

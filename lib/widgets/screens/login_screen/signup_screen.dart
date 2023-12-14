@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mongol/mongol.dart';
 import 'package:mongol_ebook/Helper/AppConstant.dart';
 import 'package:mongol_ebook/Model/auth/register_result.dart';
 import 'package:mongol_ebook/network/api_service.dart';
-import 'package:mongol/mongol.dart';
 
 class SignupPage extends StatelessWidget {
   final apiService = ApiService(Dio(), BASE_URL);
@@ -25,7 +25,8 @@ class SignupPage extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        brightness: Brightness.light,
+
+        // brightness: Brightness.light,
         backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () {
@@ -82,6 +83,7 @@ class SignupPage extends StatelessWidget {
                         if (val.length < 4) {
                           return "ᠳᠦᠷᠪᠡ ᠡᠴᠡ ᠤᠷᠲᠤ ᠨᠡᠷ᠎ᠡ ᠪᠢᠴᠢᠭᠡᠷᠡᠢ Username has to be at least 4 characters long.用户名最短是4位";
                         }
+                        return null;
                       },
                     ),
                     inputFile(
@@ -96,6 +98,7 @@ class SignupPage extends StatelessWidget {
                         if (val.length < 8) {
                           return "ᠨᠢᠭᠤᠴᠠ  ᠳ᠋ᠤᠭᠠᠷ 8  ᠡᠴᠡ ᠤᠷᠲᠤ ᠪᠠᠶ᠋ᠢᠬᠤ Password has to be at least 8 characters long.";
                         }
+                        return null;
                       },
                     ),
                     inputFile(
@@ -111,6 +114,7 @@ class SignupPage extends StatelessWidget {
                         if (val != passwordText.text) {
                           return "ᠳᠠᠪᠲᠠᠬᠤ  ᠳ᠋ᠤᠭᠠᠷ ᠠᠳᠠᠯᠢ ᠪᠠᠶ᠋ᠢᠬᠤ Confirm Password and Password have to be the same 确认密码必须同一";
                         }
+                        return null;
                       },
                     ),
                     inputFile(
@@ -120,6 +124,7 @@ class SignupPage extends StatelessWidget {
                         if (val == null || val.isEmpty) {
                           return "ᠢᠮᠡᠸᠯ ᠬᠡᠷᠡᠭᠲᠡᠢ Email is required 需要邮箱";
                         }
+                        return null;
                       },
                     ),
                     inputFile(
@@ -129,6 +134,7 @@ class SignupPage extends StatelessWidget {
                         if (val == null || val.isEmpty) {
                           return "ᠨᠡᠷ᠎ᠡ ᠬᠡᠷᠡᠭᠲᠡᠢ First Name is required 需要名字";
                         }
+                        return null;
                       },
                     ),
                     inputFile(
